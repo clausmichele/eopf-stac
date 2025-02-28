@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "epof-stac"
+version = "0.1.0"
+authors = [
+    { name="Mario Winkler", email="mario.winkler@dlr.de" }
+]
+description = "Python tool to create STAC metadata for an EOPF product"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests",
+#    "eopf==2.5.3",
+    "s3fs",
+    "pystac",
+    "stactools-sentinel2"
+]
+[project.optional-dependencies]
+dev = [
+    "ruff"
+]
+test = [
+    "pytest"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eopf_stac"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-q --import-mode=importlib --no-header -rfE --disable-warnings --log-level=INFO"
+testpaths = [
+    "tests"
+]
+pythonpath = [
+  "src/eopf_stac"
+]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py311"
