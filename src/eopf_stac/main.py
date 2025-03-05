@@ -9,6 +9,8 @@ from eopf import create_item, register_item
 logger = logging.getLogger(__name__)
 
 ENV_STAC_API_URL: str = "STAC_API_URL"
+ENV_STAC_INGEST_USER: str = "STAC_INGEST_USER"
+ENV_STAC_INGEST_PASS: str = "STAC_INGEST_PASS"
 ENV_S3_ENDPOINT_URL: str = "S3_ENDPOINT_URL"
 ENV_AWS_ACCESS_KEY_ID: str = "AWS_ACCESS_KEY_ID"
 ENV_AWS_SECRET_ACCESS_KEY: str = "AWS_SECRET_ACCESS_KEY"
@@ -42,6 +44,12 @@ def validate_env(url: str, dry_run: bool, env: dict):
     if not dry_run:
         if ENV_STAC_API_URL not in env:
             raise ValueError(f"The enviroment variable {ENV_STAC_API_URL} is missing")
+
+        if ENV_STAC_INGEST_USER not in env:
+            raise ValueError(f"The enviroment variable {ENV_STAC_INGEST_USER} is missing")
+
+        if ENV_STAC_INGEST_PASS not in env:
+            raise ValueError(f"The enviroment variable {ENV_STAC_INGEST_PASS} is missing")
 
 
 def exit_on_error(exit_code: int = 1):
