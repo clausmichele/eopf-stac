@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "epof-stac"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
     { name="Mario Winkler", email="mario.winkler@dlr.de" }
 ]

@@ -34,9 +34,11 @@ Additional settings need to be provided through the following environment variab
 | AWS_SECRET_ACCESS_KEY | If an s3 URL is provided, the secret for the access key. | None |
 | S3_ENDPOINT_URL | If an s3 URL is provided, the endpoint URL of the object storage  | None |
 | STAC_API_URL | The URL of the STAC catalog to register the created STAC item  | None |
+| STAC_INGEST_USER | The username to access the transaction endpoints of the STAC API with HTTP Basic Auth | None |
+| STAC_INGEST_PASS | The password to access the transaction endpoints of the STAC API with HTTP Basic Auth | None |
 
 ## Docker
-The tool can also be exectued with Docker. Images are available at the Github container registry. It can be run as follows:
+The tool can also be exectued with Docker. Images are available at the [Github container registry](https://github.com/EOPF-Sample-Service/eopf-stac/pkgs/container/eopf-stac/versions). It can be run as follows:
 
 ```bash
 $ docker run \
@@ -44,6 +46,8 @@ $ docker run \
     --env AWS_SECRET_ACCESS_KEY=value \
     --env S3_ENDPOINT_URL=value \
     --env STAC_API_URL=value \
-    ghcr.io/eopf-sample-service/eopf-stac:0.1.0 s3://path/to/eopf.zarr
+    --env STAC_INGEST_USER=value \
+    --env STAC_INGEST_PASS=value \
+    ghcr.io/eopf-sample-service/eopf-stac:0.2.0 s3://path/to/eopf.zarr
 ```
 
