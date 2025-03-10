@@ -86,6 +86,7 @@ def register_item(item: pystac.Item, stac_api_url: str) -> pystac.Item:
 
     item.remove_links("self")
     session = requests.Session()
+    session.auth = (os.environ["STAC_INGEST_USER"], os.environ["STAC_INGEST_PASS"])
     api_action = "inserted"
     r = session.post(f"{stac_api_url}/collections/{item.collection_id}/items", json=item.to_dict())
     if r.status_code == 409:
