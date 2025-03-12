@@ -2,57 +2,54 @@ import os
 
 import numpy as np
 import pystac
-from constants import PRODUCT_METADATA_ASSET_KEY, PRODUCT_METADATA_PATH
+from pystac.extensions.eo import Band
 from pystac.extensions.raster import RasterExtension
 from pystac.extensions.xarray_assets import AssetXarrayAssetsExtension
-from sentinel2.constants import (
-    ASSET_TO_DESCRIPTION,
-    DATASET_PATHS_TO_ASSET,
-    L2A_AOT_WVP_PATHS_TO_ASSET,
-    L2A_SCL_PATHS_TO_ASSET,
-    MEDIA_TYPE_JSON,
-    MEDIA_TYPE_ZARR,
-    ROLE_DATA,
-    ROLE_DATASET,
-    ROLE_METADATA,
-    ROLE_REFLECTANCE,
-    ROLE_VISUAL,
-)
 from stactools.sentinel2.constants import (
     BANDS_TO_ASSET_NAME,
     SENTINEL_BANDS,
 )
 
-
-def metadata_asset_from_href(asset_href: str) -> pystac.Asset:
-    return pystac.Asset(
-        href=os.path.join(asset_href, PRODUCT_METADATA_PATH),
-        title="Consolidated Metadata",
-        description="Consolidated metadata of the EOPF product",
-        media_type=MEDIA_TYPE_JSON,
-        roles=[ROLE_METADATA],
-    )
-
-
-def product_asset_from_href(asset_href: str, owner: pystac.Item) -> pystac.Asset:
-    asset = pystac.Asset(
-        href=asset_href,
-        title="EOPF Product",
-        description="The full Zarr hierarchy of the EOPF product",
-        media_type=MEDIA_TYPE_ZARR,
-        roles=[ROLE_DATA, ROLE_METADATA],
-    )
-    asset.set_owner(owner)
-    xr = AssetXarrayAssetsExtension.ext(asset, add_if_missing=True)
-    xr.open_kwargs = {"consolidated": True, "chunks": {}, "engine": "sentinel-zarr"}
-    return asset
+from eopf_stac.constants import (
+    MEDIA_TYPE_ZARR,
+    PRODUCT_ASSET_KEY,
+    PRODUCT_METADATA_ASSET_KEY,
+    PRODUCT_METADATA_PATH,
+    ROLE_DATA,
+    ROLE_DATASET,
+    get_item_asset_metadata,
+    get_item_asset_product,
+)
+from eopf_stac.sentinel2.constants import (
+    ASSET_TO_DESCRIPTION,
+    DATASET_PATHS_TO_ASSET,
+    L2A_AOT_WVP_ASSETS_TO_PATH,
+    L2A_SCL_ASSETS_TO_PATH,
+    ROLE_REFLECTANCE,
+)
 
 
-def band_assets_from_dict(asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item):
+def get_band_item_assets(band_asset_defs: dict) -> dict[str, pystac.ItemAssetDefinition]:
+    item_assets = {}
+    for key in band_asset_defs.keys():
+        band_key = band_key_from_asset_key(key)
+        extra_fields = {
+            "xarray:open_kwargs": {"consolidated": True, "chunks": {}, "engine": "eopf-zarr", "mode": "convenience"}
+        }
+        item_assets[key] = create_item_asset(
+            asset_key=key, roles=[ROLE_DATA, ROLE_REFLECTANCE], band_keys=[band_key], extra_fields=extra_fields
+        )
+    return item_assets
+
+
+def get_band_assets(
+    band_asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item
+) -> dict[str, pystac.Asset]:
     assets = {}
-    for href_suffix, key in asset_defs.items():
-        asset = create_asset(asset_href, href_suffix, key, [ROLE_DATA, ROLE_REFLECTANCE])
-        update_bands(asset, key)
+    item_assets = get_band_item_assets(band_asset_defs)
+    for key, item_asset in item_assets.items():
+        href_suffix = band_asset_defs[key]
+        asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -63,10 +60,22 @@ def band_assets_from_dict(asset_defs: dict, asset_href: str, metadata: dict, ite
     return assets
 
 
-def aot_wvp_assets_from_href(asset_href: str, metadata: dict, item: pystac.Item):
+def get_aot_wvp_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
+    item_assets = {}
+    for key in L2A_AOT_WVP_ASSETS_TO_PATH.keys():
+        item_asset = create_item_asset(asset_key=key, roles=[ROLE_DATA], band_keys=[], extra_fields={})
+        item_assets[key] = item_asset
+    return item_assets
+
+
+def get_aot_wvp_assets(
+    aot_wvp_asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item
+) -> dict[str, pystac.Asset]:
     assets = {}
-    for href_suffix, key in L2A_AOT_WVP_PATHS_TO_ASSET.items():
-        asset = create_asset(asset_href, href_suffix, key, [ROLE_DATA])
+    item_assets = get_aot_wvp_item_assets()
+    for key, item_asset in item_assets.items():
+        href_suffix = aot_wvp_asset_defs[key]
+        asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -82,19 +91,27 @@ def aot_wvp_assets_from_href(asset_href: str, metadata: dict, item: pystac.Item)
     return assets
 
 
-def scl_assets_from_href(asset_href: str, metadata: dict, item: pystac.Item):
+def get_scl_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
+    item_assets = {}
+    for key in L2A_SCL_ASSETS_TO_PATH.keys():
+        extra_fields = {"xarray:open_kwargs": {"consolidated": False, "chunks": {}, "engine": "zarr"}}
+        item_assets[key] = create_item_asset(
+            asset_key=key, roles=[ROLE_DATA, ROLE_DATASET], band_keys=[], extra_fields=extra_fields
+        )
+    return item_assets
+
+
+def get_scl_assets(scl_asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item) -> dict[str, pystac.Asset]:
     assets = {}
-    for href_suffix, key in L2A_SCL_PATHS_TO_ASSET.items():
-        # SCL can be opened as zarr group / xarray dataset -> we remove the 'scl' part of the path
-        asset = create_asset(asset_href, os.path.dirname(href_suffix), key, [ROLE_DATA, ROLE_DATASET])
+    item_assets = get_scl_item_assets()
+    for key, item_asset in item_assets.items():
+        href_suffix = scl_asset_defs[key]
+        # SCL can be opened as zarr group / xarray dataset -> remove the 'scl' part of the path
+        asset = item_asset.create_asset(os.path.dirname(os.path.join(asset_href, href_suffix)))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
             update_extra_fields_from_metadata(asset=asset, attrs=attrs, item=item)
-
-        asset.set_owner(item)
-        xr = AssetXarrayAssetsExtension.ext(asset, add_if_missing=True)
-        xr.open_kwargs = {"consolidated": False, "chunks": {}, "engine": "zarr"}
 
         assets[key] = asset
 
@@ -105,11 +122,21 @@ def scl_assets_from_href(asset_href: str, metadata: dict, item: pystac.Item):
     return assets
 
 
-def tci_assets_from_def(asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item):
+def get_tci_item_assets(tci_asset_defs: dict) -> dict[str, pystac.ItemAssetDefinition]:
+    item_assets = {}
+    for key in tci_asset_defs.keys():
+        item_assets[key] = create_item_asset(
+            asset_key=key, roles=[ROLE_DATA, ROLE_REFLECTANCE], band_keys=["B04", "B03", "B02"], extra_fields={}
+        )
+    return item_assets
+
+
+def get_tci_assets(tci_asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item) -> dict[str, pystac.Asset]:
     assets = {}
-    for href_suffix, key in asset_defs.items():
-        asset = create_asset(asset_href, href_suffix, key, [ROLE_VISUAL])
-        update_bands_from_band_keys(asset, ["B04", "B03", "B02"])
+    item_assets = get_tci_item_assets(tci_asset_defs)
+    for key, item_asset in item_assets.items():
+        href_suffix = tci_asset_defs[key]
+        asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -123,70 +150,86 @@ def tci_assets_from_def(asset_defs: dict, asset_href: str, metadata: dict, item:
     return assets
 
 
-def dataset_assets_from_href(asset_href: str, metadata: dict, item: pystac.Item):
-    assets = {}
-    for href_suffix, key in DATASET_PATHS_TO_ASSET.items():
-        asset = create_asset(asset_href, href_suffix, key, [ROLE_DATA, ROLE_REFLECTANCE, ROLE_DATASET])
+def get_dataset_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
+    item_assets = {}
+    for key in DATASET_PATHS_TO_ASSET.keys():
+        extra_fields = {"xarray:open_kwargs": {"consolidated": False, "chunks": {}, "engine": "zarr"}}
+        band_keys = []
         if key == "SR_10m":
-            update_bands_from_band_keys(asset, ["B02", "B03", "B04", "B08"])
+            band_keys = ["B02", "B03", "B04", "B08"]
         elif key == "SR_20m":
-            update_bands_from_band_keys(asset, ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B11", "B12"])
+            band_keys = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B11", "B12"]
         elif key == "SR_60m":
-            update_bands_from_band_keys(
-                asset, ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B11", "B12"]
-            )
+            band_keys = ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B11", "B12"]
+
+        item_assets[key] = create_item_asset(
+            asset_key=key,
+            roles=[ROLE_DATA, ROLE_REFLECTANCE, ROLE_DATASET],
+            band_keys=band_keys,
+            extra_fields=extra_fields,
+        )
+    return item_assets
+
+
+def get_dataset_assets(
+    dataset_asset_defs: dict, asset_href: str, metadata: dict, item: pystac.Item
+) -> dict[str, pystac.Asset]:
+    assets = {}
+    item_assets = get_dataset_item_assets()
+    for key, item_asset in item_assets.items():
+        href_suffix = dataset_asset_defs[key]
+        asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
             update_extra_fields_from_metadata(asset=asset, attrs=attrs, item=item)
 
-        asset.set_owner(item)
-        xr = AssetXarrayAssetsExtension.ext(asset, add_if_missing=True)
-        xr.open_kwargs = {"consolidated": False, "chunks": {}, "engine": "zarr"}
-
         assets[key] = asset
 
-    # xarray
     # nodata
     # data_type
 
     return assets
 
 
-def extra_assets_from_href(asset_href: str):
-    assets = {PRODUCT_METADATA_ASSET_KEY: metadata_asset_from_href(asset_href)}
-    return assets
+def get_extra_assets(asset_href: str, item: pystac.Item) -> dict[str, pystac.Asset]:
+    metadata = get_item_asset_metadata().create_asset(os.path.join(asset_href, PRODUCT_METADATA_PATH))
+    product = get_item_asset_product().create_asset(asset_href)
+    product.set_owner(item)
+    AssetXarrayAssetsExtension.ext(product, add_if_missing=True)
+    return {
+        PRODUCT_METADATA_ASSET_KEY: metadata,
+        PRODUCT_ASSET_KEY: product,
+    }
 
 
-def create_asset(href_base: str, href_suffix: str, asset_key: str, roles: list[str]):
+def create_item_asset(
+    asset_key: str, roles: list[str], band_keys: list[str] = [], extra_fields: dict = {}
+) -> pystac.ItemAssetDefinition:
     gsd = unsuffixed_band_resolution(asset_key)
     band_key = band_key_from_asset_key(asset_key)
+    extra_fields["gsd"] = int(gsd)
 
-    asset = pystac.Asset(
-        href=os.path.join(href_base, href_suffix),
+    if len(band_keys) > 0:
+        bands = get_bands_for_band_keys(band_keys)
+        extra_fields["bands"] = bands
+
+    return pystac.ItemAssetDefinition.create(
         title=f"{ASSET_TO_DESCRIPTION[band_key]} - {gsd}m",
+        description=None,
         media_type=MEDIA_TYPE_ZARR,
         roles=roles,
+        extra_fields=extra_fields,
     )
 
-    asset.extra_fields["gsd"] = int(gsd)
 
-    return asset
-
-
-def update_bands(asset: pystac.Asset, asset_key: str):
-    band_key = band_key_from_asset_key(asset_key)
-    update_bands_from_band_keys(asset, [band_key])
-
-
-def update_bands_from_band_keys(asset: pystac.Asset, keys: list[str]):
+def get_bands_for_band_keys(keys: list[str]) -> list[Band]:
     bands = []
     for band_key in keys:
         band = SENTINEL_BANDS[BANDS_TO_ASSET_NAME[band_key]]
         band.description = f"{ASSET_TO_DESCRIPTION[band_key]}"
         bands.append(band.to_dict())
-
-    asset.extra_fields["bands"] = bands
+    return bands
 
 
 def band_key_from_asset_key(asset_key: str) -> str:

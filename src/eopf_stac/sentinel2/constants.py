@@ -2,14 +2,8 @@ import re
 from re import Pattern
 from typing import Final
 
-ROLE_DATA = "data"
-ROLE_METADATA = "metadata"
 ROLE_REFLECTANCE = "reflectance"
-ROLE_VISUAL = "visual"
-ROLE_DATASET = "dataset"
 
-MEDIA_TYPE_ZARR = "application/vnd+zarr"
-MEDIA_TYPE_JSON = "application/json"
 
 MGRS_PATTERN: Final[Pattern[str]] = re.compile(
     r"_T(\d{1,2})([CDEFGHJKLMNPQRSTUVWX])([ABCDEFGHJKLMNPQRSTUVWXYZ][ABCDEFGHJKLMNPQRSTUV])"
@@ -36,74 +30,74 @@ ASSET_TO_DESCRIPTION: Final[dict[str, str]] = {
     "SR": "Surface Reflectance",
 }
 
-L2A_BAND_PATHS_TO_ASSET: Final[dict[str, str]] = {
-    "measurements/reflectance/r10m/b02": "B02_10m",
-    "measurements/reflectance/r10m/b03": "B03_10m",
-    "measurements/reflectance/r10m/b04": "B04_10m",
-    "measurements/reflectance/r10m/b08": "B08_10m",
-    "measurements/reflectance/r20m/b01": "B01_20m",
-    "measurements/reflectance/r20m/b02": "B02_20m",
-    "measurements/reflectance/r20m/b03": "B03_20m",
-    "measurements/reflectance/r20m/b04": "B04_20m",
-    "measurements/reflectance/r20m/b05": "B05_20m",
-    "measurements/reflectance/r20m/b06": "B06_20m",
-    "measurements/reflectance/r20m/b07": "B07_20m",
-    "measurements/reflectance/r20m/b8a": "B8A_20m",
-    "measurements/reflectance/r20m/b11": "B11_20m",
-    "measurements/reflectance/r20m/b12": "B12_20m",
-    "measurements/reflectance/r60m/b01": "B01_60m",
-    "measurements/reflectance/r60m/b02": "B02_60m",
-    "measurements/reflectance/r60m/b03": "B03_60m",
-    "measurements/reflectance/r60m/b04": "B04_60m",
-    "measurements/reflectance/r60m/b05": "B05_60m",
-    "measurements/reflectance/r60m/b06": "B06_60m",
-    "measurements/reflectance/r60m/b07": "B07_60m",
-    "measurements/reflectance/r60m/b8a": "B8A_60m",
-    "measurements/reflectance/r60m/b09": "B09_60m",
-    "measurements/reflectance/r60m/b11": "B11_60m",
-    "measurements/reflectance/r60m/b12": "B12_60m",
+L2A_BAND_ASSETS_TO_PATH: Final[dict[str, str]] = {
+    "B02_10m": "measurements/reflectance/r10m/b02",
+    "B03_10m": "measurements/reflectance/r10m/b03",
+    "B04_10m": "measurements/reflectance/r10m/b04",
+    "B08_10m": "measurements/reflectance/r10m/b08",
+    "B01_20m": "measurements/reflectance/r20m/b01",
+    "B02_20m": "measurements/reflectance/r20m/b02",
+    "B03_20m": "measurements/reflectance/r20m/b03",
+    "B04_20m": "measurements/reflectance/r20m/b04",
+    "B05_20m": "measurements/reflectance/r20m/b05",
+    "B06_20m": "measurements/reflectance/r20m/b06",
+    "B07_20m": "measurements/reflectance/r20m/b07",
+    "B8A_20m": "measurements/reflectance/r20m/b8a",
+    "B11_20m": "measurements/reflectance/r20m/b11",
+    "B12_20m": "measurements/reflectance/r20m/b12",
+    "B01_60m": "measurements/reflectance/r60m/b01",
+    "B02_60m": "measurements/reflectance/r60m/b02",
+    "B03_60m": "measurements/reflectance/r60m/b03",
+    "B04_60m": "measurements/reflectance/r60m/b04",
+    "B05_60m": "measurements/reflectance/r60m/b05",
+    "B06_60m": "measurements/reflectance/r60m/b06",
+    "B07_60m": "measurements/reflectance/r60m/b07",
+    "B8A_60m": "measurements/reflectance/r60m/b8a",
+    "B09_60m": "measurements/reflectance/r60m/b09",
+    "B11_60m": "measurements/reflectance/r60m/b11",
+    "B12_60m": "measurements/reflectance/r60m/b12",
 }
 
-L2A_AOT_WVP_PATHS_TO_ASSET: Final[dict[str, str]] = {
-    "quality/atmosphere/r10m/aot": "AOT_10m",
-    "quality/atmosphere/r20m/aot": "AOT_20m",
-    "quality/atmosphere/r60m/aot": "AOT_60m",
-    "quality/atmosphere/r10m/wvp": "WVP_10m",
-    "quality/atmosphere/r20m/wvp": "WVP_20m",
-    "quality/atmosphere/r60m/wvp": "WVP_60m",
+L2A_AOT_WVP_ASSETS_TO_PATH: Final[dict[str, str]] = {
+    "AOT_10m": "quality/atmosphere/r10m/aot",
+    "AOT_20m": "quality/atmosphere/r20m/aot",
+    "AOT_60m": "quality/atmosphere/r60m/aot",
+    "WVP_10m": "quality/atmosphere/r10m/wvp",
+    "WVP_20m": "quality/atmosphere/r20m/wvp",
+    "WVP_60m": "quality/atmosphere/r60m/wvp",
 }
 
-L2A_SCL_PATHS_TO_ASSET: Final[dict[str, str]] = {
-    "conditions/mask/l2a_classification/r20m/scl": "SCL_20m",
-    "conditions/mask/l2a_classification/r60m/scl": "SCL_60m",
+L2A_SCL_ASSETS_TO_PATH: Final[dict[str, str]] = {
+    "SCL_20m": "conditions/mask/l2a_classification/r20m/scl",
+    "SCL_60m": "conditions/mask/l2a_classification/r60m/scl",
 }
 
-L2A_TCI_PATHS_TO_ASSET: Final[dict[str, str]] = {
-    "quality/l2a_quicklook/r10m/tci": "TCI_10m",
-    "quality/l2a_quicklook/r20m/tci": "TCI_20m",
-    "quality/l2a_quicklook/r60m/tci": "TCI_60m",
+L2A_TCI_ASSETS_TO_PATH: Final[dict[str, str]] = {
+    "TCI_10m": "quality/l2a_quicklook/r10m/tci",
+    "TCI_20m": "quality/l2a_quicklook/r20m/tci",
+    "TCI_60m": "quality/l2a_quicklook/r60m/tci",
 }
 
 DATASET_PATHS_TO_ASSET: Final[dict[str, str]] = {
-    "measurements/reflectance/r10m": "SR_10m",
-    "measurements/reflectance/r20m": "SR_20m",
-    "measurements/reflectance/r60m": "SR_60m",
+    "SR_10m": "measurements/reflectance/r10m",
+    "SR_20m": "measurements/reflectance/r20m",
+    "SR_60m": "measurements/reflectance/r60m",
 }
 
-L1C_BANDS_PATH_TO_ASSET: Final[dict[str, str]] = {
-    "measurements/reflectance/r60m/b01": "B01_60m",
-    "measurements/reflectance/r10m/b02": "B02_10m",
-    "measurements/reflectance/r10m/b03": "B03_10m",
-    "measurements/reflectance/r10m/b04": "B04_10m",
-    "measurements/reflectance/r20m/b05": "B05_20m",
-    "measurements/reflectance/r20m/b06": "B06_20m",
-    "measurements/reflectance/r20m/b07": "B07_20m",
-    "measurements/reflectance/r10m/b08": "B08_10m",
-    "measurements/reflectance/r60m/b09": "B09_60m",
-    "measurements/reflectance/r60m/b10": "B10_60m",
-    "measurements/reflectance/r20m/b11": "B11_20m",
-    "measurements/reflectance/r20m/b12": "B12_20m",
-    "measurements/reflectance/r20m/b8a": "B8A_20m",
+L1C_BAND_ASSETS_TO_PATH: Final[dict[str, str]] = {
+    "B01_60m": "measurements/reflectance/r60m/b01",
+    "B02_10m": "measurements/reflectance/r10m/b02",
+    "B03_10m": "measurements/reflectance/r10m/b03",
+    "B04_10m": "measurements/reflectance/r10m/b04",
+    "B05_20m": "measurements/reflectance/r20m/b05",
+    "B06_20m": "measurements/reflectance/r20m/b06",
+    "B07_20m": "measurements/reflectance/r20m/b07",
+    "B08_10m": "measurements/reflectance/r10m/b08",
+    "B09_60m": "measurements/reflectance/r60m/b09",
+    "B10_60m": "measurements/reflectance/r60m/b10",
+    "B11_20m": "measurements/reflectance/r20m/b11",
+    "B12_20m": "measurements/reflectance/r20m/b12",
+    "B8A_20m": "measurements/reflectance/r20m/b8a",
 }
 
-L1C_TCI_PATHS_TO_ASSET: Final[dict[str, str]] = {"quality/l1c_quicklook/r10m/tci": "TCI_10m"}
+L1C_TCI_ASSETS_TO_PATH: Final[dict[str, str]] = {"TCI_10m": "quality/l1c_quicklook/r10m/tci"}

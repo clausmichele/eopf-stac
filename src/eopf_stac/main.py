@@ -45,12 +45,6 @@ def validate_env(url: str, dry_run: bool, env: dict):
         if ENV_STAC_API_URL not in env:
             raise ValueError(f"The enviroment variable {ENV_STAC_API_URL} is missing")
 
-        if ENV_STAC_INGEST_USER not in env:
-            raise ValueError(f"The enviroment variable {ENV_STAC_INGEST_USER} is missing")
-
-        if ENV_STAC_INGEST_PASS not in env:
-            raise ValueError(f"The enviroment variable {ENV_STAC_INGEST_PASS} is missing")
-
 
 def exit_on_error(exit_code: int = 1):
     logger.error("Exit on error")

@@ -4,12 +4,6 @@ from itertools import chain
 
 import antimeridian
 import pystac
-from constants import (
-    EOPF_PROVIDER,
-    LICENSE_PROVIDER,
-    SENTINEL_LICENSE,
-    SENTINEL_PROVIDER,
-)
 from pystac.extensions.eo import EOExtension
 from pystac.extensions.grid import GridExtension
 from pystac.extensions.projection import ProjectionExtension
@@ -17,26 +11,36 @@ from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.scientific import ItemScientificExtension
 from pystac.extensions.view import ViewExtension
 from pystac.utils import now_in_utc, str_to_datetime
-from sentinel2.assets import (
-    aot_wvp_assets_from_href,
-    band_assets_from_dict,
-    dataset_assets_from_href,
-    extra_assets_from_href,
-    scl_assets_from_href,
-    tci_assets_from_def,
-)
-from sentinel2.constants import (
-    L1C_BANDS_PATH_TO_ASSET,
-    L1C_TCI_PATHS_TO_ASSET,
-    L2A_BAND_PATHS_TO_ASSET,
-    L2A_TCI_PATHS_TO_ASSET,
-    MGRS_PATTERN,
-)
 from stactools.sentinel2.constants import (
     SENTINEL_CONSTELLATION,
     SENTINEL_INSTRUMENTS,
 )
 from stactools.sentinel2.mgrs import MgrsExtension
+
+from eopf_stac.constants import (
+    EOPF_PROVIDER,
+    LICENSE_PROVIDER,
+    SENTINEL_LICENSE,
+    SENTINEL_PROVIDER,
+)
+from eopf_stac.sentinel2.assets import (
+    get_aot_wvp_assets,
+    get_band_assets,
+    get_dataset_assets,
+    get_extra_assets,
+    get_scl_assets,
+    get_tci_assets,
+)
+from eopf_stac.sentinel2.constants import (
+    DATASET_PATHS_TO_ASSET,
+    L1C_BAND_ASSETS_TO_PATH,
+    L1C_TCI_ASSETS_TO_PATH,
+    L2A_AOT_WVP_ASSETS_TO_PATH,
+    L2A_BAND_ASSETS_TO_PATH,
+    L2A_SCL_ASSETS_TO_PATH,
+    L2A_TCI_ASSETS_TO_PATH,
+    MGRS_PATTERN,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -96,12 +100,26 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
 
     # -- Common metadata
 
-    sentinel_provider = SENTINEL_PROVIDER
     mission = properties.get("mission")
     if mission is not None:
-        sentinel_provider.url = os.path.join(SENTINEL_PROVIDER.url, mission.lower())
+        item.common_metadata.mission = mission
+    else:
+        item.common_metadata.mission = SENTINEL_CONSTELLATION.capitalize()
 
-    item.common_metadata.providers = [LICENSE_PROVIDER, sentinel_provider, EOPF_PROVIDER]
+    # sentinel_provider = SENTINEL_PROVIDER
+    # sentinel_provider.url = os.path.join(SENTINEL_PROVIDER.url, SENTINEL_CONSTELLATION.lower())
+    # item.common_metadata.providers = [LICENSE_PROVIDER, sentinel_provider, EOPF_PROVIDER]
+
+    item.common_metadata.providers = [
+        LICENSE_PROVIDER,
+        pystac.Provider(
+            name=SENTINEL_PROVIDER.name,
+            roles=SENTINEL_PROVIDER.roles,
+            url=os.path.join(SENTINEL_PROVIDER.url, item.common_metadata.mission.lower()),
+        ),
+        EOPF_PROVIDER,
+    ]
+
     item.common_metadata.constellation = SENTINEL_CONSTELLATION
     item.common_metadata.instruments = SENTINEL_INSTRUMENTS
     item.common_metadata.gsd = 10
@@ -253,20 +271,20 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
     logger.debug("Creating assets ...")
 
     if product_type == "S02MSIL1C":
-        band_assets = band_assets_from_dict(L1C_BANDS_PATH_TO_ASSET, asset_href_prefix, metadata, item)
+        band_assets = get_band_assets(L1C_BAND_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
         aot_wvp_assets = {}
         scl_assets = {}
-        tci_assets = tci_assets_from_def(L1C_TCI_PATHS_TO_ASSET, asset_href_prefix, metadata, item)
+        tci_assets = get_tci_assets(L1C_TCI_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
     elif product_type == "S02MSIL2A":
-        band_assets = band_assets_from_dict(L2A_BAND_PATHS_TO_ASSET, asset_href_prefix, metadata, item)
-        aot_wvp_assets = aot_wvp_assets_from_href(asset_href_prefix, metadata, item)
-        scl_assets = scl_assets_from_href(asset_href_prefix, metadata, item)
-        tci_assets = tci_assets_from_def(L2A_TCI_PATHS_TO_ASSET, asset_href_prefix, metadata, item)
+        band_assets = get_band_assets(L2A_BAND_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
+        aot_wvp_assets = get_aot_wvp_assets(L2A_AOT_WVP_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
+        scl_assets = get_scl_assets(L2A_SCL_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
+        tci_assets = get_tci_assets(L2A_TCI_ASSETS_TO_PATH, asset_href_prefix, metadata, item)
     else:
         raise ValueError(f"Invalid Sentinel-2 product type '{product_type}'")
 
-    dataset_assets = dataset_assets_from_href(asset_href_prefix, metadata, item)
-    extra_assets = extra_assets_from_href(asset_href_prefix)
+    dataset_assets = get_dataset_assets(DATASET_PATHS_TO_ASSET, asset_href_prefix, metadata, item)
+    extra_assets = get_extra_assets(asset_href_prefix, item)
 
     for key, asset in chain(
         band_assets.items(),
