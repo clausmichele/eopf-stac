@@ -1,10 +1,10 @@
 import os
+from copy import deepcopy
 
 import numpy as np
 import pystac
 from pystac.extensions.eo import Band
 from pystac.extensions.raster import RasterExtension
-from pystac.extensions.xarray_assets import AssetXarrayAssetsExtension
 from stactools.sentinel2.constants import (
     BANDS_TO_ASSET_NAME,
     SENTINEL_BANDS,
@@ -22,6 +22,8 @@ from eopf_stac.constants import (
 )
 from eopf_stac.sentinel2.constants import (
     ASSET_TO_DESCRIPTION,
+    BAND_ASSET_EXTRA_FIELDS,
+    DATASET_ASSET_EXTRA_FIELDS,
     DATASET_PATHS_TO_ASSET,
     L2A_AOT_WVP_ASSETS_TO_PATH,
     L2A_SCL_ASSETS_TO_PATH,
@@ -33,11 +35,11 @@ def get_band_item_assets(band_asset_defs: dict) -> dict[str, pystac.ItemAssetDef
     item_assets = {}
     for key in band_asset_defs.keys():
         band_key = band_key_from_asset_key(key)
-        extra_fields = {
-            "xarray:open_kwargs": {"consolidated": True, "chunks": {}, "engine": "eopf-zarr", "mode": "convenience"}
-        }
         item_assets[key] = create_item_asset(
-            asset_key=key, roles=[ROLE_DATA, ROLE_REFLECTANCE], band_keys=[band_key], extra_fields=extra_fields
+            asset_key=key,
+            roles=[ROLE_DATA, ROLE_REFLECTANCE],
+            band_keys=[band_key],
+            extra_fields=deepcopy(BAND_ASSET_EXTRA_FIELDS),
         )
     return item_assets
 
@@ -63,7 +65,9 @@ def get_band_assets(
 def get_aot_wvp_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
     item_assets = {}
     for key in L2A_AOT_WVP_ASSETS_TO_PATH.keys():
-        item_asset = create_item_asset(asset_key=key, roles=[ROLE_DATA], band_keys=[], extra_fields={})
+        item_asset = create_item_asset(
+            asset_key=key, roles=[ROLE_DATA], band_keys=[], extra_fields={}, title_with_resolution=False
+        )
         item_assets[key] = item_asset
     return item_assets
 
@@ -94,9 +98,12 @@ def get_aot_wvp_assets(
 def get_scl_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
     item_assets = {}
     for key in L2A_SCL_ASSETS_TO_PATH.keys():
-        extra_fields = {"xarray:open_kwargs": {"consolidated": False, "chunks": {}, "engine": "zarr"}}
         item_assets[key] = create_item_asset(
-            asset_key=key, roles=[ROLE_DATA, ROLE_DATASET], band_keys=[], extra_fields=extra_fields
+            asset_key=key,
+            roles=[ROLE_DATA],
+            band_keys=[],
+            extra_fields={},
+            title_with_resolution=False,
         )
     return item_assets
 
@@ -107,7 +114,8 @@ def get_scl_assets(scl_asset_defs: dict, asset_href: str, metadata: dict, item: 
     for key, item_asset in item_assets.items():
         href_suffix = scl_asset_defs[key]
         # SCL can be opened as zarr group / xarray dataset -> remove the 'scl' part of the path
-        asset = item_asset.create_asset(os.path.dirname(os.path.join(asset_href, href_suffix)))
+        # asset = item_asset.create_asset(os.path.dirname(os.path.join(asset_href, href_suffix)))
+        asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -126,7 +134,11 @@ def get_tci_item_assets(tci_asset_defs: dict) -> dict[str, pystac.ItemAssetDefin
     item_assets = {}
     for key in tci_asset_defs.keys():
         item_assets[key] = create_item_asset(
-            asset_key=key, roles=[ROLE_DATA, ROLE_REFLECTANCE], band_keys=["B04", "B03", "B02"], extra_fields={}
+            asset_key=key,
+            roles=[ROLE_DATA],
+            band_keys=["B04", "B03", "B02"],
+            extra_fields={},
+            title_with_resolution=False,
         )
     return item_assets
 
@@ -153,7 +165,6 @@ def get_tci_assets(tci_asset_defs: dict, asset_href: str, metadata: dict, item: 
 def get_dataset_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
     item_assets = {}
     for key in DATASET_PATHS_TO_ASSET.keys():
-        extra_fields = {"xarray:open_kwargs": {"consolidated": False, "chunks": {}, "engine": "zarr"}}
         band_keys = []
         if key == "SR_10m":
             band_keys = ["B02", "B03", "B04", "B08"]
@@ -166,7 +177,7 @@ def get_dataset_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
             asset_key=key,
             roles=[ROLE_DATA, ROLE_REFLECTANCE, ROLE_DATASET],
             band_keys=band_keys,
-            extra_fields=extra_fields,
+            extra_fields=deepcopy(DATASET_ASSET_EXTRA_FIELDS),
         )
     return item_assets
 
@@ -196,7 +207,6 @@ def get_extra_assets(asset_href: str, item: pystac.Item) -> dict[str, pystac.Ass
     metadata = get_item_asset_metadata().create_asset(os.path.join(asset_href, PRODUCT_METADATA_PATH))
     product = get_item_asset_product().create_asset(asset_href)
     product.set_owner(item)
-    AssetXarrayAssetsExtension.ext(product, add_if_missing=True)
     return {
         PRODUCT_METADATA_ASSET_KEY: metadata,
         PRODUCT_ASSET_KEY: product,
@@ -204,7 +214,11 @@ def get_extra_assets(asset_href: str, item: pystac.Item) -> dict[str, pystac.Ass
 
 
 def create_item_asset(
-    asset_key: str, roles: list[str], band_keys: list[str] = [], extra_fields: dict = {}
+    asset_key: str,
+    roles: list[str],
+    band_keys: list[str] = [],
+    extra_fields: dict = {},
+    title_with_resolution: bool = True,
 ) -> pystac.ItemAssetDefinition:
     gsd = unsuffixed_band_resolution(asset_key)
     band_key = band_key_from_asset_key(asset_key)
@@ -214,8 +228,19 @@ def create_item_asset(
         bands = get_bands_for_band_keys(band_keys)
         extra_fields["bands"] = bands
 
+    if "alternate" in extra_fields:
+        if "xarray" in extra_fields["alternate"]:
+            if "xarray:open_dataset_kwargs" in extra_fields["alternate"]["xarray"]:
+                open_dataset_kwargs = extra_fields["alternate"]["xarray"]["xarray:open_dataset_kwargs"]
+                open_dataset_kwargs["bands"] = band_keys
+                open_dataset_kwargs["spatial_res"] = int(gsd)
+
+    title = ASSET_TO_DESCRIPTION[band_key]
+    if title_with_resolution:
+        title = f"{title} - {gsd}m"
+
     return pystac.ItemAssetDefinition.create(
-        title=f"{ASSET_TO_DESCRIPTION[band_key]} - {gsd}m",
+        title=title,
         description=None,
         media_type=MEDIA_TYPE_ZARR,
         roles=roles,

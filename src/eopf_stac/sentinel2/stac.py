@@ -9,6 +9,7 @@ from pystac.extensions.grid import GridExtension
 from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.scientific import ItemScientificExtension
+from pystac.extensions.timestamps import TimestampsExtension
 from pystac.extensions.view import ViewExtension
 from pystac.utils import now_in_utc, str_to_datetime
 from stactools.sentinel2.constants import (
@@ -139,6 +140,10 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
     # TODO published?
 
     # -- Extensions
+
+    # Timestamps
+    ts_ext = TimestampsExtension.ext(item, add_if_missing=True)
+    ts_ext.apply(published=created_datetime)
 
     # Electro-Optical Extension
     eo = EOExtension.ext(item, add_if_missing=True)
