@@ -56,6 +56,14 @@ PRODUCT_ASSET_EXTRA_FIELDS: Final[dict] = {
     }
 }
 
+DATASET_ASSET_EXTRA_FIELDS: Final[dict] = {
+    "xarray:open_dataset_kwargs": {
+        "engine": "eopf-zarr",
+        "mode": "native",
+        "chunks": {},
+    }
+}
+
 
 def get_item_asset_metadata() -> ItemAssetDefinition:
     return ItemAssetDefinition.create(

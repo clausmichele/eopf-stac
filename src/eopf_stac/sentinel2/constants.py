@@ -1,6 +1,9 @@
 import re
+from copy import deepcopy
 from re import Pattern
 from typing import Final
+
+from eopf_stac.constants import DATASET_ASSET_EXTRA_FIELDS
 
 ROLE_REFLECTANCE = "reflectance"
 
@@ -84,12 +87,8 @@ DATASET_PATHS_TO_ASSET: Final[dict[str, str]] = {
     "SR_60m": "measurements/reflectance/r60m",
 }
 
-DATASET_ASSET_EXTRA_FIELDS: Final[dict] = {
-    "xarray:open_dataset_kwargs": {
-        "engine": "eopf-zarr",
-        "mode": "native",
-        "chunks": {},
-    }
+OTHER_ASSET_EXTRA_FIELDS: dict[str:dict] = {
+    "alternate": {"xarray": deepcopy(DATASET_ASSET_EXTRA_FIELDS)},
 }
 
 BAND_ASSET_EXTRA_FIELDS: dict[str:dict] = {

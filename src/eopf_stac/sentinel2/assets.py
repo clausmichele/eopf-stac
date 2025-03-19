@@ -11,6 +11,7 @@ from stactools.sentinel2.constants import (
 )
 
 from eopf_stac.constants import (
+    DATASET_ASSET_EXTRA_FIELDS,
     MEDIA_TYPE_ZARR,
     PRODUCT_ASSET_KEY,
     PRODUCT_METADATA_ASSET_KEY,
@@ -23,10 +24,10 @@ from eopf_stac.constants import (
 from eopf_stac.sentinel2.constants import (
     ASSET_TO_DESCRIPTION,
     BAND_ASSET_EXTRA_FIELDS,
-    DATASET_ASSET_EXTRA_FIELDS,
     DATASET_PATHS_TO_ASSET,
     L2A_AOT_WVP_ASSETS_TO_PATH,
     L2A_SCL_ASSETS_TO_PATH,
+    OTHER_ASSET_EXTRA_FIELDS,
     ROLE_REFLECTANCE,
 )
 
@@ -52,6 +53,7 @@ def get_band_assets(
     for key, item_asset in item_assets.items():
         href_suffix = band_asset_defs[key]
         asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
+        update_alternate_xarray_asset(asset=asset, asset_href=asset_href, href_suffix=href_suffix)
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -66,10 +68,21 @@ def get_aot_wvp_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
     item_assets = {}
     for key in L2A_AOT_WVP_ASSETS_TO_PATH.keys():
         item_asset = create_item_asset(
-            asset_key=key, roles=[ROLE_DATA], band_keys=[], extra_fields={}, title_with_resolution=False
+            asset_key=key,
+            roles=[ROLE_DATA],
+            band_keys=[],
+            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
+            title_with_resolution=False,
         )
         item_assets[key] = item_asset
     return item_assets
+
+
+def update_alternate_xarray_asset(asset: pystac.Asset, asset_href: str, href_suffix: str):
+    # set href of alternate xarray asset pointing to the dataset
+    alternate_asset = asset.extra_fields.get("alternate", {}).get("xarray", None)
+    if alternate_asset is not None:
+        alternate_asset["href"] = os.path.dirname(os.path.join(asset_href, href_suffix))
 
 
 def get_aot_wvp_assets(
@@ -80,6 +93,7 @@ def get_aot_wvp_assets(
     for key, item_asset in item_assets.items():
         href_suffix = aot_wvp_asset_defs[key]
         asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
+        update_alternate_xarray_asset(asset=asset, asset_href=asset_href, href_suffix=href_suffix)
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -102,7 +116,7 @@ def get_scl_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
             asset_key=key,
             roles=[ROLE_DATA],
             band_keys=[],
-            extra_fields={},
+            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
             title_with_resolution=False,
         )
     return item_assets
@@ -116,6 +130,7 @@ def get_scl_assets(scl_asset_defs: dict, asset_href: str, metadata: dict, item: 
         # SCL can be opened as zarr group / xarray dataset -> remove the 'scl' part of the path
         # asset = item_asset.create_asset(os.path.dirname(os.path.join(asset_href, href_suffix)))
         asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
+        update_alternate_xarray_asset(asset=asset, asset_href=asset_href, href_suffix=href_suffix)
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -137,7 +152,7 @@ def get_tci_item_assets(tci_asset_defs: dict) -> dict[str, pystac.ItemAssetDefin
             asset_key=key,
             roles=[ROLE_DATA],
             band_keys=["B04", "B03", "B02"],
-            extra_fields={},
+            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
             title_with_resolution=False,
         )
     return item_assets
@@ -149,6 +164,7 @@ def get_tci_assets(tci_asset_defs: dict, asset_href: str, metadata: dict, item: 
     for key, item_asset in item_assets.items():
         href_suffix = tci_asset_defs[key]
         asset = item_asset.create_asset(os.path.join(asset_href, href_suffix))
+        update_alternate_xarray_asset(asset=asset, asset_href=asset_href, href_suffix=href_suffix)
 
         attrs = metadata.get(f"{href_suffix}/.zattrs")
         if attrs:
@@ -232,8 +248,9 @@ def create_item_asset(
         if "xarray" in extra_fields["alternate"]:
             if "xarray:open_dataset_kwargs" in extra_fields["alternate"]["xarray"]:
                 open_dataset_kwargs = extra_fields["alternate"]["xarray"]["xarray:open_dataset_kwargs"]
-                open_dataset_kwargs["bands"] = band_keys
-                open_dataset_kwargs["spatial_res"] = int(gsd)
+                if len(band_keys) > 0 and band_key != "TCI":
+                    open_dataset_kwargs["bands"] = band_keys
+                    open_dataset_kwargs["spatial_res"] = int(gsd)
 
     title = ASSET_TO_DESCRIPTION[band_key]
     if title_with_resolution:
