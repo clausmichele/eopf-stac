@@ -107,10 +107,6 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
     else:
         item.common_metadata.mission = SENTINEL_CONSTELLATION.capitalize()
 
-    # sentinel_provider = SENTINEL_PROVIDER
-    # sentinel_provider.url = os.path.join(SENTINEL_PROVIDER.url, SENTINEL_CONSTELLATION.lower())
-    # item.common_metadata.providers = [LICENSE_PROVIDER, sentinel_provider, EOPF_PROVIDER]
-
     item.common_metadata.providers = [
         LICENSE_PROVIDER,
         pystac.Provider(

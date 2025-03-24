@@ -69,10 +69,9 @@ def main():
         validate_env(args.URL, args.dry_run, env=os.environ)
 
         item = create_item(eopf_href=args.URL)
+        logger.debug(json.dumps(item.to_dict(), indent=4))
         if not args.dry_run:
             item = register_item(item=item, stac_api_url=os.environ[ENV_STAC_API_URL])
-
-        logger.debug(json.dumps(item.to_dict(), indent=4))
 
     except Exception as e:
         logger.error(str(e))

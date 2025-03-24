@@ -14,6 +14,7 @@ from constants import (
     SUPPORTED_PRODUCT_TYPES_S3,
 )
 from pystac.utils import now_in_utc
+from sentinel1.stac import create_item as create_item_s1
 from sentinel2.stac import create_item as create_item_s2
 
 logger = logging.getLogger(__name__)
@@ -62,7 +63,7 @@ def create_item(eopf_href: str) -> pystac.Item:
     item = None
 
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:
-        pass
+        item = create_item_s1(metadata=metadata, asset_href_prefix=eopf_href)
     elif product_type in SUPPORTED_PRODUCT_TYPES_S2:
         item = create_item_s2(metadata=metadata, asset_href_prefix=eopf_href)
     elif product_type in SUPPORTED_PRODUCT_TYPES_S3:
