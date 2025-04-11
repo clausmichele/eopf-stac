@@ -4,6 +4,7 @@ from re import Pattern
 from typing import Final
 
 from eopf_stac.constants import DATASET_ASSET_EXTRA_FIELDS
+from eopf_stac.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
 ROLE_REFLECTANCE = "reflectance"
 
@@ -92,17 +93,7 @@ OTHER_ASSET_EXTRA_FIELDS: dict[str:dict] = {
 }
 
 BAND_ASSET_EXTRA_FIELDS: dict[str:dict] = {
-    "alternate": {
-        "xarray": {
-            "xarray:open_dataset_kwargs": {
-                "engine": "eopf-zarr",
-                "mode": "analysis",
-                "chunks": {},
-                "bands": None,
-                "spatial_res": None,
-            },
-        }
-    },
+    "alternate": {"xarray": {"xarray:open_dataset_kwargs": EopfXarrayBackendConfig(mode=OpMode.ANALYSIS).to_dict()}},
 }
 
 L1C_BAND_ASSETS_TO_PATH: Final[dict[str, str]] = {

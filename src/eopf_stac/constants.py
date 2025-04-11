@@ -6,6 +6,8 @@ from pystac.collection import ItemAssetDefinition
 from pystac.link import Link
 from pystac.provider import ProviderRole
 
+from eopf_stac.eopf_xarray import EopfXarrayBackendConfig, OpMode
+
 # S01SEWSLC S01SSMSLC S01SWVSLC S01SEWGRH S01SSMGRH S01SWVGRH S01SIWOCN S01SEWOCN
 SUPPORTED_PRODUCT_TYPES_S1 = ["S01SIWGRH", "S01SIWSLC", "S01SIWOCN"]
 SUPPORTED_PRODUCT_TYPES_S2 = ["S02MSIL1C", "S02MSIL2A"]
@@ -56,19 +58,11 @@ PRODUCT_METADATA_ASSET_KEY: Final[str] = "product_metadata"
 
 PRODUCT_ASSET_KEY: Final[str] = "product"
 PRODUCT_ASSET_EXTRA_FIELDS: Final[dict] = {
-    "xarray:open_datatree_kwargs": {
-        "engine": "eopf-zarr",
-        "mode": "native",
-        "chunks": {},
-    }
+    "xarray:open_datatree_kwargs": EopfXarrayBackendConfig(mode=OpMode.NATIVE).to_dict()
 }
 
 DATASET_ASSET_EXTRA_FIELDS: Final[dict] = {
-    "xarray:open_dataset_kwargs": {
-        "engine": "eopf-zarr",
-        "mode": "native",
-        "chunks": {},
-    }
+    "xarray:open_dataset_kwargs": EopfXarrayBackendConfig(mode=OpMode.NATIVE).to_dict()
 }
 
 
