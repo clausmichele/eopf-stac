@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from urllib.parse import urlparse
 
 import fsspec
 import pystac
@@ -33,12 +34,25 @@ def validate_metadata(metadata: dict) -> dict:
 
 
 def metadata_from_href(eopf_href: str) -> dict:
+    path = os.path.join(eopf_href, PRODUCT_METADATA_PATH)
     fs = fsspec.filesystem("file")
+
     if eopf_href.startswith("s3://"):
         fs = s3fs.S3FileSystem(anon=False, endpoint_url=os.environ["S3_ENDPOINT_URL"])
+    elif eopf_href.startswith("http"):
+        o = urlparse(eopf_href)
+        endpoint_url = f"{o.scheme}://{o.netloc}"
+        path = os.path.join(o.path, PRODUCT_METADATA_PATH)
+        fs = s3fs.S3FileSystem(anon=True, client_kwargs={"endpoint_url": endpoint_url})
+
+        # unregister handler to make boto3 work with CEPH
+        handlers = fs.s3.meta.events._emitter._handlers
+        handlers_to_unregister = handlers.prefix_search("before-parameter-build.s3")
+        handler_to_unregister = handlers_to_unregister[0]
+        fs.s3.meta.events._emitter.unregister("before-parameter-build.s3", handler_to_unregister)
 
     # -- open product metadata
-    f = fs.open(os.path.join(eopf_href, PRODUCT_METADATA_PATH), "rb")
+    f = fs.open(path, "rb")
     zmetadata = json.load(f)
 
     return validate_metadata(zmetadata)

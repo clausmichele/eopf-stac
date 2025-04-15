@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.0] - 2025-04-15
+
+### Added
+
+- Add support for HTTPS product URLs ([#5](https://github.com/EOPF-Sample-Service/eopf-stac/issues/5))
+- Add support for Sentinel 1 instrument modes `EW`, `SM`, `WV` and corresponding EOPF product types `S01SSMGRH`, `S01SEWGRH`, `S01SWVSLC`, `S01SSMSLC`, `S01SEWSLC`, `S01SEWOCN`, `S01SSMOCN`, `S01SWVOCN` ([#7](https://github.com/EOPF-Sample-Service/eopf-stac/issues/7))
+
 ## [0.7.1] - 2025-04-14
 
 ### Fixed

@@ -9,14 +9,14 @@ When started, it does the following:
 
 ## Usage
 
-The EOPF product must be referenced by an URL which must be provided as a command-line argument. Only `s3://` and `file://` URLs are supported. For debugging, a combination of the `--dry-run` and `--debug` option can be used to see the created STAC item in the logs without inserting it into a catalog.
+The EOPF product must be referenced by an URL which must be provided as a command-line argument. Only `http(s)://`, `s3://` and `file://` URLs are supported. For debugging, a combination of the `--dry-run` and `--debug` option can be used to see the created STAC item in the logs without inserting it into a catalog.
 
 ```bash
 $ python src/eopf_stac/main.py --help
 usage: eopf-stac.py [-h] [--dry-run] [--debug] URL
 
 positional arguments:
-  URL         Local file path or S3 URL to the EOPF product.
+  URL         Local file path or HTTP/S3 URL to the EOPF product.
 
 options:
   -h, --help  show this help message and exit
