@@ -178,3 +178,21 @@ S1_ASSET_KEYS_FOR_POLARIZATION: Final[dict[str, list[str]]] = {
     "HH": ["hh", "calibration-hh", "noise-hh"],
     "HV": ["hv", "calibration-hv", "noise-hv"],
 }
+
+S1_PRODUCT_TYPE_MAPPING: Final[dict[str, str]] = {
+    "S01SIWGRH": "IW_GRDH_1S",
+    "S01SSMGRH": "SM_GRDH_1S",
+    "S01SEWGRH": "EW_GRDH_1S",
+    "S01SIWSLC": "IW_SLC__1S",
+    "S01SWVSLC": "WV_SLC__1S",
+    "S01SSMSLC": "SM_SLC__1S",
+    "S01SEWSLC": "EW_SLC__1S",
+    "S01SIWOCN": "IW_OCN__2S",
+    "S01SEWOCN": "EW_OCN__2S",
+    "S01SSMOCN": "SM_OCN__2S",
+    "S01SWVOCN": "WV_OCN__2S",
+}
+
+S1_GRD_PRODUCT_TYPES: Final[list[str]] = ["S01SIWGRH", "S01SSMGRH", "S01SEWGRH"]
+S1_SLC_PRODUCT_TYPES: Final[list[str]] = ["S01SIWSLC", "S01SWVSLC", "S01SEWSLC", "S01SSMSLC"]
+S1_OCN_PRODUCT_TYPES: Final[list[str]] = ["S01SIWOCN", "S01SEWOCN", "S01SSMOCN", "S01SWVOCN"]

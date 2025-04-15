@@ -8,14 +8,33 @@ from pystac.provider import ProviderRole
 
 from eopf_stac.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
-# S01SEWSLC S01SSMSLC S01SWVSLC S01SEWGRH S01SSMGRH S01SWVGRH S01SIWOCN S01SEWOCN
-SUPPORTED_PRODUCT_TYPES_S1 = ["S01SIWGRH", "S01SIWSLC", "S01SIWOCN"]
+SUPPORTED_PRODUCT_TYPES_S1 = [
+    "S01SIWGRH",
+    "S01SSMGRH",
+    "S01SEWGRH",
+    "S01SIWSLC",
+    "S01SWVSLC",
+    "S01SSMSLC",
+    "S01SEWSLC",
+    "S01SIWOCN",
+    "S01SEWOCN",
+    "S01SSMOCN",
+    "S01SWVOCN",
+]
 SUPPORTED_PRODUCT_TYPES_S2 = ["S02MSIL1C", "S02MSIL2A"]
 SUPPORTED_PRODUCT_TYPES_S3 = []
 PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SIWGRH": "sentinel-1-l1-grd",
+    "S01SSMGRH": "sentinel-1-l1-grd",
+    "S01SEWGRH": "sentinel-1-l1-grd",
     "S01SIWSLC": "sentinel-1-l1-slc",
+    "S01SWVSLC": "sentinel-1-l1-slc",
+    "S01SSMSLC": "sentinel-1-l1-slc",
+    "S01SEWSLC": "sentinel-1-l1-slc",
     "S01SIWOCN": "sentinel-1-l2-ocn",
+    "S01SEWOCN": "sentinel-1-l2-ocn",
+    "S01SSMOCN": "sentinel-1-l2-ocn",
+    "S01SWVOCN": "sentinel-1-l2-ocn",
     "S02MSIL1C": "sentinel-2-l1c",
     "S02MSIL2A": "sentinel-2-l2a",
 }

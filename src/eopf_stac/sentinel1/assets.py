@@ -50,16 +50,18 @@ def create_slc_assets(asset_href_prefix: str, components: list[str]) -> dict[str
     return assets
 
 
-def create_ocn_assets(asset_href_prefix: str, components: list[str]) -> dict[str, pystac.Asset]:
+def create_ocn_assets(asset_href_prefix: str, components: list[str], instrument_mode: str) -> dict[str, pystac.Asset]:
     assets = {}
 
-    # Create assets for product components (osw, owi, rvl)
-    for comp_key, comp_name in components.items():
-        item_asset = S1_OCN_ASSETS[comp_key.upper()]
-        asset = item_asset.create_asset(
-            os.path.join(asset_href_prefix, comp_key, comp_name, S1_ASSET_KEY_TO_PATH[comp_key.upper()])
-        )
-        assets[comp_key] = asset
+    # For WV mode the measurements data set are one per vignette. Not creating assets for each burst at the moment.
+    if instrument_mode != "WV":
+        # Create assets for product components (osw, owi, rvl)
+        for comp_key, comp_name in components.items():
+            item_asset = S1_OCN_ASSETS[comp_key.upper()]
+            asset = item_asset.create_asset(
+                os.path.join(asset_href_prefix, comp_key, comp_name, S1_ASSET_KEY_TO_PATH[comp_key.upper()])
+            )
+            assets[comp_key] = asset
 
     # Create product and metadata assets
     assets[PRODUCT_ASSET_KEY] = get_item_asset_product().create_asset(asset_href_prefix)

@@ -16,6 +16,12 @@ from eopf_stac.constants import (
     SENTINEL_PROVIDER,
 )
 from eopf_stac.sentinel1.assets import create_grd_assets, create_ocn_assets, create_slc_assets
+from eopf_stac.sentinel1.constants import (
+    S1_GRD_PRODUCT_TYPES,
+    S1_OCN_PRODUCT_TYPES,
+    S1_PRODUCT_TYPE_MAPPING,
+    S1_SLC_PRODUCT_TYPES,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -271,16 +277,10 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
 
     # Reconstruct original identifier of SAFE product
     # workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/70
-    datatake = None
-    crc = None
-    for _, component_name in product_components.items():
-        parts = component_name.split("_")
-        datatake = parts[5]
-        crc = parts[4]
+    component_name = None
+    for _, name in product_components.items():
+        component_name = name
         break  # we need only one component_name
-
-    if product_type == "S01SIWOCN":
-        polarizations_value = ["VV", "VH"]
 
     item.id = construct_identifier_s1(
         product_type=product_type,
@@ -289,19 +289,20 @@ def create_item(metadata: dict, asset_href_prefix: str) -> pystac.Item:
         endTime=end_datetime_str,
         platform=platform,
         orbit=absolute_orbit,
-        datatake=datatake,
-        crc=crc,
+        component=component_name,
     )
 
     # -- Assets
     assets = {}
     logger.debug("Creating assets...")
-    if product_type == "S01SIWGRH":
+    if product_type in S1_GRD_PRODUCT_TYPES:
         assets = create_grd_assets(asset_href_prefix=asset_href_prefix, components=product_components)
-    elif product_type == "S01SIWSLC":
+    elif product_type in S1_SLC_PRODUCT_TYPES:
         assets = create_slc_assets(asset_href_prefix=asset_href_prefix, components=product_components)
-    elif product_type == "S01SIWOCN":
-        assets = create_ocn_assets(asset_href_prefix=asset_href_prefix, components=product_components)
+    elif product_type in S1_OCN_PRODUCT_TYPES:
+        assets = create_ocn_assets(
+            asset_href_prefix=asset_href_prefix, components=product_components, instrument_mode=eopf_instrument_mode
+        )
     else:
         raise ValueError(f"Unsupported Sentinel-1 product type '{product_type}'")
 
@@ -339,14 +340,17 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
     if stac_discovery_links:
         for component_name in stac_discovery_links:
             if isinstance(component_name, str):
-                if product_type == "S01SIWGRH":
+                if product_type in S1_GRD_PRODUCT_TYPES:
                     key = component_name.split("_")[6]
                     components[key] = component_name
-                elif product_type == "S01SIWSLC":
+                elif product_type in S1_SLC_PRODUCT_TYPES:
                     parts = component_name.split("_")
-                    key = f"{parts[6]}_{parts[7]}_{parts[8]}"
+                    if len(parts) > 7:
+                        key = f"{parts[6]}_{parts[7]}_{parts[8]}"
+                    else:
+                        key = parts[6]
                     components[key] = component_name
-                elif product_type == "S01SIWOCN":
+                elif product_type in S1_OCN_PRODUCT_TYPES:
                     key = component_name
                     for sub_component in (
                         metadata.get(f"{component_name.lower()}/.zattrs", {}).get("stac_discovery", {}).get("links", {})
@@ -360,43 +364,56 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
 
 
 def list_equals(actual, expected):
+    if len(actual) != len(expected):
+        return False
+
     return all([a == b for a, b in zip(actual, expected)])
 
 
-def construct_identifier_s1(
-    product_type,
-    polarization: list[str],
-    startTime,
-    endTime,
-    platform,
-    orbit,
-    datatake,
-    crc,
-):
+def construct_identifier_s1(product_type, polarization, startTime, endTime, platform, orbit, component):
     logger.debug("Re-creating S1 identifier from metadata...")
 
     mission = "S1"
-    product_type_out = ""
-    if product_type == "S01SIWGRH":
-        product_type_out = "IW_GRDH_1S"
-    elif product_type == "S01SIWSLC":
-        product_type_out = "IW_SLC__1S"
-    elif product_type == "S01SIWOCN":
-        product_type_out = "IW_OCN__2S"
+
+    product_type_out = S1_PRODUCT_TYPE_MAPPING.get(product_type)
+    if product_type_out is None:
+        raise ValueError(f"Unexpected product type: {product_type}")
+
+    datatake = None
+    crc = None
+    if component is not None and len(component) > 0:
+        parts = component.split("_")
+        if len(parts) >= 7:
+            crc = parts[4]
+            datatake = parts[5]
+            if polarization is None:
+                polarization = parts[6]
+        else:
+            raise ValueError(f"Unexpected format of component name: {component}")
     else:
-        raise ValueError("Product type cannot be empty")
+        raise ValueError("Name of component cannot be empty")
+
+    if polarization is None:
+        raise ValueError("Polarization cannot be empty")
 
     polarization_out = ""
-    if list_equals(polarization, ["VV", "VH"]):
-        polarization_out = "DV"
-    elif list_equals(polarization, ["HH", "HV"]):
-        polarization_out = "DH"
-    elif list_equals(polarization, ["SV"]):
-        polarization_out = "VV"
-    elif list_equals(polarization, ["SH"]):
-        polarization_out = "HH"
+    if product_type in S1_OCN_PRODUCT_TYPES:
+        if product_type == "S01SWVOCN":
+            polarization_out = "SV" if polarization == "VV" else "SH"
+        else:
+            polarization_out = "DV" if polarization == "VV" else "DH"
     else:
-        raise ValueError("Polarization cannot be empty")
+        if list_equals(polarization, ["VV", "VH"]):
+            polarization_out = "DV"
+        elif list_equals(polarization, ["HH", "HV"]):
+            polarization_out = "DH"
+        elif list_equals(polarization, ["VV"]):
+            polarization_out = "SV"
+        elif list_equals(polarization, ["HH"]):
+            polarization_out = "SH"
+
+    if len(polarization_out) == 0:
+        raise ValueError(f"Unexpectd polarization value: {polarization}")
 
     startTime_out = startTime[:19].replace("-", "").replace(":", "")
     endTime_out = endTime[:19].replace("-", "").replace(":", "")
