@@ -6,7 +6,7 @@ from pystac.collection import ItemAssetDefinition
 from pystac.link import Link
 from pystac.provider import ProviderRole
 
-from eopf_stac.eopf_xarray import EopfXarrayBackendConfig, OpMode
+from eopf_stac.common.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
 SUPPORTED_PRODUCT_TYPES_S1 = [
     "S01SIWGRH",
@@ -22,7 +22,16 @@ SUPPORTED_PRODUCT_TYPES_S1 = [
     "S01SWVOCN",
 ]
 SUPPORTED_PRODUCT_TYPES_S2 = ["S02MSIL1C", "S02MSIL2A"]
-SUPPORTED_PRODUCT_TYPES_S3 = []
+
+SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES = ["S03OLCEFR", "S03OLCERR"]
+SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES = ["S03OLCLFR"]
+SUPPORTED_PRODUCT_TYPES_S3 = SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES + SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES
+
+# Other Sentinen-3 product types to support
+# SRAL
+# SLSTR
+# SYN
+
 PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SIWGRH": "sentinel-1-l1-grd",
     "S01SSMGRH": "sentinel-1-l1-grd",
@@ -37,6 +46,9 @@ PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SWVOCN": "sentinel-1-l2-ocn",
     "S02MSIL1C": "sentinel-2-l1c",
     "S02MSIL2A": "sentinel-2-l2a",
+    "S03OLCEFR": "sentinel-3-olci-l1-efr",
+    "S03OLCERR": "sentinel-3-olci-l1-err",
+    "S03OLCLFR": "sentinel-3-olci-l2-lfr",
 }
 
 MEDIA_TYPE_ZARR = "application/vnd+zarr"
@@ -72,6 +84,13 @@ EOPF_PROVIDER: Final[pystac.Provider] = pystac.Provider(
     roles=[ProviderRole.HOST, ProviderRole.PROCESSOR],
 )
 
+THUMBNAIL_ASSET: pystac.Asset = pystac.Asset(
+    href="",
+    title="",
+    media_type="image/png",
+    roles=["thumbnail"],
+)
+
 PRODUCT_METADATA_PATH: Final[str] = ".zmetadata"
 PRODUCT_METADATA_ASSET_KEY: Final[str] = "product_metadata"
 
@@ -102,3 +121,8 @@ def get_item_asset_product():
         roles=[ROLE_DATA, ROLE_METADATA],
         extra_fields=deepcopy(PRODUCT_ASSET_EXTRA_FIELDS),
     )
+
+
+PRODUCT_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/product/v0.1.0/schema.json"
+PROCESSING_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+EOPF_EXTENSION_SCHEMA_URI = "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json"

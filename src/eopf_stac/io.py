@@ -7,33 +7,24 @@ import fsspec
 import pystac
 import requests
 import s3fs
-from constants import (
+from pystac.utils import now_in_utc
+
+from eopf_stac.common.constants import (
     PRODUCT_METADATA_PATH,
     PRODUCT_TYPE_TO_COLLECTION,
     SUPPORTED_PRODUCT_TYPES_S1,
     SUPPORTED_PRODUCT_TYPES_S2,
     SUPPORTED_PRODUCT_TYPES_S3,
 )
-from pystac.utils import now_in_utc
-from sentinel1.stac import create_item as create_item_s1
-from sentinel2.stac import create_item as create_item_s2
+from eopf_stac.common.stac import validate_metadata
+from eopf_stac.sentinel1.stac import create_item as create_item_s1
+from eopf_stac.sentinel2.stac import create_item as create_item_s2
+from eopf_stac.sentinel3.stac import create_item as create_item_s3
 
 logger = logging.getLogger(__name__)
 
 
-def validate_metadata(metadata: dict) -> dict:
-    stac_discovery = metadata.get("metadata", {}).get(".zattrs", {}).get("stac_discovery")
-    if stac_discovery is None:
-        raise ValueError("JSON object 'stac_discovery' not found in .zmetadata file")
-
-    other_metadata = metadata.get("metadata", {}).get(".zattrs", {}).get("other_metadata")
-    if other_metadata is None:
-        raise ValueError("JSON object 'other_metadata' not found in .zmetadata file")
-
-    return metadata["metadata"]
-
-
-def metadata_from_href(eopf_href: str) -> dict:
+def read_metadata(eopf_href: str) -> dict:
     path = os.path.join(eopf_href, PRODUCT_METADATA_PATH)
     fs = fsspec.filesystem("file")
 
@@ -58,12 +49,7 @@ def metadata_from_href(eopf_href: str) -> dict:
     return validate_metadata(zmetadata)
 
 
-def create_item(eopf_href: str) -> pystac.Item:
-    logger.info(f"Creating STAC item for {eopf_href} ...")
-
-    logger.debug("Opening .zmetadata ...")
-    metadata = metadata_from_href(eopf_href)
-
+def create_item(metadata: dict, eopf_href: str) -> pystac.Item:
     product_type = metadata[".zattrs"]["stac_discovery"].get("properties", {}).get("product:type")
     # workaround eopf-cpm 2.4.x
     if product_type is None:
@@ -75,13 +61,12 @@ def create_item(eopf_href: str) -> pystac.Item:
     logger.info(f"Product type is {product_type}")
 
     item = None
-
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:
-        item = create_item_s1(metadata=metadata, asset_href_prefix=eopf_href)
+        item = create_item_s1(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
     elif product_type in SUPPORTED_PRODUCT_TYPES_S2:
-        item = create_item_s2(metadata=metadata, asset_href_prefix=eopf_href)
+        item = create_item_s2(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
     elif product_type in SUPPORTED_PRODUCT_TYPES_S3:
-        pass
+        item = create_item_s3(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
     else:
         raise ValueError(f"The product type '{product_type}' is not supported")
 

@@ -10,7 +10,7 @@ from stactools.sentinel2.constants import (
     SENTINEL_BANDS,
 )
 
-from eopf_stac.constants import (
+from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
     MEDIA_TYPE_ZARR,
     PRODUCT_ASSET_KEY,
