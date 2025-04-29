@@ -2,7 +2,7 @@ import os
 
 import pystac
 
-from eopf_stac.constants import (
+from eopf_stac.common.constants import (
     PRODUCT_ASSET_KEY,
     PRODUCT_METADATA_ASSET_KEY,
     PRODUCT_METADATA_PATH,

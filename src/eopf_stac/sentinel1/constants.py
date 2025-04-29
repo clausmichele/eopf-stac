@@ -4,7 +4,7 @@ from typing import Final
 import pystac
 from pystac.item_assets import ItemAssetDefinition
 
-from eopf_stac.constants import (
+from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
     PRODUCT_ASSET_EXTRA_FIELDS,
     PRODUCT_ASSET_KEY,
@@ -16,8 +16,7 @@ from eopf_stac.constants import (
     get_item_asset_product,
 )
 
-ASSET_TO_DESCRIPTION: Final[dict[str, str]] = {}
-
+# TODO change asset key to lower
 S1_OCN_ASSETS: dict[str, ItemAssetDefinition] = {
     "OSW": ItemAssetDefinition.create(
         title="Ocean Swell spectra",

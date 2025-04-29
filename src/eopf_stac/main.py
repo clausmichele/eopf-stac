@@ -4,7 +4,7 @@ import logging
 import os
 from sys import exit
 
-from eopf import create_item, register_item
+from eopf_stac.io import create_item, read_metadata, register_item
 
 logger = logging.getLogger(__name__)
 
@@ -68,8 +68,13 @@ def main():
     try:
         validate_env(args.URL, args.dry_run, env=os.environ)
 
-        item = create_item(eopf_href=args.URL)
+        logger.debug("Opening metadata file ...")
+        metadata = read_metadata(args.URL)
+
+        logger.info(f"Creating STAC item for {args.URL} ...")
+        item = create_item(metadata=metadata, eopf_href=args.URL)
         logger.debug(json.dumps(item.to_dict(), indent=4))
+
         if not args.dry_run:
             item = register_item(item=item, stac_api_url=os.environ[ENV_STAC_API_URL])
 
