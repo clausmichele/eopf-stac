@@ -1,0 +1,5650 @@
+{
+    "metadata": {
+        ".zattrs": {
+            "other_metadata": {
+                "eopf_category": "eocontainer",
+                "history": [
+                    {
+                        "output": "Downlinked Stream",
+                        "processingTime": "2025-03-21T06:34:36.146879",
+                        "processor": null,
+                        "type": "Raw Data"
+                    },
+                    {
+                        "inputs": {
+                            "Applicable Document1": "S-1 Core PDGS S-1 Level-0 Product Format Specifications S1PD.SP.00110.ASTR",
+                            "Applicable Document2": "Sentinel-1 SAR Space Packet Protocol Data Unit S1-IF-ASD-PL-0007",
+                            "Raw Data": "Downlinked Stream"
+                        },
+                        "output": "Unknown",
+                        "processingTime": "2025-03-21T06:51:25.384778",
+                        "processor": null,
+                        "type": "Raw Data"
+                    },
+                    {
+                        "output": "Downlinked Stream",
+                        "processingTime": "2025-03-21T06:35:03.309125",
+                        "processor": null,
+                        "type": "Raw Data"
+                    },
+                    {
+                        "inputs": {
+                            "Applicable Document1": "S-1 Core PDGS S-1 Level-0 Product Format Specifications S1PD.SP.00110.ASTR",
+                            "Applicable Document2": "Sentinel-1 SAR Space Packet Protocol Data Unit S1-IF-ASD-PL-0007",
+                            "Raw Data": "Downlinked Stream"
+                        },
+                        "output": "Unknown",
+                        "processingTime": "2025-03-21T06:54:50.450654",
+                        "processor": null,
+                        "type": "Raw Data"
+                    },
+                    {
+                        "inputs": {
+                            "Applicable Document1": "S-1 Core PDGS S-1 Level-0 Product Format Specifications S1PD.SP.00110.ASTR",
+                            "Applicable Document2": "Sentinel-1 SAR Space Packet Protocol Data Unit S1-IF-ASD-PL-0007",
+                            "Raw Data1": "Unknown",
+                            "Raw Data2": "Unknown"
+                        },
+                        "output": "/data/CDP/production//2434010/S1A_IW_RAW__0SDV_20250321T063152_20250321T063225_058399_0738CE_4EAF.SAFE",
+                        "processingCentre": "S1A-PS, ESA",
+                        "processingTime": "2025-03-21T06:57:05.826063",
+                        "processor": "",
+                        "type": "Level-0 Product"
+                    },
+                    {
+                        "inputs": {
+                            "AUX_CAL": "/data/CDP/production//2434010/S1A_AUX_CAL_V20190228T092500_G20240327T102320.SAFE",
+                            "AUX_INS": "/data/CDP/production//2434010/S1A_AUX_INS_V20231201T000000_G20250116T092837.SAFE",
+                            "AUX_PP1": "/data/CDP/production//2434010/S1A_AUX_PP1_V20190228T092500_G20241125T134138.SAFE",
+                            "AUX_PRE": "/data/CDP/production//2434010/S1A_OPER_AUX_PREORB_OPOD_20250321T045715_V20250321T041753_20250321T105253.EOF",
+                            "Level-0 Annotation Product": "/data/CDP/production//2434010/S1A_IW_RAW__0ADV_20250321T062602_20250321T063840_058399_0738CE_842C.SAFE",
+                            "Level-0 Calibration Product": "/data/CDP/production//2434010/S1A_IW_RAW__0CDV_20250321T062602_20250321T063840_058399_0738CE_4203.SAFE",
+                            "Level-0 Noise Product": "/data/CDP/production//2434010/S1A_IW_RAW__0NDV_20250321T062602_20250321T063840_058399_0738CE_BB4A.SAFE",
+                            "Level-0 Product": "/data/CDP/production//2434010/S1A_IW_RAW__0SDV_20250321T063152_20250321T063225_058399_0738CE_4EAF.SAFE",
+                            "product definition": "Sentinel-1 Product Definition (S1-RS-MDA-52-7440) release 2/7",
+                            "product specification": "Sentinel-1 Product Specification (S1-RS-MDA-52-7441) release 3/14"
+                        },
+                        "output": "S1A_IW_SL2__1_DV_20250321T063154_20250321T063226_058399_0738CE_E4CE.SAFE",
+                        "processingCentre": "S1A-PS, ESA",
+                        "processingTime": "2025-03-21T07:23:29.000000",
+                        "processor": "Sentinel-1 IPF",
+                        "type": "Level-1 Intermediate SLC Product",
+                        "version": "003.91"
+                    },
+                    {
+                        "inputs": {
+                            "Level-1 Intermediate SLC Product": "S1A_IW_SL2__1_DV_20250321T063154_20250321T063226_058399_0738CE_E4CE.SAFE"
+                        },
+                        "output": "S1A_IW_GR2__1_DV_20250321T063156_20250321T063221_058399_0738CE_8AE8.SAFE",
+                        "processingCentre": "S1A-PS, ESA",
+                        "processingTime": "2025-03-21T07:24:50.000000",
+                        "processor": "Sentinel-1 IPF",
+                        "type": "Level-1 Intermediate GRD Product",
+                        "version": "003.91"
+                    },
+                    {
+                        "inputs": {
+                            "AUX_ICE": "S1__AUX_ICE_V20250320T120000_G20250321T043438.SAFE",
+                            "AUX_PP2": "S1A_AUX_PP2_V20190228T092500_G20241125T134618.SAFE",
+                            "AUX_WAV": "S1__AUX_WAV_V20250321T060000_G20250318T043415.SAFE",
+                            "AUX_WND": "S1__AUX_WND_V20250321T070000_G20250321T054830.SAFE",
+                            "Level-1 Intermediate GRD Product": "S1A_IW_GR2__1_DV_20250321T063156_20250321T063221_058399_0738CE_8AE8.SAFE"
+                        },
+                        "output": "",
+                        "processingCentre": "S1A-PS, ESA",
+                        "processingTime": "2025-03-21T07:31:12.061723",
+                        "processor": "Sentinel-1 IPF",
+                        "type": "L2",
+                        "version": "003.91"
+                    }
+                ]
+            },
+            "stac_discovery": {
+                "assets": {},
+                "bbox": [
+                    -2.673269,
+                    49.712505,
+                    -6.79871,
+                    51.620117
+                ],
+                "geometry": {
+                    "coordinates": [
+                        [
+                            [
+                                -3.151751,
+                                49.712505
+                            ],
+                            [
+                                -6.79871,
+                                50.124348
+                            ],
+                            [
+                                -6.43738,
+                                51.620117
+                            ],
+                            [
+                                -2.673269,
+                                51.206413
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                },
+                "id": "SAR Standard L2 Product",
+                "links": [
+                    {
+                        "href": "./.zattrs.json",
+                        "rel": "self",
+                        "type": "application/json"
+                    },
+                    "osw",
+                    "owi",
+                    "rvl"
+                ],
+                "properties": {
+                    "constellation": "sentinel-1",
+                    "created": "2025-03-21T07:31:12.061723Z",
+                    "datetime": "null",
+                    "end_datetime": "2025-03-21T06:32:21.673897Z",
+                    "eopf:datatake_id": "473294",
+                    "eopf:instrument_mode": "IW",
+                    "instrument": "sar",
+                    "platform": "sentinel-1a",
+                    "processing:expression": "systematic",
+                    "processing:software": {
+                        "Sentinel-1 IPF": "003.91"
+                    },
+                    "product:timeliness": "PT3H",
+                    "product:timeliness_category": "NRT-3h",
+                    "product:type": "S01SIWOCN",
+                    "sat:absolute_orbit": 58399,
+                    "sat:orbit_state": "descending",
+                    "sat:relative_orbit": 52,
+                    "start_datetime": "2025-03-21T06:31:56.675155Z"
+                },
+                "stac_extensions": [
+                    "https://stac-extensions.github.io/eopf/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/product/v0.1.0/schema.json",
+                    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+                    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+                ],
+                "stac_version": "1.0.0",
+                "type": "Feature"
+            }
+        },
+        ".zgroup": {
+            "zarr_format": 2
+        },
+        "osw/.zattrs": {
+            "other_metadata": {
+                "eopf_category": "eocontainer"
+            },
+            "stac_discovery": {
+                "links": [
+                    "S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV"
+                ],
+                "properties": {
+                    "product:type": null
+                }
+            }
+        },
+        "osw/.zgroup": {
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zattrs": {
+            "other_metadata": {
+                "algorithm_version": "S-1 OSW rev 1/7",
+                "azimuth_sampling_freq": 0.0,
+                "bathymetry_source": "GEBCO",
+                "clm_source": "OpenStreetMap",
+                "eopf_category": "eoproduct",
+                "gmf": "CMOD5n",
+                "ground_velocity": 0.0,
+                "history": "MISSING",
+                "l2rp_version": "Product prototype",
+                "mission_phase": "Operational",
+                "noise_correction": "",
+                "osw_status": "missing",
+                "polarisation": "VV",
+                "polarisation_ratio": "Identity",
+                "prf": 486.48631029955294,
+                "processing_center": "MTI",
+                "processing_start_time": "2025-03-21T07:24:59.429825Z",
+                "radar_frequency": 0.0,
+                "radar_sampling_freq": 0.0,
+                "statevector_acc": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "statevector_pos": [
+                    4604165.182499,
+                    154214.730634,
+                    5361446.069876
+                ],
+                "statevector_utc": "21-MAR-2025 06:32:12.577832",
+                "statevector_vel": [
+                    5627.162232,
+                    -1789.190409,
+                    -4769.010433
+                ],
+                "title": "'Sentinel-1 OCN OSW Product'",
+                "wind_source": "ECMWF"
+            },
+            "stac_discovery": {
+                "assets": {},
+                "bbox": [
+                    -2.673269,
+                    49.712505,
+                    -6.79871,
+                    51.620117
+                ],
+                "geometry": {
+                    "coordinates": [
+                        [
+                            [
+                                -3.151751,
+                                49.712505
+                            ],
+                            [
+                                -6.79871,
+                                50.124348
+                            ],
+                            [
+                                -6.43738,
+                                51.620117
+                            ],
+                            [
+                                -2.673269,
+                                51.206413
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                },
+                "id": "SAR Standard L2 Product",
+                "links": [
+                    {
+                        "href": "./.zattrs.json",
+                        "rel": "self",
+                        "type": "application/json"
+                    },
+                    "osw",
+                    "owi",
+                    "rvl"
+                ],
+                "properties": {
+                    "processing:version": "004.00",
+                    "product:type": "S01SIWOCN"
+                },
+                "stac_extensions": [
+                    "https://stac-extensions.github.io/eopf/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/product/v0.1.0/schema.json",
+                    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+                    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+                ],
+                "stac_version": "1.0.0",
+                "type": "Feature"
+            }
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zgroup": {
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zattrs": {},
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zgroup": {
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ambiguity_factor/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ambiguity_factor/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "ambiguity factor measuring the ability to estimate wave propagation direction from the sign of the imaginary part of the cross spectra",
+                "short_name": "osw_ambiguity_factor",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_direction/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_direction/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "ECMWF wind direction (meteorological convention = clockwise direction from where the wind comes respect to north)",
+                "short_name": "osw_auxiliary_wind_direction",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_speed/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_speed/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "ECMWF wind speed",
+                "short_name": "osw_auxiliary_wind_speed",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_cutoff/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_cutoff/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "azimuth cut-off wavelength, the shortest wavelength in the azimuth direction that is resolved in the swell wave spectra; the cut-off wavelength in the azimuth direction is computed from the imagette cross-spectra; the spectral resolution is derived from this parameter",
+                "short_name": "osw_azimuth_cutoff",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "azimuth size of the estimation area",
+                "short_name": "osw_azimuth_size",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size_slc/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size_slc/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "Size of SLC swath over Azimuth dimension",
+                "short_name": "osw_azimuth_size_slc",
+                "units": "pixels"
+            },
+            "coordinates": "latitude longitude",
+            "units": "pixels"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/cartesian_spectra_imaginary/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/cartesian_spectra_imaginary/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "lag",
+                "ky",
+                "kx"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude",
+                    "kx",
+                    "ky",
+                    "jx",
+                    "jy"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "lag",
+                    "ky",
+                    "kx"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "imaginary part of half cartesian cross-spectra between the different sub-views: zero time lag; 1rst time lag; 2nd time lag",
+                "short_name": "cartesian_spectra_imaginary",
+                "units": "m^4"
+            },
+            "coordinates": "jx jy latitude longitude",
+            "units": "m^4"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/cartesian_spectra_real/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/cartesian_spectra_real/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "lag",
+                "ky",
+                "kx"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude",
+                    "kx",
+                    "ky",
+                    "jx",
+                    "jy"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "lag",
+                    "ky",
+                    "kx"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "real part of half cartesian cross-spectra between the different sub-views: zero time lag; 1rst time lag; 2nd time lag",
+                "short_name": "cartesian_spectra_real",
+                "units": "m^4"
+            },
+            "coordinates": "jx jy latitude longitude",
+            "units": "m^4"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/clutter_noise_cross_covariance_spectra/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/clutter_noise_cross_covariance_spectra/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "lag"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "lag"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "Estimated clutter noise levels of the cross-covariance spectra",
+                "short_name": "osw_clutter_noise_cross_covariance_spectra",
+                "units": ""
+            },
+            "coordinates": "latitude longitude",
+            "units": ""
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/clutter_noise_cross_spectra/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/clutter_noise_cross_spectra/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "lag"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "lag"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "Estimated clutter noise levels on cross spectra from which low frequency signal is removed",
+                "short_name": "osw_clutter_noise_cross_spectra",
+                "units": ""
+            },
+            "coordinates": "latitude longitude",
+            "units": ""
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/depth/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/depth/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "water depth from auxiliary data set",
+                "short_name": "osw_depth",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ground_range_size/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ground_range_size/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "Ground range size of the estimation area",
+                "short_name": "osw_ground_range_size",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "local northing angle (azimuth from north)",
+                "short_name": "osw_heading",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "radar incidence angle to the center of the wave cell",
+                "short_name": "osw_incidence_angle",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/intensity/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/intensity/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "input SLC image intensity estimated within each wave cell",
+                "short_name": "osw_intensity",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/jx/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/jx/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "kx"
+            ],
+            "dimensions": [
+                "kx"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "normalised jacobian array in range direction describing the non-linear resampling transformation for the cartesian cross-spectra, half the array is provided corresponding to positive frequencies, it is normalized by osw_ground_range_size and has to be divided by this later in order to get the actual jacobian vector for the given imagette",
+            "units": "m/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/jy/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/jy/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "ky"
+            ],
+            "dimensions": [
+                "ky"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "normalised jacobian array in azimuth direction describing the non-linear resampling transformation for the cartesian cross-spectra, half the array is provided corresponding to positive frequencies, it is normalized by osw_azimuth_size and has to be divided by this later in order to get the actual jacobian vector for the given imagette",
+            "units": "m/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/k/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/k/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "wavenumber_binsize"
+            ],
+            "dimensions": [
+                "wavenumber_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of logarithmically spaced wavenumbers for the ocean swell wave spectra",
+            "units": "rad/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/kurtosis/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/kurtosis/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "kurtosis of the input SLC image estimated within each wave cell",
+                "short_name": "osw_kurtosis",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/kx/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/kx/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "kx"
+            ],
+            "dimensions": [
+                "kx"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "normalised positive frequencies array of the cartesian cross-spectra in range direction, it is normalized by osw_ground_range_size and has to be divided by this later in order to get the actual spatial frequency vector for the given imagette",
+            "units": "m/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ky/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ky/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "ky"
+            ],
+            "dimensions": [
+                "ky"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "normalised positive frequencies array of the cartesian cross-spectra in azimuth direction, it is normalized by osw_azimuth_size and has to be divided by this later in order to get the actual spatial frequency vector for the given imagette",
+            "units": "m/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_coverage/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_coverage/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "percentage of land coverage within the cell",
+                "short_name": "osw_land_coverage",
+                "units": "%",
+                "valid_max": 100.0,
+                "valid_min": 0.0
+            },
+            "coordinates": "latitude longitude",
+            "units": "%",
+            "valid_max": 100.0,
+            "valid_min": 0.0
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_flag/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_flag/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<b1",
+                "flag_meanings": "no_land land",
+                "flag_values": "[false true]",
+                "long_name": "land flag : true if presence of more than 10% of land coverage, false otherwise",
+                "short_name": "osw_land_flag"
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "no_land land",
+            "flag_values": "[false true]"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wave cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wave cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/look_separation_time/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/look_separation_time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "separation time between inner and outer looks",
+                "short_name": "osw_look_separation_time",
+                "units": "s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "s"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/non_linear_spectral_width/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/non_linear_spectral_width/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "non-linear inverse spectral width describing non-linear spectral cut-off computed from the cross-spectra",
+                "short_name": "osw_non_linear_spectral_width",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/normalised_variance/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/normalised_variance/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "variance of the input SLC image normalized by the square of the mean intensity estimated within each wave cell.",
+                "short_name": "osw_slc_nv",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "normalized radar cross section of the imagette, normalized to the area on ground",
+                "short_name": "osw_nrcs",
+                "units": "dB"
+            },
+            "coordinates": "latitude longitude",
+            "units": "dB"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_denoised/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_denoised/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "denoised normalized radar cross section",
+                "short_name": "osw_nrcs_denoised",
+                "units": "dB"
+            },
+            "coordinates": "latitude longitude",
+            "units": "dB"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/phi/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/phi/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "angular_binsize"
+            ],
+            "dimensions": [
+                "angular_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of equidistantly spaced directional angles for the ocean swell wave spectra",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polar_spectrum/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polar_spectrum/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize",
+                "wavenumber_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "k",
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize",
+                    "wavenumber_binsize"
+                ],
+                "dtype": "<f4",
+                "long_name": "two-dimensional representation of the ocean swell waveheight spectrum given on a log-polar grid of wavenumber [rad/m] and angle [degrees]",
+                "short_name": "osw_polar_spectrum",
+                "units": "m^4"
+            },
+            "coordinates": "k latitude longitude phi",
+            "units": "m^4"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polar_spectrum_normalised_variance/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polar_spectrum_normalised_variance/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize",
+                "wavenumber_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "k",
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize",
+                    "wavenumber_binsize"
+                ],
+                "dtype": "<f4",
+                "long_name": "two-dimensional representation of the normalized variance of the ocean swell waveheight spectrum given on a log-polar grid of wavenumber [rad/m] and angle [degrees], it is estimated as the wave spectra variance among the periodograms within the overall image and normalized by the mean wave spectrum",
+                "short_name": "osw_polar_spectrum_nv",
+                "units": "1"
+            },
+            "coordinates": "k latitude longitude phi",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/range_cutoff/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/range_cutoff/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "range cut-off wavelength, the shortest wavelength in range direction that can be resolved in the swell wave spectra; it is computed from the slant range resolution (or range bandwidth) and the local incidence angle",
+                "short_name": "osw_range_cutoff",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/range_size_slc/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/range_size_slc/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "ground range size of the estimation area",
+                "short_name": "osw_range_size_slc",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/skewness/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/skewness/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "skewness of the input SLC image estimated within each wave cell",
+                "short_name": "osw_skewness",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/spectrum_resolution/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/spectrum_resolution/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize"
+                ],
+                "dtype": "<f4",
+                "long_name": "azimuth cut-off wavelength as function of wave direction; the spectral resolution gives the shortest ocean wavelength that can be detected; this depends on the sea state and the wave direction relative to azimuth; the vector length is equal to the number of directional bins; in range, the theoretical limit is given by the range bandwidth, and does not depend on the sea state",
+                "short_name": "osw_spec_res",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude phi",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/wind_direction/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/wind_direction/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "wind direction (meteorological convention = clockwise direction from where the wind comes respect to North)",
+                "short_name": "osw_wind_direction",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/wind_speed/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/wind_speed/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "wind speed used for wave spectral retrieval (this value is derived from the NRCS)",
+                "short_name": "osw_wind_speed",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zattrs": {},
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zgroup": {
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/hs/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/hs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "significant wave height computed from the most energetic wave partitions of the swell wave spectra",
+                "short_name": "osw_hs",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/hs_normalised_variance/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/hs_normalised_variance/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "value of the ocean swell spectrum normalized variance computed for the most energetic wave partitions of the swell wave spectra, weighted by the spectral energy",
+                "short_name": "osw_hs_nv",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/k/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/k/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "wavenumber_binsize"
+            ],
+            "dimensions": [
+                "wavenumber_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of logarithmically spaced wavenumbers for the ocean swell wave spectra",
+            "units": "rad/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wave cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wave cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/partitions/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": -128,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/partitions/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize",
+                "wavenumber_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "k",
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize",
+                    "wavenumber_binsize"
+                ],
+                "dtype": "<f4",
+                "fill_value": -128,
+                "long_name": "total significant wave height",
+                "short_name": "osw_partitions",
+                "units": "1"
+            },
+            "coordinates": "k latitude longitude phi",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/phi/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/phi/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "angular_binsize"
+            ],
+            "dimensions": [
+                "angular_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of equidistantly spaced directional angles for the ocean swell wave spectra",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/total_hs/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/total_hs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "total significant wave height",
+                "short_name": "osw_total_hs",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/total_hs_standard_deviation/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/total_hs_standard_deviation/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "standard deviation of total significant wave height",
+                "short_name": "osw_total_hs_standard_deviation",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_age/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_age/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "parameter that describes the state of development of the wind sea component of the wave spectra",
+                "short_name": "osw_wave_age",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_direction/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_direction/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "dominant wave direction of the swell wave spectrum for each wave partition (with respect to North)",
+                "short_name": "osw_wave_direction",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_length/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wave_length/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "dominant wave length of the swell wave spectrum for each wave partition",
+                "short_name": "osw_wave_length",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_sea_hs/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_sea_hs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "significant wave height for the wind sea part of the total wave height spectrum, computed from the wind speed and the inverse wave age",
+                "short_name": "osw_wind_sea_hs",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zattrs": {},
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zgroup": {
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/i_confidence/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": 0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/i_confidence/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<b1",
+                "fill_value": false,
+                "flag_meanings": "resolved ambiguous",
+                "flag_values": "[false true]",
+                "long_name": "confidence flag for wave direction resolution, false if the wave direction is resolved and true if there is a 180-degree ambiguity in the wave direction",
+                "short_name": "osw_i_confidence"
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "resolved ambiguous",
+            "flag_values": "[false true]"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/k/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/k/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "wavenumber_binsize"
+            ],
+            "dimensions": [
+                "wavenumber_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of logarithmically spaced wavenumbers for the ocean swell wave spectra",
+            "units": "rad/m"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wave cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wave cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/partition_quality_flag/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/partition_quality_flag/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "partition"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "partition"
+                ],
+                "dtype": "<u1",
+                "flag_meanings": "excellent good fair low bad",
+                "flag_values": "[0 1 2 3 4]",
+                "long_name": "quality flag for the integral parameters of each partition",
+                "short_name": "osw_partition_quality_flag",
+                "valid_max": 4,
+                "valid_min": 0
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "excellent good fair low bad",
+            "flag_values": "[0 1 2 3 4]",
+            "valid_max": 4,
+            "valid_min": 0
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/phi/.zarray": {
+            "chunks": [
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/phi/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "angular_binsize"
+            ],
+            "dimensions": [
+                "angular_binsize"
+            ],
+            "dtype": "<f4",
+            "long_name": "array of equidistantly spaced directional angles for the ocean swell wave spectra",
+            "units": "degrees"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_cross_spectra_imaginary_part/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_cross_spectra_imaginary_part/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize",
+                "wavenumber_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "k",
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize",
+                    "wavenumber_binsize"
+                ],
+                "dtype": "<f4",
+                "long_name": "imaginary part of quality image cross spectra given on a log-polar grid of wavenumber [rad/m] and angle [degrees]",
+                "short_name": "osw_quality_cross_spectra_imaginary",
+                "units": "(m/rad)^2"
+            },
+            "coordinates": "k latitude longitude phi",
+            "units": "(m/rad)^2"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_cross_spectra_real_part/.zarray": {
+            "chunks": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_cross_spectra_real_part/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "angular_binsize",
+                "wavenumber_binsize"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "k",
+                    "phi",
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "angular_binsize",
+                    "wavenumber_binsize"
+                ],
+                "dtype": "<f4",
+                "long_name": "real part of quality image cross spectra given on a log-polar grid of wavenumber [rad/m] and angle [degrees]",
+                "short_name": "osw_quality_cross_spectra_real",
+                "units": "(m/rad)^2"
+            },
+            "coordinates": "k latitude longitude phi",
+            "units": "(m/rad)^2"
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_flag/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/quality_flag/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<u1",
+                "flag_meanings": "good fair low bad",
+                "flag_values": "[0 1 2 3]",
+                "long_name": "final quality flag of the directional swell spectrum",
+                "short_name": "osw_quality_flag",
+                "valid_max": 3,
+                "valid_min": 0
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "good fair low bad",
+            "flag_values": "[0 1 2 3]",
+            "valid_max": 3,
+            "valid_min": 0
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/snr/.zarray": {
+            "chunks": [
+                1,
+                1
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                1,
+                1
+            ],
+            "zarr_format": 2
+        },
+        "osw/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/snr/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "signal-to-noise ratio of cross spectra",
+                "short_name": "osw_snr",
+                "units": "dB"
+            },
+            "coordinates": "latitude longitude",
+            "units": "dB"
+        },
+        "owi/.zattrs": {
+            "other_metadata": {
+                "eopf_category": "eocontainer"
+            },
+            "stac_discovery": {
+                "links": [
+                    "S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV"
+                ],
+                "properties": {
+                    "product:type": null
+                }
+            }
+        },
+        "owi/.zgroup": {
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zattrs": {
+            "other_metadata": {
+                "algorithm_version": "S-1 OWI rev 2/2",
+                "azimuth_sampling_freq": 0.0,
+                "clm_source": "OpenStreetMap",
+                "eopf_category": "eoproduct",
+                "gmf": "CMOD5n",
+                "ground_velocity": 0.0,
+                "history": "MISSING",
+                "ice_source": "EUMETSAT OSI SAF",
+                "l2rp_version": "Product prototype",
+                "mission_phase": "Operational",
+                "noise_correction": "True",
+                "owi_status": "nominal",
+                "polarisation": "VV",
+                "polarisation_ratio": "Identity",
+                "prf": 486.48631029955294,
+                "processing_center": "MTI",
+                "processing_start_time": "2025-03-21T07:24:59.429825Z",
+                "radar_frequency": 0.0,
+                "radar_sampling_freq": 0.0,
+                "statevector_acc": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "statevector_pos": [
+                    4604165.182499,
+                    154214.730634,
+                    5361446.069876
+                ],
+                "statevector_utc": "21-MAR-2025 06:32:12.577832",
+                "statevector_vel": [
+                    5627.162232,
+                    -1789.190409,
+                    -4769.010433
+                ],
+                "title": "Sentinel-1 OCN OWI Product",
+                "wind_source": "ECMWF"
+            },
+            "stac_discovery": {
+                "assets": {},
+                "bbox": [
+                    -2.673269,
+                    49.712505,
+                    -6.79871,
+                    51.620117
+                ],
+                "geometry": {
+                    "coordinates": [
+                        [
+                            [
+                                -3.151751,
+                                49.712505
+                            ],
+                            [
+                                -6.79871,
+                                50.124348
+                            ],
+                            [
+                                -6.43738,
+                                51.620117
+                            ],
+                            [
+                                -2.673269,
+                                51.206413
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                },
+                "id": "SAR Standard L2 Product",
+                "links": [
+                    {
+                        "href": "./.zattrs.json",
+                        "rel": "self",
+                        "type": "application/json"
+                    },
+                    "osw",
+                    "owi",
+                    "rvl"
+                ],
+                "properties": {
+                    "processing:version": "004.00",
+                    "product:type": "S01SIWOCN"
+                },
+                "stac_extensions": [
+                    "https://stac-extensions.github.io/eopf/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/product/v0.1.0/schema.json",
+                    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+                    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+                ],
+                "stac_version": "1.0.0",
+                "type": "Feature"
+            }
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zgroup": {
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zattrs": {},
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zgroup": {
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_direction/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_direction/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "ECMWF wind direction (meteorological convention = clockwise direction from where the wind comes respect to north)",
+                "short_name": "owi_auxiliary_wind_direction",
+                "standard_name": "wind_direction",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_speed/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/auxiliary_wind_speed/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "ECMWF wind speed",
+                "short_name": "owi_auxiliary_wind_speed",
+                "standard_name": "wind_speed",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/elevation_angle/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/elevation_angle/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "radar elevation angle at wind cell center, this parameter is provided at each azimuth line in the wind cell grid",
+                "short_name": "owi_elevation_angle",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "local northing angle (azimuth from north)",
+                "short_name": "owi_heading",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "long_name": "radar incidence angle at wind cell center, this parameter is provided at each azimuth line in the wind cell grid",
+                "short_name": "osw_incidence_angle",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wind cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wind cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/mask/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/mask/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<u1",
+                "flag_meanings": "valid_data land ice no_data",
+                "flag_values": "[0, 1, 2, 4]",
+                "long_name": "mask of classification: set to 1 if land coverage > 10%, set to 2 if inside 10km-dilated ice edge area",
+                "short_name": "owi_mask",
+                "valid_max": 8,
+                "valid_min": 0
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "valid_data land ice no_data",
+            "flag_values": "[0, 1, 2, 4]",
+            "valid_max": 8,
+            "valid_min": 0
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nesz/.zarray": {
+            "chunks": [
+                166,
+                265,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nesz/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "polarisation"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude",
+                    "polarisation"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "polarisation"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "noise equivalent sigma-naught, equivalent to measured radar cross section normalized to the area on ground; this is a copy of the level-1 calibrated noise LUT interpolated on the wind cell grid",
+                "short_name": "owi_nesz",
+                "units": "m^2/m^2"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m^2/m^2"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zarray": {
+            "chunks": [
+                166,
+                265,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "polarisation"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude",
+                    "polarisation"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "polarisation"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "normalized radar cross section of the imagette, measured radar cross section normalized to the area on ground",
+                "short_name": "owi_nrcs",
+                "units": "m^2/m^2"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m^2/m^2"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_noise_corrected/.zarray": {
+            "chunks": [
+                166,
+                265,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_noise_corrected/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "polarisation"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude",
+                    "polarisation"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "polarisation"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "noise corrected NRCS averaged within and provided for each wind cell",
+                "short_name": "owi_nrcs_noise_corrected",
+                "units": "m^2/m^2"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m^2/m^2"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_wind_gmf/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs_wind_gmf/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "predicted normalized radar cross section from CMOD and ECMWF 10m wind for each wind cell",
+                "short_name": "owi_nrcs_wind_gmf",
+                "units": "m^2/m^2"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m^2/m^2"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polarisation/.zarray": {
+            "chunks": [
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/polarisation/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "polarisation"
+            ],
+            "dimensions": [
+                "polarisation"
+            ],
+            "dtype": "<u1",
+            "flag_meanings": "VV VH HH HV DH DV",
+            "flag_values": "[0 1 2 3 4 5]",
+            "long_name": "identifier of the receiving polarization in order to discriminate co and cross polarisations"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zattrs": {},
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zgroup": {
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wind cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wind cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_direction/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_direction/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "SAR wind direction (meteorological convention = clockwise direction from where the wind comes respect to north)",
+                "short_name": "owi_wind_direction",
+                "standard_name": "wind_direction",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_speed/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/wind_speed/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "SAR wind speed",
+                "short_name": "owi_wind_speed",
+                "standard_name": "wind_speed",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zattrs": {},
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zgroup": {
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/calibration_constant/.zarray": {
+            "chunks": [
+                159
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                159
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/calibration_constant/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "calib_const_inc_angles"
+            ],
+            "_eopf_attrs": {
+                "dimensions": [
+                    "calib_const_inc_angles"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "geophysical calibration constant estimated from ECMWF and CMOD GMF",
+                "short_name": "owi_calibration_constant"
+            }
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/inversion_quality/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/inversion_quality/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<u1",
+                "flag_meanings": "good fair bad",
+                "flag_values": "[0 1 2]",
+                "long_name": "inversion quality flag for each wind cell",
+                "short_name": "owi_inversion_quality",
+                "valid_max": 2,
+                "valid_min": 0
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "good fair bad",
+            "flag_values": "[0 1 2]",
+            "valid_max": 2,
+            "valid_min": 0
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic latitude at wind cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range"
+            ],
+            "dtype": "<f4",
+            "long_name": "geodetic longitude at wind cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/percentage_bright_points/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/percentage_bright_points/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "percentage of bright target pixels detected in each wind cell and removed for the computation of the mean NRCS",
+                "short_name": "owi_percentage_bright_points",
+                "units": "%",
+                "valid_max": 100.0,
+                "valid_min": 0.0
+            },
+            "coordinates": "latitude longitude",
+            "units": "%",
+            "valid_max": 100.0,
+            "valid_min": 0.0
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/wind_quality/.zarray": {
+            "chunks": [
+                166,
+                265
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": -128,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                166,
+                265
+            ],
+            "zarr_format": 2
+        },
+        "owi/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/wind_quality/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range"
+                ],
+                "dtype": "<u1",
+                "fill_value": -128,
+                "flag_meanings": "good fair low bad",
+                "flag_values": "[0 1 2 3]",
+                "long_name": "wind quality flag for each wind cell; this flag takes into account the consistency between wind invertion, NRCS and Doppler",
+                "short_name": "owi_wind_quality",
+                "valid_max": 3,
+                "valid_min": 0
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "good fair low bad",
+            "flag_values": "[0 1 2 3]",
+            "valid_max": 3,
+            "valid_min": 0
+        },
+        "rvl/.zattrs": {
+            "other_metadata": {
+                "eopf_category": "eocontainer"
+            },
+            "stac_discovery": {
+                "links": [
+                    "S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV"
+                ],
+                "properties": {
+                    "product:type": null
+                }
+            }
+        },
+        "rvl/.zgroup": {
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zattrs": {
+            "other_metadata": {
+                "algorithm_version": "S-1 RVL rev 1/6",
+                "azimuth_sampling_freq": 0.0,
+                "clm_source": "OpenStreetMap",
+                "eopf_category": "eoproduct",
+                "ground_velocity": 0.0,
+                "history": "MISSING",
+                "mission_phase": "Operational",
+                "polarisation": "VV",
+                "prf": 486.48631029955294,
+                "processing_center": "MTI",
+                "processing_start_time": "2025-03-21T07:24:59.429825Z",
+                "radar_frequency": 0.0,
+                "radar_sampling_freq": 0.0,
+                "rvl_status": "nominal",
+                "statevector_acc": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "statevector_pos": [
+                    4604165.182499,
+                    154214.730634,
+                    5361446.069876
+                ],
+                "statevector_utc": "21-MAR-2025 06:32:12.577832",
+                "statevector_vel": [
+                    5627.162232,
+                    -1789.190409,
+                    -4769.010433
+                ],
+                "stokes_source": "WAVEWATCH III (R)",
+                "title": "Sentinel-1 OCN RVL Product"
+            },
+            "stac_discovery": {
+                "assets": {},
+                "bbox": [
+                    -2.673269,
+                    49.712505,
+                    -6.79871,
+                    51.620117
+                ],
+                "geometry": {
+                    "coordinates": [
+                        [
+                            [
+                                -3.151751,
+                                49.712505
+                            ],
+                            [
+                                -6.79871,
+                                50.124348
+                            ],
+                            [
+                                -6.43738,
+                                51.620117
+                            ],
+                            [
+                                -2.673269,
+                                51.206413
+                            ]
+                        ]
+                    ],
+                    "type": "Polygon"
+                },
+                "id": "SAR Standard L2 Product",
+                "links": [
+                    {
+                        "href": "./.zattrs.json",
+                        "rel": "self",
+                        "type": "application/json"
+                    },
+                    "osw",
+                    "owi",
+                    "rvl"
+                ],
+                "properties": {
+                    "processing:version": "004.00",
+                    "product:type": "S01SIWOCN"
+                },
+                "stac_extensions": [
+                    "https://stac-extensions.github.io/eopf/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/product/v0.1.0/schema.json",
+                    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+                    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
+                    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+                ],
+                "stac_version": "1.0.0",
+                "type": "Feature"
+            }
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/.zgroup": {
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zattrs": {},
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/.zgroup": {
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/azimuth_size/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "azimuth resolution, the pixel size is half this value",
+                "short_name": "rvl_azimuth_size",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_geo/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_geo/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "doppler centroid frequency from geometry, this parameter is interpolated from the L1 data",
+                "short_name": "rvl_dc_geo",
+                "units": "Hz"
+            },
+            "coordinates": "latitude longitude",
+            "units": "Hz"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_miss/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_miss/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "doppler centroid frequency from antenna mispointing at cell centre",
+                "short_name": "rvl_dc_miss",
+                "units": "Hz"
+            },
+            "coordinates": "latitude longitude",
+            "units": "Hz"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_obs/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/dc_obs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "estimated doppler centroid frequency",
+                "short_name": "rvl_dc_obs",
+                "units": "Hz"
+            },
+            "coordinates": "latitude longitude",
+            "units": "Hz"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ground_range_size/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/ground_range_size/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "ground range resolution, the pixel size is half this value",
+                "short_name": "rvl_ground_range_size",
+                "units": "m"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/heading/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "local northing angle (azimuth from north)",
+                "short_name": "rvl_heading",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/incidence_angle/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "radar incidence angle at cell center, this parameter is provided at each azimuth line in the radial velocity cell grid",
+                "short_name": "rvl_incidence_angle",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_coverage/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_coverage/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "percentage of land coverage within the cell",
+                "short_name": "rvl_land_coverage",
+                "valid_max": 100.0,
+                "valid_min": 0.0
+            },
+            "coordinates": "latitude longitude",
+            "valid_max": 100.0,
+            "valid_min": 0.0
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_flag/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/land_flag/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<b1",
+                "flag_meanings": "no_land land",
+                "flag_values": "[false true]",
+                "long_name": "land flag : true if presence of more than 10% of land coverage, false otherwise",
+                "short_name": "rvl_land_flag"
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "no_land land",
+            "flag_values": "[false true]"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic latitude at cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic longitude at cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/nrcs/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "normalized radar cross section, side-band corrected signal intensity; the intensity is estimated within and provided for each radial velocity cell",
+                "short_name": "rvl_nrcs",
+                "units": "m^2/m^2"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m^2/m^2"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/pitch/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/pitch/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "platform pitch angle at zero doppler time",
+                "short_name": "rvl_pitch",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/roll/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/roll/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "platform roll angle at zero doppler time",
+                "short_name": "rvl_roll",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/slant_range_time/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/slant_range_time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "two-way slant range time to cell center",
+                "short_name": "rvl_slant_range_time",
+                "units": "s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "s"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/stokes_drift_x/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/stokes_drift_x/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "easterly component of surface stokes drift from wavewatchIII model",
+                "short_name": "rvl_stokes_drift_x",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/stokes_drift_y/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/stokes_drift_y/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "northerly component of surface stokes drift from wavewatchIII model",
+                "short_name": "rvl_stokes_drift_y",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/sweep_angle/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/sweep_angle/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "sweep angle of the TOPS mode",
+                "short_name": "rvl_sweep_angle",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/yaw/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/yaw/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "platform yaw angle at zero doppler time",
+                "short_name": "rvl_yaw",
+                "units": "degrees"
+            },
+            "coordinates": "latitude longitude",
+            "units": "degrees"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/zero_doppler_time/.zarray": {
+            "chunks": [
+                234,
+                136,
+                26,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|S1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                26,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/conditions/zero_doppler_time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "length",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "length",
+                    "swath"
+                ],
+                "dtype": "<M8[us]",
+                "long_name": "zero doppler time at cell center",
+                "short_name": "rvl_zero_doppler_time"
+            },
+            "coordinates": "latitude longitude"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zattrs": {},
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/.zgroup": {
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic latitude at cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic longitude at cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/radial_velocity/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/radial_velocity/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "radial velocity",
+                "short_name": "radial_velocity",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/radial_velocity_standard_deviation/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/measurements/radial_velocity_standard_deviation/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "standard deviation of radial velocities",
+                "short_name": "radial_velocity_std",
+                "units": "m/s"
+            },
+            "coordinates": "latitude longitude",
+            "units": "m/s"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zattrs": {},
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/.zgroup": {
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/dc_obs_confidence/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "|i1",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/dc_obs_confidence/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<b1",
+                "flag_meanings": "bad good",
+                "flag_values": "[false true]",
+                "long_name": "confidence flag on estimated doppler centroid frequency; true is good confidence and false is bad confidence",
+                "short_name": "rvl_dc_obs_confidence"
+            },
+            "coordinates": "latitude longitude",
+            "flag_meanings": "bad good",
+            "flag_values": "[false true]"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/dc_obs_std/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/dc_obs_std/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "estimated doppler centroid frequency standard deviation",
+                "short_name": "rvl_dc_obs_std",
+                "units": "Hz"
+            },
+            "coordinates": "latitude longitude",
+            "units": "Hz"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/latitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic latitude at cell center",
+            "standard_name": "latitude",
+            "units": "degrees_north"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/longitude/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dimensions": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "long_name": "geodetic longitude at cell center",
+            "standard_name": "longitude",
+            "units": "degrees_east"
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/snr/.zarray": {
+            "chunks": [
+                234,
+                136,
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 3,
+                "cname": "zstd",
+                "id": "blosc",
+                "shuffle": 2
+            },
+            "dtype": "<f4",
+            "fill_value": -999.0,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                234,
+                136,
+                3
+            ],
+            "zarr_format": 2
+        },
+        "rvl/S01SIWOCN_20250321T063156_0025_A334_2479_0738CE_VV/quality/snr/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "azimuth",
+                "range",
+                "swath"
+            ],
+            "_eopf_attrs": {
+                "coordinates": [
+                    "longitude",
+                    "latitude"
+                ],
+                "dimensions": [
+                    "azimuth",
+                    "range",
+                    "swath"
+                ],
+                "dtype": "<f4",
+                "fill_value": -999.0,
+                "long_name": "signal-to-noise ratio estimated from doppler spectra",
+                "short_name": "rvl_snr",
+                "units": "1"
+            },
+            "coordinates": "latitude longitude",
+            "units": "1"
+        }
+    },
+    "zarr_consolidated_format": 1
+}

@@ -3,8 +3,8 @@ from copy import deepcopy
 from re import Pattern
 from typing import Final
 
-from eopf_stac.constants import DATASET_ASSET_EXTRA_FIELDS
-from eopf_stac.eopf_xarray import EopfXarrayBackendConfig, OpMode
+from eopf_stac.common.constants import DATASET_ASSET_EXTRA_FIELDS
+from eopf_stac.common.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
 ROLE_REFLECTANCE = "reflectance"
 
