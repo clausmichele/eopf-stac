@@ -24,13 +24,35 @@ SUPPORTED_PRODUCT_TYPES_S1 = [
 SUPPORTED_PRODUCT_TYPES_S2 = ["S02MSIL1C", "S02MSIL2A"]
 
 SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES = ["S03OLCEFR", "S03OLCERR"]
-SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES = ["S03OLCLFR"]
-SUPPORTED_PRODUCT_TYPES_S3 = SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES + SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES
+SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES = ["S03OLCLFR", "S03OLCLRR"]
+SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES = ["S03SLSRBT"]
+SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE = ["S03SLSLST"]
+# SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE = ["S03SLSFRP"]  # conversion error
+SUPPORTED_PRODUCT_TYPES_S3 = (
+    SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES
+    + SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES
+    + SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES
+    + SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE
+)
 
 # Other Sentinen-3 product types to support
-# SRAL
-# SLSTR
-# SYN
+SUPPORTED_S3_SRAL_L1_PRODUCT_TYPES = ["S03AHRL1B"]  # sentinel-3-sra-l1b
+SUPPORTED_S3_SRAL_L2_PRODUCT_TYPES = ["S03AHRL2H"]  # sentinel-3-sra-l2-lan-hy
+SUPPORTED_S3_SYN_L2_PRODUCT_TYPES = [
+    "S03SYNAOD",
+    "S03SYNSDR",
+    "S03SYNV10",
+    "S03SYNVG1",
+    "S03SYNVGK",
+    "S03SYNVGP",
+]  # sentinel-3-syn-l2-aod, sentinel-3-syn-l2, sentinel-3-syn-l2-v10, sentinel-3-syn-l2-vg1, ?, sentinel-3-syn-l2-vgp
+
+
+# other SRAL listed in [1]
+#   - S03AHRL1A (SR_1_SRA_A_), S03ALRL1A (SR_1_SRA_A_), S03ALRL1B (SR_1_SRA_BS), S03ALRL2H (SR_2_LAN_HY)
+# other SYN listed in [1]: S03SYNMIS
+
+# [1] https://cpm.pages.eopf.copernicus.eu/eopf-cpm/main/PSFD/3-product-types-naming-rules.html
 
 PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SIWGRH": "sentinel-1-l1-grd",
@@ -49,6 +71,10 @@ PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S03OLCEFR": "sentinel-3-olci-l1-efr",
     "S03OLCERR": "sentinel-3-olci-l1-err",
     "S03OLCLFR": "sentinel-3-olci-l2-lfr",
+    "S03OLCLRR": "sentinel-3-olci-l2-lrr",
+    "S03SLSRBT": "sentinel-3-slstr-l1-rbt",
+    "S03SLSFRP": "sentinel-3-slstr-l2-frp",
+    "S03SLSLST": "sentinel-3-slstr-l2-lst",
 }
 
 MEDIA_TYPE_ZARR = "application/vnd+zarr"

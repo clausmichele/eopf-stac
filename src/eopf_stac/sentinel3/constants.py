@@ -6,7 +6,7 @@ from pystac import Extent, Provider, SpatialExtent, TemporalExtent
 from pystac.extensions.sat import OrbitState
 from pystac.item_assets import ItemAssetDefinition
 from pystac.utils import str_to_datetime
-from stactools.sentinel3.constants import SENTINEL_OLCI_BANDS
+from stactools.sentinel3.constants import SENTINEL_OLCI_BANDS, SENTINEL_SLSTR_BANDS
 
 from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
@@ -205,6 +205,124 @@ OLCI_L2_ASSETS_KEY_TO_PATH: dict[str:str] = {
     PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
 }
 
+# SENTINEL_SLSTR_BANDS
+# SLSTR_BANDS_TO_RESOLUTIONS
+
+
+def get_slstr_bands(band_keys: list[str] | None = None) -> list[dict]:
+    bands = []
+    if band_keys is None:
+        for _, band in SENTINEL_SLSTR_BANDS.items():
+            bands.append(band.to_dict())
+    else:
+        for key in band_keys:
+            bands.append(SENTINEL_SLSTR_BANDS[key].to_dict())
+
+    return bands
+
+
+SLSTR_L1_ASSETS: dict[str, ItemAssetDefinition] = {
+    "radiance_an": ItemAssetDefinition.create(
+        title="TOA radiance - stripe A, nadir view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA radiances for the 500m grid, stripe A, nadir view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S01", "S02", "S03", "S04", "S05", "S06"]), "gsd": 500},
+    ),
+    "radiance_ao": ItemAssetDefinition.create(
+        title="TOA radiance - stripe A, oblique view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA radiances for the 500m grid, stripe A, oblique view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S01", "S02", "S03", "S04", "S05", "S06"]), "gsd": 500},
+    ),
+    "radiance_bn": ItemAssetDefinition.create(
+        title="TOA radiance - stripe B, nadir view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA radiances for the 500m grid, stripe B, nadir view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S04", "S05", "S06"]), "gsd": 500},
+    ),
+    "radiance_bo": ItemAssetDefinition.create(
+        title="TOA radiance - stripe B, oblique view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA radiances for the 500m grid, stripe B, oblique view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S04", "S05", "S06"]), "gsd": 500},
+    ),
+    "BT_in": ItemAssetDefinition.create(
+        title="TOA brightness temperature - TIR, nadir view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA brightness temperature for channels S7-S9 and F2 in the 1km grid, nadir view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S07", "S08", "S09", "S11"]), "gsd": 1000},
+    ),
+    "BT_io": ItemAssetDefinition.create(
+        title="TOA brightness temperature - TIR, oblique view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA brightness temperature for channels S7-S9 and F2, 1km grid, oblique view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S07", "S08", "S09", "S11"]), "gsd": 1000},
+    ),
+    "BT_fn": ItemAssetDefinition.create(
+        title="TOA brightness temperature - F1, nadir view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA brightness temperature for the F1 channel, 1km grid, nadir view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S10"]), "gsd": 1000},
+    ),
+    "BT_fo": ItemAssetDefinition.create(
+        title="TOA brightness temperature - F1, oblique view",
+        media_type=pystac.MediaType.ZARR,
+        description=("Dataset of the TOA brightness temperature for the F1 channel, 1km grid, oblique view"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S10"]), "gsd": 1000},
+    ),
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SLSTR_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
+    "radiance_an": "measurements/anadir",
+    "radiance_ao": "measurements/aoblique",
+    "radiance_bn": "measurements/bnadir",
+    "radiance_bo": "measurements/boblique",
+    "BT_in": "measurements/inadir",
+    "BT_io": "measurements/ioblique",
+    "BT_fn": "measurements/fnadir",
+    "BT_fo": "measurements/foblique",
+    PRODUCT_ASSET_KEY: "",
+    PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
+}
+
+SLSTR_L2_LST_ASSETS: dict[str, ItemAssetDefinition] = {
+    "lst": ItemAssetDefinition.create(
+        title="Land Surface Temperature (LST)",
+        media_type=pystac.MediaType.ZARR,
+        description=("Gridded Land Surface Temperature generated on the wide 1 km measurement grid"),
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S07", "S08", "S09"]), "gsd": 1000},
+    ),
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SLSTR_L2_LST_ASSETS_KEY_TO_PATH: dict[str:str] = {
+    "lst": "measurements",
+    PRODUCT_ASSET_KEY: "",
+    PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
+}
+
+SLSTR_L2_FRP_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
+    PRODUCT_ASSET_KEY: "",
+    PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
+}
+
 # -- Collection metadata
 
 S3_OLCI_L1_EFR = {
@@ -218,7 +336,7 @@ S3_OLCI_L1_EFR = {
     "product_type": "S03OLCEFR",
     "processing_level": "L1",
     "instrument": "olci",
-    "gsd": 300,
+    "gsd": [300],
     "item_assets": {**OLCI_L1_ASSETS},
 }
 
@@ -233,7 +351,7 @@ S3_OLCI_L1_ERR = {
     "product_type": "S03OLCERR",
     "processing_level": "L1",
     "instrument": "olci",
-    "gsd": 1200,
+    "gsd": [1200],
     "item_assets": {**OLCI_L1_ASSETS},
 }
 
@@ -246,20 +364,9 @@ S3_OLCI_L2_LFR = {
     "product_type": "S03OLCLFR",
     "processing_level": "L2",
     "instrument": "olci",
-    "gsd": 300,
+    "gsd": [300],
     "item_assets": {**OLCI_L2_ASSETS},
 }
-
-
-# S03SLSRBT / SL_1_RBT
-S3_SLSTR_L1_RBT = {}
-
-# S03SLSLST / SL_2_LST
-S3_SLSTR_L2_LST = {}
-
-# TBD: SRAL, SYN
-
-# Conversion not supported by CPM; no mapping
 
 S3_OLCI_L2_LRR = {
     "id": "sentinel-3-olci-l2-lrr",
@@ -270,9 +377,52 @@ S3_OLCI_L2_LRR = {
     "product_type": "S03OLCLRR",
     "processing_level": "L2",
     "instrument": "olci",
-    "gsd": 1200,
+    "gsd": [1200],
     "item_assets": {**OLCI_L2_ASSETS},
 }
+
+S3_SLSTR_L1_RBT = {
+    "id": "sentinel-3-slstr-l1-rbt",
+    "title": "Sentinel-3 SLSTR Level-1 RBT",
+    "description": (
+        "The Sentinel-3 SLSTR Level-1B RBT product provides radiances and brightness temperatures for each pixel "
+        "in a regular image grid for each view and SLSTR channel. In addition, it also contains annotations data "
+        "associated with each image pixels."
+    ),
+    "product_type": "S03SLSRBT",
+    "processing_level": "L1",
+    "instrument": "slstr",
+    "gsd": [500, 1000],
+    "item_assets": {**SLSTR_L1_ASSETS},
+}
+
+S3_SLSTR_L2_LST = {
+    "id": "sentinel-3-slstr-l2-lst",
+    "title": "Sentinel-3 SLSTR Level-2 LST",
+    "description": "The Sentinel-3 SLSTR Level-2 LST product provides land surface temperature.",
+    "product_type": "S03SLSLST",
+    "processing_level": "L2",
+    "instrument": "slstr",
+    "gsd": [500, 1000],
+    "item_assets": {**SLSTR_L2_LST_ASSETS},
+}
+
+S3_SLSTR_L2_FRP = {
+    "id": "sentinel-3-slstr-l2-frp",
+    "title": "Sentinel-3 SLSTR Level-2 FRP",
+    "description": (
+        "The Sentinel-3 SLSTR Level-2 FRP product provides global (over land and water) fire radiative power."
+    ),
+    "product_type": "S03SLSFRP",
+    "processing_level": "L2",
+    "instrument": "slstr",
+    "gsd": [500, 1000],
+    "item_assets": {**SLSTR_L2_FRP_ASSETS},
+}
+
+# TBD: SRAL, SYN
+
+# Conversion not supported by CPM; no mapping
 
 S3_OLCI_L2_WFR = {
     "id": "sentinel-3-olci-l2-wfr",

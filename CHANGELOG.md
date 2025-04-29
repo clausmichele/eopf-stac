@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Add support for the following Sentinel 3 OLCI products: `S03OLCEFR`, `S03OLCERR`, `S03OLCLFR`, `S03OLCLRR` [#9](https://github.com/EOPF-Sample-Service/eopf-stac/issues/9)
+- Add support for the following Sentinel 3 SLSTR products: `S03SLSRBT`, `S03SLSLST` [#11](https://github.com/EOPF-Sample-Service/eopf-stac/issues/11)
+- Add tests [#10](https://github.com/EOPF-Sample-Service/eopf-stac/issues/10)
+
 ## [0.8.0] - 2025-04-15
 
 ### Added
