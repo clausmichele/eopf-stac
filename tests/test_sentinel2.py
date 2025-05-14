@@ -100,6 +100,15 @@ def test_create_item_l2a():
             assert asset.href == url + "/" + path
             assert "data" in asset.roles
 
+            if key.startswith("B"):
+                assert asset.extra_fields.get("raster:scale") is not None
+                assert asset.extra_fields.get("raster:offset") is not None
+
+            # TODO Update test: with CPM 2.5.8 these fields should not be None!
+            if key.startswith("AOT") or key.startswith("WVP"):
+                assert asset.extra_fields.get("raster:scale") is None
+                assert asset.extra_fields.get("raster:offset") is None
+
             if key.startswith("SR_"):
                 assert asset.extra_fields["xarray:open_dataset_kwargs"]["engine"] == "eopf-zarr"
                 assert asset.extra_fields["xarray:open_dataset_kwargs"]["op_mode"] == "native"
