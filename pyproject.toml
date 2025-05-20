@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "eopf-stac"
-version = "0.9.0"
+version = "0.9.1"
 authors = [
     { name="Mario Winkler", email="mario.winkler@dlr.de" }
 ]
@@ -20,10 +20,9 @@ classifiers = [
 dependencies = [
     "requests",
     "s3fs",
-    "pystac",
-    "stactools-sentinel3",
-    "stactools-sentinel2",
-    "stactools-sentinel1",    
+    "pystac >= 1.12.0",
+    "stactools-sentinel3 >= 0.4.0",
+    "stactools-sentinel2 >= 0.6.5",
     "geojson",
     "xarray"
 ]
