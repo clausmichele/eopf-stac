@@ -11,8 +11,8 @@ from tests.utils import (
 
 
 def test_create_item_olci_l2():
-    file = "tests/data-files/S03OLCLFR_20250416T063751_0180_B248_T691_.json"
-    url = "s3://eopf-data/S03OLCLFR_20250416T063751_0180_B248_T691_.zarr"
+    file = "tests/data-files/S03OLCLFR_20250416T063751_0180_B248_T378.json"
+    url = "s3://eopf-data/S03OLCLFR_20250416T063751_0180_B248_T378.zarr"
 
     metadata = get_metadata(file)
     product_type = get_product_type(metadata)
@@ -29,6 +29,7 @@ def test_create_item_olci_l2():
     assert item.common_metadata.instruments == ["olci"]
     assert item.common_metadata.gsd == 300
     assert len(item.stac_extensions) == 5
+    assert item.properties.get("processing:version") != "TODO"
 
     # -- Assets
     assert len(item.assets) == 9
@@ -57,8 +58,8 @@ def test_create_item_olci_l2():
 
 
 def test_create_item_olci_l1():
-    file = "tests/data-files/S03OLCEFR_20250416T063751_0180_B248_T893_.json"
-    url = "s3://eopf-data/S03OLCEFR_20250416T063751_0180_B248_T893_.zarr"
+    file = "tests/data-files/S03OLCEFR_20250416T063751_0180_B248_T853.json"
+    url = "s3://eopf-data/S03OLCEFR_20250416T063751_0180_B248_T853.zarr"
 
     metadata = get_metadata(file)
     product_type = get_product_type(metadata)
@@ -75,6 +76,7 @@ def test_create_item_olci_l1():
     assert item.common_metadata.instruments == ["olci"]
     assert item.common_metadata.gsd == 300
     assert len(item.stac_extensions) == 5
+    assert item.properties.get("processing:version") != "TODO"
 
     # -- Assets
     assert len(item.assets) == 24

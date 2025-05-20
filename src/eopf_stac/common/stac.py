@@ -142,7 +142,9 @@ def fill_processing_properties(item: pystac.Item, properties: dict) -> None:
         if is_valid_string(proc_lineage):
             item.properties["processing:lineage"] = proc_lineage
         if is_valid_string(proc_version):
-            item.properties["processing:version"] = proc_version
+            # CPM workaround
+            if proc_version != "TODO":
+                item.properties["processing:version"] = proc_version
 
 
 def fill_product_properties(item: pystac.Item, product_type: str, properties: dict) -> None:
