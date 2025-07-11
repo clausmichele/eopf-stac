@@ -12,6 +12,7 @@ from eopf_stac.common.constants import (
     SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES,
     SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES,
     SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES,
+    SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE,
     SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE,
     THUMBNAIL_ASSET,
 )
@@ -35,6 +36,8 @@ from eopf_stac.sentinel3.constants import (
     SENTINEL3_METADATA,
     SLSTR_L1_ASSETS,
     SLSTR_L1_ASSETS_KEY_TO_PATH,
+    SLSTR_L2_FRP_ASSETS,
+    SLSTR_L2_FRP_ASSETS_KEY_TO_PATH,
     SLSTR_L2_LST_ASSETS,
     SLSTR_L2_LST_ASSETS_KEY_TO_PATH,
 )
@@ -47,7 +50,7 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
     summary_dict = {
         "constellation": [mission_metadata.get("constellation")],
         "platform": mission_metadata.get("platforms"),
-        "instruments": [collection_metadata.get("instrument")],
+        "instruments": collection_metadata.get("instruments"),
         "gsd": collection_metadata.get("gsd"),
         "processing:level": [collection_metadata.get("processing_level")],
         "product:type": [collection_metadata.get("product_type")],
@@ -164,6 +167,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     elif product_type in SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE:
         asset_defintions = SLSTR_L2_LST_ASSETS
         asset_path_lookups = SLSTR_L2_LST_ASSETS_KEY_TO_PATH
+    elif product_type in SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE:
+        asset_defintions = SLSTR_L2_FRP_ASSETS
+        asset_path_lookups = SLSTR_L2_FRP_ASSETS_KEY_TO_PATH
     else:
         raise ValueError(f"Unsupported Sentinel-3 product type '{product_type}'")
 
