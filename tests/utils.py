@@ -6,7 +6,8 @@ import pystac
 from pystac.utils import datetime_to_str
 
 from eopf_stac.common.constants import PRODUCT_ASSET_KEY, PRODUCT_METADATA_ASSET_KEY, PRODUCT_METADATA_PATH
-from eopf_stac.common.stac import get_identifier, validate_metadata
+from eopf_stac.common.stac import get_cpm_version, get_identifier, validate_metadata
+from eopf_stac.sentinel2.stac import get_baseline_processing_version
 
 
 def get_metadata(file: str) -> dict:
@@ -31,6 +32,8 @@ def get_eopf_product_info(path: str):
     metadata = validate_metadata(zmetadata)
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     stac_item_id = get_identifier(stac_discovery)
+    cpm_version = get_cpm_version(path)
+    baseline_version = get_baseline_processing_version(stac_item_id)
 
     eopf_id = os.path.splitext(os.path.basename(path))[0]
     eopf_product = {
@@ -38,7 +41,9 @@ def get_eopf_product_info(path: str):
         "stac_item_file_path": os.path.join("tests", f"{eopf_id}.json"),
         "eopf_id": eopf_id,
         "metadata_file": metadata_file,
-        "url": f"s3://eopf-data/{eopf_id}.zarr",
+        "url": f"s3://eopf-data/cpm-{cpm_version}/{eopf_id}.zarr",
+        "cpm_version": cpm_version,
+        "baseline_version": baseline_version,
     }
     return eopf_product
 

@@ -1,4 +1,5 @@
 import os
+import re
 
 import pystac
 from pystac.extensions.eo import EOExtension
@@ -67,6 +68,26 @@ def get_datetimes(properties: dict):
     return (datetime, start_datetime, end_datetime)
 
 
+def get_cpm_version(path: str) -> str | None:
+    # matches "cpm_v256"
+    p = re.compile("cpm_v[0-9]+")
+    m = p.search(path)
+    if m is not None:
+        g = m.group()
+        cpm_version = f"{g[5]}.{g[6]}.{g[7]}"
+        return cpm_version
+
+    # matches "cpm-2.5.9"
+    p = re.compile("(cpm-([0-9]\.)*[0-9])")
+    m = p.search(path)
+    if m is not None:
+        g = m.group()
+        cpm_version = f"{g[4]}.{g[6]}.{g[8]}"
+        return cpm_version
+
+    return None
+
+
 def fill_timestamp_properties(item: pystac.Item, properties: dict) -> None:
     created_datetime = properties.get("created")
     if created_datetime is None:
@@ -113,11 +134,15 @@ def fill_eo_properties(item: pystac.Item, properties: dict) -> None:
             eo.snow_cover = snow_cover
 
 
-def fill_processing_properties(item: pystac.Item, properties: dict) -> None:
-    # CPM workaround: following invalid values are ignored:
-    # "processing:expression": "systematic",
-    # "processing:facility": "OPE,OPE,OPE",
-    # "processing:version": "",
+def fill_processing_properties(
+    item: pystac.Item, properties: dict, cpm_version: str = None, baseline_processing_version: str = None
+) -> None:
+    # CPM workarounds:
+    # Some invalid values are ignored:
+    # - "processing:expression": "systematic",
+    # - "processing:facility": "OPE,OPE,OPE",
+    # Baseline processing version is added
+    # CPM version is added
 
     proc_expression = properties.get("processing:expression")
     proc_lineage = properties.get("processing:lineage")
@@ -147,12 +172,22 @@ def fill_processing_properties(item: pystac.Item, properties: dict) -> None:
             if proc_version != "TODO":
                 item.properties["processing:version"] = proc_version
 
+    # Add CPM to processing:software
+    if cpm_version is not None:
+        if proc_software is None:
+            item.properties["processing:software"] = {}
+        item.properties["processing:software"]["EOPF-CPM"] = cpm_version
+
+    # Add baseline processing version
+    if baseline_processing_version is not None:
+        item.properties["processing:version"] = baseline_processing_version
+
 
 def fill_product_properties(item: pystac.Item, product_type: str, properties: dict) -> None:
     product_timeliness = properties.get("product:timeliness")
     product_timeliness_category = properties.get("product:timeliness_category")
     product_acquisition_type = properties.get("product:acquisition_type")
-    if any([product_type, product_acquisition_type, all([product_timeliness, product_timeliness_category])]):
+    if any_not_none([product_type, product_acquisition_type, all([product_timeliness, product_timeliness_category])]):
         item.stac_extensions.append(PRODUCT_EXTENSION_SCHEMA_URI)
         if is_valid_string(product_type):
             item.properties["product:type"] = product_type
@@ -188,15 +223,15 @@ def fill_eopf_properties(item: pystac.Item, properties: dict) -> None:
         ]
     ):
         item.stac_extensions.append(EOPF_EXTENSION_SCHEMA_URI)
-        if is_valid_string(datatake_id):
+        if datatake_id is not None:
             item.properties["eopf:datatake_id"] = datatake_id
-        if is_valid_string(instrument_mode):
+        if instrument_mode is not None:
             # CPM workaround
             if instrument_mode != "Earth Observation":
                 item.properties["eopf:instrument_mode"] = instrument_mode
         if origin_datetime:
             item.properties["eopf:origin_datetime"] = origin_datetime
-        if is_valid_string(datastrip_id):
+        if datastrip_id is not None:
             item.properties["eopf:datastrip_id"] = datastrip_id
         if instrument_configuration_id is not None:
             item.properties["eopf:instrument_configuration_id"] = instrument_configuration_id

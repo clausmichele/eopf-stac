@@ -27,6 +27,7 @@ from eopf_stac.common.stac import (
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    get_cpm_version,
     get_datetimes,
     get_identifier,
     rearrange_bbox,
@@ -149,7 +150,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         # TODO view.azimuth view.incidence_angle
 
     # Processing Extension
-    fill_processing_properties(item, properties)
+    cpm_version = get_cpm_version(asset_href_prefix)
+    baseline_version = get_baseline_processing_version(item.id)
+    fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
     fill_product_properties(item, product_type, properties)
@@ -198,3 +201,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     item.links.append(SENTINEL_LICENSE)
 
     return item
+
+
+def get_baseline_processing_version(identifier: str) -> str:
+    # S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125
+    # S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750
+    return f"{identifier[28:30]}.{identifier[30:32]}"
