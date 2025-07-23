@@ -23,11 +23,9 @@ from eopf_stac.common.constants import (
 )
 from eopf_stac.sentinel2.constants import (
     ASSET_TO_DESCRIPTION,
-    BAND_ASSET_EXTRA_FIELDS,
     DATASET_PATHS_TO_ASSET,
     L2A_AOT_WVP_ASSETS_TO_PATH,
     L2A_SCL_ASSETS_TO_PATH,
-    OTHER_ASSET_EXTRA_FIELDS,
     ROLE_REFLECTANCE,
 )
 
@@ -40,7 +38,6 @@ def get_band_item_assets(band_asset_defs: dict) -> dict[str, pystac.ItemAssetDef
             asset_key=key,
             roles=[ROLE_DATA, ROLE_REFLECTANCE],
             band_keys=[band_key],
-            extra_fields=deepcopy(BAND_ASSET_EXTRA_FIELDS),
         )
     return item_assets
 
@@ -71,7 +68,6 @@ def get_aot_wvp_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
             asset_key=key,
             roles=[ROLE_DATA],
             band_keys=[],
-            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
             title_with_resolution=False,
         )
         item_assets[key] = item_asset
@@ -116,7 +112,6 @@ def get_scl_item_assets() -> dict[str, pystac.ItemAssetDefinition]:
             asset_key=key,
             roles=[ROLE_DATA],
             band_keys=[],
-            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
             title_with_resolution=False,
         )
     return item_assets
@@ -152,7 +147,6 @@ def get_tci_item_assets(tci_asset_defs: dict) -> dict[str, pystac.ItemAssetDefin
             asset_key=key,
             roles=[ROLE_DATA],
             band_keys=["B04", "B03", "B02"],
-            extra_fields=deepcopy(OTHER_ASSET_EXTRA_FIELDS),
             title_with_resolution=False,
         )
     return item_assets
@@ -244,14 +238,6 @@ def create_item_asset(
         bands = get_bands_for_band_keys(band_keys)
         extra_fields["bands"] = bands
 
-    if "alternate" in extra_fields:
-        if "xarray" in extra_fields["alternate"]:
-            if "xarray:open_dataset_kwargs" in extra_fields["alternate"]["xarray"]:
-                open_dataset_kwargs = extra_fields["alternate"]["xarray"]["xarray:open_dataset_kwargs"]
-                if len(band_keys) > 0 and band_key != "TCI":
-                    open_dataset_kwargs["bands"] = band_keys
-                    open_dataset_kwargs["spatial_res"] = int(gsd)
-
     title = ASSET_TO_DESCRIPTION[band_key]
     if title_with_resolution:
         title = f"{title} - {gsd}m"
@@ -287,6 +273,8 @@ def unsuffixed_band_resolution(asset_key: str) -> str:
 
 
 def update_extra_fields_from_metadata(asset: pystac.Asset, attrs: dict, item: pystac.Item):
+    attrs = attrs.get("_eopf_attrs")
+
     if attrs.get("long_name"):
         asset.description = attrs.get("long_name")
 
@@ -306,10 +294,10 @@ def update_extra_fields_from_metadata(asset: pystac.Asset, attrs: dict, item: py
     offset = attrs.get("add_offset")
     if any([scale, offset]):
         RasterExtension.add_to(item)
-        if scale:
-            asset.extra_fields["raster:scale"] = attrs.get("scale_factor")
-        if offset:
-            asset.extra_fields["raster:offset"] = attrs.get("add_offset")
+        if scale is not None:
+            asset.extra_fields["raster:scale"] = scale
+        if offset is not None:
+            asset.extra_fields["raster:offset"] = offset
 
     if attrs.get("fill_value") is not None:
         asset.extra_fields["nodata"] = attrs.get("fill_value")

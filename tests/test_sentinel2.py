@@ -1,3 +1,7 @@
+import os
+
+import pytest
+
 from eopf_stac.sentinel2.constants import (
     DATASET_PATHS_TO_ASSET,
     L1C_BAND_ASSETS_TO_PATH,
@@ -13,32 +17,50 @@ from tests.utils import (
     check_license_link,
     check_metadata_asset,
     check_product_asset,
+    get_eopf_product_info,
     get_metadata,
     get_product_type,
+    save_item_as_file_for_debugging,
 )
 
 
-def test_create_item_l1c():
-    file = "tests/data-files/S02MSIL1C_20240428T102559_0000_B108_T853.json"
-    url = "s3://eopf-data/S02MSIL1C_20240428T102559_0000_B108_T853.zarr"
+@pytest.fixture
+def test_product_l1c():
+    path = "data/converted/cpm-2.5.9/S02MSIL1C_20240428T102559_0000_B108_T659.zarr"
+    return get_eopf_product_info(path)
 
-    metadata = get_metadata(file)
+
+@pytest.fixture
+def test_product_l2a():
+    path = "data/converted/cpm-2.5.9/S02MSIL2A_20250109T100401_0000_A122_T808.zarr"
+    return get_eopf_product_info(path)
+
+
+def test_create_item_l1c(test_product_l1c):
+    test_product = test_product_l1c
+    url = test_product.get("url")
+    metadata = get_metadata(test_product.get("metadata_file"))
+
+    # -- Check product type
     product_type = get_product_type(metadata)
     assert product_type == "S02MSIL1C"
 
     item = create_item(metadata=metadata, product_type=product_type, asset_href_prefix=url)
     # item.validate()  # fails for raster extension
 
-    # -- Common metadata
+    # temporally save item for debugging
+    save_item_as_file_for_debugging(item, test_product.get("stac_item_file_path"))
+
+    # -- Check common metadata
     check_common_metadata(item)
-    assert item.id == "S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125"
+    assert item.id == test_product.get("stac_item_id")
     assert item.common_metadata.mission == "Sentinel-2"
     assert len(item.common_metadata.providers) == 3
     assert item.common_metadata.instruments == ["msi"]
     assert item.common_metadata.gsd == 10
     assert len(item.stac_extensions) == 12
 
-    # -- Assets
+    # -- Check Assets
     assert len(item.assets) == 19
 
     check_product_asset(item, url)
@@ -60,17 +82,26 @@ def test_create_item_l1c():
                 assert "dataset" in asset.roles
                 assert "reflectance" in asset.roles
 
+    # -- Links
+    check_license_link(item)
 
-def test_create_item_l2a():
-    file = "tests/data-files/S02MSIL2A_20250109T100401_0000_A122_T461.json"
-    url = "s3://eopf-data/S02MSIL2A_20250109T100401_0000_A122_T461.zarr"
+    # Remove debugging file when test succeeded
+    os.remove(test_product.get("stac_item_file_path"))
 
-    metadata = get_metadata(file)
+
+def test_create_item_l2a(test_product_l2a):
+    test_product = test_product_l2a
+    url = test_product.get("url")
+    metadata = get_metadata(test_product.get("metadata_file"))
+
     product_type = get_product_type(metadata)
     assert product_type == "S02MSIL2A"
 
     item = create_item(metadata=metadata, product_type=product_type, asset_href_prefix=url)
     # item.validate() # fails for raster extension
+
+    # temporally save item for debugging
+    save_item_as_file_for_debugging(item, test_product.get("stac_item_file_path"))
 
     # -- Common metadata
     check_common_metadata(item)
@@ -104,10 +135,9 @@ def test_create_item_l2a():
                 assert asset.extra_fields.get("raster:scale") is not None
                 assert asset.extra_fields.get("raster:offset") is not None
 
-            # TODO Update test: with CPM 2.5.8 these fields should not be None!
             if key.startswith("AOT") or key.startswith("WVP"):
-                assert asset.extra_fields.get("raster:scale") is None
-                assert asset.extra_fields.get("raster:offset") is None
+                assert asset.extra_fields.get("raster:scale") is not None
+                assert asset.extra_fields.get("raster:offset") is not None
 
             if key.startswith("SR_"):
                 assert asset.extra_fields["xarray:open_dataset_kwargs"]["engine"] == "eopf-zarr"
@@ -117,3 +147,6 @@ def test_create_item_l2a():
 
     # -- Links
     check_license_link(item)
+
+    # Remove debugging file when test succeeded
+    os.remove(test_product.get("stac_item_file_path"))

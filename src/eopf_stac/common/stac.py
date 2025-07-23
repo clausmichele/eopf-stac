@@ -45,6 +45,15 @@ def get_datetimes(properties: dict):
     datetime = None
     start_datetime = None
     end_datetime = None
+
+    start_datetime_str = properties.get("start_datetime")
+    if start_datetime_str is not None:
+        start_datetime = str_to_datetime(start_datetime_str)
+
+    end_datetime_str = properties.get("end_datetime")
+    if end_datetime_str is not None:
+        end_datetime = str_to_datetime(end_datetime_str)
+
     datetime_str = properties.get("datetime")
     if datetime_str is not None:
         # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/643
@@ -52,16 +61,8 @@ def get_datetimes(properties: dict):
             datetime = None
         else:
             datetime = str_to_datetime(datetime_str)
-
-    if datetime is None:
-        # start_datetime and end_datetime must be supplied
-        start_datetime_str = properties.get("start_datetime")
-        if start_datetime_str is not None:
-            start_datetime = str_to_datetime(start_datetime_str)
-            datetime = start_datetime
-        end_datetime_str = properties.get("end_datetime")
-        if end_datetime_str is not None:
-            end_datetime = str_to_datetime(end_datetime_str)
+    else:
+        datetime = start_datetime
 
     return (datetime, start_datetime, end_datetime)
 
