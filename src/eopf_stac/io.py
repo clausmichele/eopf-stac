@@ -16,7 +16,7 @@ from eopf_stac.common.constants import (
     SUPPORTED_PRODUCT_TYPES_S2,
     SUPPORTED_PRODUCT_TYPES_S3,
 )
-from eopf_stac.common.stac import validate_metadata
+from eopf_stac.common.stac import get_cpm_version, validate_metadata
 from eopf_stac.sentinel1.stac import create_item as create_item_s1
 from eopf_stac.sentinel2.stac import create_item as create_item_s2
 from eopf_stac.sentinel3.stac import create_item as create_item_s3
@@ -50,23 +50,32 @@ def read_metadata(eopf_href: str) -> dict:
 
 
 def create_item(metadata: dict, eopf_href: str) -> pystac.Item:
+    # Determine product type
     product_type = metadata[".zattrs"]["stac_discovery"].get("properties", {}).get("product:type")
     # workaround eopf-cpm 2.4.x
     if product_type is None:
         product_type = metadata[".zattrs"]["stac_discovery"].get("properties", {}).get("eopf:type")
-
     if product_type is None:
         raise ValueError("No product type in stac_discovery metadata")
-
     logger.info(f"Product type is {product_type}")
+
+    # Extract CPM version from eopf_href
+    cpm_version = get_cpm_version(eopf_href)
+    logger.info(f"CPM version is {cpm_version}")
 
     item = None
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:
-        item = create_item_s1(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
+        item = create_item_s1(
+            metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href, cpm_version=cpm_version
+        )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S2:
-        item = create_item_s2(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
+        item = create_item_s2(
+            metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href, cpm_version=cpm_version
+        )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S3:
-        item = create_item_s3(metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href)
+        item = create_item_s3(
+            metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href, cpm_version=cpm_version
+        )
     else:
         raise ValueError(f"The product type '{product_type}' is not supported")
 

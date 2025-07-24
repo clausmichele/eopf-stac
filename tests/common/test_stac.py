@@ -49,7 +49,7 @@ class TestSTAC:
 
         properties = {"datetime": "null", "start_datetime": "2025-04-16T06:37:51.892834Z"}
         expected = datetime.datetime(2025, 4, 16, 6, 37, 51, 892834, tzinfo=tzutc())
-        assert (expected, expected, None) == get_datetimes(properties)
+        assert (None, expected, None) == get_datetimes(properties)
 
         properties = {
             "datetime": "null",
@@ -58,4 +58,4 @@ class TestSTAC:
         }
         expected_start = datetime.datetime(2025, 4, 16, 6, 37, 51, 892834, tzinfo=tzutc())
         expected_end = datetime.datetime(2025, 4, 16, 6, 40, 51, 892834, tzinfo=tzutc())
-        assert (expected_start, expected_start, expected_end) == get_datetimes(properties)
+        assert (None, expected_start, expected_end) == get_datetimes(properties)
