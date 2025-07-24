@@ -149,11 +149,8 @@ def fill_processing_properties(
     proc_level = properties.get("processing:level")
     proc_facility = properties.get("processing:facility")
     proc_datetime = properties.get("processing:datetime")
-    proc_version = properties.get("processing:version")
     proc_software = properties.get("processing:software")
-    if any_not_none(
-        [proc_expression, proc_facility, proc_level, proc_lineage, proc_software, proc_datetime, proc_version]
-    ):
+    if any_not_none([proc_expression, proc_facility, proc_level, proc_lineage, proc_software, proc_datetime]):
         item.stac_extensions.append(PROCESSING_EXTENSION_SCHEMA_URI)
         if proc_expression is not None and proc_expression != "systematic":
             item.properties["processing:expression"] = proc_expression
@@ -167,10 +164,6 @@ def fill_processing_properties(
             item.properties["processing:level"] = proc_level
         if is_valid_string(proc_lineage):
             item.properties["processing:lineage"] = proc_lineage
-        if is_valid_string(proc_version):
-            # CPM workaround
-            if proc_version != "TODO":
-                item.properties["processing:version"] = proc_version
 
     # Add CPM to processing:software
     if cpm_version is not None:

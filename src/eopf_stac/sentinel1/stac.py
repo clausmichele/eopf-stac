@@ -34,7 +34,7 @@ from eopf_stac.sentinel1.constants import (
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> pystac.Item:
+def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
@@ -99,7 +99,10 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
             view.off_nadir = off_nadir
 
     # Processing Extension
-    fill_processing_properties(item, properties)
+    baseline_version = None
+    if properties.get("processing:software") is not None:
+        baseline_version = properties.get("processing:software").get("Sentinel-1 IPF")
+    fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
     fill_product_properties(item, product_type, properties)

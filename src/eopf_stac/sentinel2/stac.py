@@ -27,7 +27,6 @@ from eopf_stac.common.stac import (
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
-    get_cpm_version,
     get_datetimes,
     get_identifier,
     rearrange_bbox,
@@ -54,7 +53,7 @@ from eopf_stac.sentinel2.constants import (
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> pystac.Item:
+def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
@@ -150,7 +149,6 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         # TODO view.azimuth view.incidence_angle
 
     # Processing Extension
-    cpm_version = get_cpm_version(asset_href_prefix)
     baseline_version = get_baseline_processing_version(item.id)
     fill_processing_properties(item, properties, cpm_version, baseline_version)
 
