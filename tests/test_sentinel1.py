@@ -103,10 +103,10 @@ def stac_item(product_spec):
 
 def test_stac_item(stac_item, product_spec):
     # print(json.dumps(stac_item.to_dict(), indent=2))
+    stac_item.validate()
 
     # -- Common metadata
     check_common_metadata(stac_item)
-    assert stac_item.datetime is None
     assert stac_item.id == product_spec.get("stac_item_id")
     assert stac_item.common_metadata.mission == "Sentinel-1"
     assert len(stac_item.common_metadata.providers) == 3

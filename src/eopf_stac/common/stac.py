@@ -59,7 +59,7 @@ def get_datetimes(properties: dict):
     if datetime_str is not None:
         # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/643
         if datetime_str == "null":
-            datetime = None
+            datetime = start_datetime
         else:
             datetime = str_to_datetime(datetime_str)
     else:

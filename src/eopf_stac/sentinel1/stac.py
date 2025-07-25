@@ -3,7 +3,7 @@ import os
 
 import geojson
 import pystac
-from pystac.extensions.sar import FrequencyBand, Polarization, SarExtension
+from pystac.extensions.sar import FrequencyBand, Polarization
 from pystac.extensions.view import ViewExtension
 from pystac.utils import datetime_to_str
 
@@ -141,31 +141,30 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_v
             sar_instrument_mode,
         ]
     ):
-        sar = SarExtension.ext(item, add_if_missing=True)
+        item.stac_extensions.append("https://stac-extensions.github.io/sar/v1.3.0/schema.json")
+        # sar = SarExtension.ext(item, add_if_missing=True)
         if polarizations:
-            sar.polarizations = polarizations
+            item.properties["sar:polarizations"] = polarizations
         if frequency_band:
-            sar.frequency_band = frequency_band
-        if instrument_mode:
-            sar.instrument_mode = instrument_mode
+            item.properties["sar:frequency_band"] = frequency_band
         if center_frequency:
-            sar.center_frequency = center_frequency
+            item.properties["sar:center_frequency"] = center_frequency
         else:
-            sar.center_frequency = 5.405
+            item.properties["sar:center_frequency"] = 5.405
         if resolution_range:
-            sar.resolution_range = resolution_range
+            item.properties["sar:resolution_range"] = resolution_range
         if resolution_azimuth:
-            sar.resolution_azimuth = resolution_azimuth
+            item.properties["sar:resolution_azimuth"] = resolution_azimuth
         if pixel_spacing_range:
-            sar.pixel_spacing_range = pixel_spacing_range
+            item.properties["sar:pixel_spacing_range"] = pixel_spacing_range
         if observation_direction:
-            sar.observation_direction = observation_direction
+            item.properties["sar:observation_direction"] = observation_direction
         if pixel_spacing_azimuth:
-            sar.pixel_spacing_azimuth = pixel_spacing_azimuth
+            item.properties["sar:pixel_spacing_azimuth"] = pixel_spacing_azimuth
         if sar_product_type:
-            sar.product_type = sar_product_type
+            item.properties["sar:product_type"] = sar_product_type
         if sar_instrument_mode:
-            sar.instrument_mode = sar_instrument_mode
+            item.properties["sar:instrument_mode"] = sar_instrument_mode
 
     # EOPF Extension
     fill_eopf_properties(item, properties)
