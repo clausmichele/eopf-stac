@@ -155,7 +155,11 @@ def fill_processing_properties(
         if proc_expression is not None and proc_expression != "systematic":
             item.properties["processing:expression"] = proc_expression
         if proc_software is not None:
-            item.properties["processing:software"] = proc_software
+            # CPM workaround
+            if proc_software.get("name") is None and proc_software.get("version") is None:
+                item.properties["processing:software"] = proc_software
+            else:
+                item.properties["processing:software"] = {}
         if proc_datetime is not None:
             item.properties["processing:datetime"] = proc_datetime
         if is_valid_string(proc_facility) and proc_facility != "OPE,OPE,OPE":
