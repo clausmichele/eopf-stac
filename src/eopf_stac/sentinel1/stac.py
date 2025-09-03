@@ -241,9 +241,9 @@ def fix_geometry(item: pystac.Item):
 
 def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
     components = {}
-    stac_discovery_links = metadata[".zattrs"]["stac_discovery"]["links"]
-    if stac_discovery_links:
-        for component_name in stac_discovery_links:
+    component_refs = metadata[".zattrs"]["stac_discovery"]["assets"]
+    if component_refs:
+        for component_name, _ in component_refs.items():
             if isinstance(component_name, str):
                 if product_type in S1_GRD_PRODUCT_TYPES:
                     key = component_name.split("_")[6]
@@ -258,12 +258,14 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
                 elif product_type in S1_OCN_PRODUCT_TYPES:
                     key = component_name
                     for sub_component in (
-                        metadata.get(f"{component_name.lower()}/.zattrs", {}).get("stac_discovery", {}).get("links", {})
+                        metadata.get(f"{component_name.lower()}/.zattrs", {})
+                        .get("stac_discovery", {})
+                        .get("assets", {})
                     ):
                         if isinstance(sub_component, str):
                             components[component_name] = sub_component
     else:
-        raise ValueError("Links section in metadata is missing")
+        raise ValueError("No references to product components found")
 
     return components
 

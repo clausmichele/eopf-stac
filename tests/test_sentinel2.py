@@ -48,7 +48,6 @@ def test_stac_item(stac_item, product_spec):
 
     # -- Check common metadata
     check_common_metadata(stac_item)
-    # assert stac_item.id == product_spec.get("stac_item_id")
     assert stac_item.common_metadata.mission == "Sentinel-2"
     assert len(stac_item.common_metadata.providers) == 3
     assert stac_item.common_metadata.instruments == ["msi"]

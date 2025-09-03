@@ -123,9 +123,9 @@ def create_item(
     item.common_metadata.providers = SENTINEL3_METADATA["providers"]
     item.common_metadata.constellation = SENTINEL3_METADATA["constellation"]
 
-    # CPM workaround: instrument property which is not an array
-    if properties.get("instrument"):
-        item.common_metadata.instruments = [properties.get("instrument")]
+    # CPM workaround: instruments property which is not an array
+    if properties.get("instruments"):
+        item.common_metadata.instruments = [properties.get("instruments")]
 
     if properties.get("platform"):
         item.common_metadata.platform = properties.get("platform")
