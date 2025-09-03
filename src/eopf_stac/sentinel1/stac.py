@@ -21,6 +21,7 @@ from eopf_stac.common.stac import (
     fill_timestamp_properties,
     get_datetimes,
     get_identifier,
+    get_source_identifier,
     rearrange_bbox,
 )
 from eopf_stac.sentinel1.assets import create_grd_assets, create_ocn_assets, create_slc_assets
@@ -34,10 +35,16 @@ from eopf_stac.sentinel1.constants import (
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None) -> pystac.Item:
+def create_item(
+    metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None, source_href: str | None = None
+) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
+
+    # -- source identifier
+    source_identifier = get_source_identifier(source_href)
+    logger.debug(source_identifier)
 
     # -- datetimes
     datetimes = get_datetimes(properties)

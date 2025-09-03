@@ -238,3 +238,12 @@ def any_not_none(values: list) -> bool:
     for v in values:
         if v is not None:
             return True
+
+
+def get_source_identifier(source_href: str | None) -> str:
+    source_identifier = None
+    if source_href is not None:
+        if source_href.endswith("/"):
+            source_href = source_href[:-1]
+        source_identifier = source_href.split("/")[-1]
+    return source_identifier

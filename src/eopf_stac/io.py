@@ -49,7 +49,7 @@ def read_metadata(eopf_href: str) -> dict:
     return validate_metadata(zmetadata)
 
 
-def create_item(metadata: dict, eopf_href: str) -> pystac.Item:
+def create_item(metadata: dict, eopf_href: str, source_href: str | None) -> pystac.Item:
     # Determine product type
     product_type = metadata[".zattrs"]["stac_discovery"].get("properties", {}).get("product:type")
     # workaround eopf-cpm 2.4.x
@@ -63,6 +63,9 @@ def create_item(metadata: dict, eopf_href: str) -> pystac.Item:
     cpm_version = get_cpm_version(eopf_href)
     logger.info(f"CPM version is {cpm_version}")
 
+    # Handle reference to source product
+    logger.info(f"Reference to source product is {source_href}")
+
     item = None
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:
         item = create_item_s1(
@@ -70,7 +73,11 @@ def create_item(metadata: dict, eopf_href: str) -> pystac.Item:
         )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S2:
         item = create_item_s2(
-            metadata=metadata, product_type=product_type, asset_href_prefix=eopf_href, cpm_version=cpm_version
+            metadata=metadata,
+            product_type=product_type,
+            asset_href_prefix=eopf_href,
+            cpm_version=cpm_version,
+            source_href=source_href,
         )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S3:
         item = create_item_s3(

@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 from itertools import chain
 
 import antimeridian
@@ -29,6 +30,7 @@ from eopf_stac.common.stac import (
     fill_timestamp_properties,
     get_datetimes,
     get_identifier,
+    get_source_identifier,
     rearrange_bbox,
 )
 from eopf_stac.sentinel2.assets import (
@@ -53,10 +55,15 @@ from eopf_stac.sentinel2.constants import (
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None) -> pystac.Item:
+def create_item(
+    metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None, source_href: str | None = None
+) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
+
+    # -- source identifier
+    source_identifier = get_source_identifier(source_href)
 
     # -- datetimes
     datetimes = get_datetimes(properties)
@@ -126,16 +133,21 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_v
             projection.centroid = {"lat": round(centroid.y, 5), "lon": round(centroid.x, 5)}
 
     # MGRS and Grid Extension
-    mgrs_match = MGRS_PATTERN.search(stac_discovery.get("id"))
-    if mgrs_match and len(mgrs_groups := mgrs_match.groups()) == 3:
-        mgrs = MgrsExtension.ext(item, add_if_missing=True)
-        mgrs.utm_zone = int(mgrs_groups[0])
-        mgrs.latitude_band = mgrs_groups[1]
-        mgrs.grid_square = mgrs_groups[2]
-        grid = GridExtension.ext(item, add_if_missing=True)
-        grid.code = f"MGRS-{mgrs.utm_zone}{mgrs.latitude_band}{mgrs.grid_square}"
+    if source_identifier is not None:
+        mgrs_match = MGRS_PATTERN.search(source_identifier)
+        if mgrs_match and len(mgrs_groups := mgrs_match.groups()) == 3:
+            mgrs = MgrsExtension.ext(item, add_if_missing=True)
+            mgrs.utm_zone = int(mgrs_groups[0])
+            mgrs.latitude_band = mgrs_groups[1]
+            mgrs.grid_square = mgrs_groups[2]
+            grid = GridExtension.ext(item, add_if_missing=True)
+            grid.code = f"MGRS-{mgrs.utm_zone}{mgrs.latitude_band}{mgrs.grid_square}"
+        else:
+            logger.warning(f"Error populating MGRS and Grid Extensions fields from identifier: {source_identifier}")
     else:
-        logger.warning(f"Error populating MGRS and Grid Extensions fields from ID: {stac_discovery.get('id')}")
+        logger.warning(
+            "MGRS and Grid Extensions fields will not be available due to missing identifier of source product"
+        )
 
     # View Extension
     sun_azimuth = other_metadata.get("mean_sun_azimuth_angle_in_deg_for_all_bands_all_detectors")
@@ -149,7 +161,13 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_v
         # TODO view.azimuth view.incidence_angle
 
     # Processing Extension
-    baseline_version = get_baseline_processing_version(item.id)
+    if source_identifier is not None:
+        baseline_version = get_baseline_processing_version(source_identifier)
+        if baseline_version is None:
+            logger.warning(f"Error populating processing:version field from identifier: {source_identifier}")
+    else:
+        baseline_version = None
+        logger.warning("Property processing:version will not be available due to missing identifier of source product")
     fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
@@ -201,7 +219,12 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str, cpm_v
     return item
 
 
-def get_baseline_processing_version(identifier: str) -> str:
+def get_baseline_processing_version(identifier: str) -> str | None:
     # S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125
     # S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750
-    return f"{identifier[28:30]}.{identifier[30:32]}"
+    proc_version_pattern = re.compile(r"_N(\d{2})(\d{2})")
+    proc_version_match = proc_version_pattern.search(identifier)
+    if proc_version_match and len(proc_version_groups := proc_version_match.groups()) == 2:
+        return f"{proc_version_groups[0]}.{proc_version_groups[1]}"
+    else:
+        return None

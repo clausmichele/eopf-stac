@@ -73,6 +73,7 @@ def create_stac_item_s1(test_product: dict):
 def create_stac_item_s2(test_product: dict):
     path = test_product.get("path")
     cpm = test_product.get("cpm")
+    source_uri = test_product.get("source_uri")
 
     eopf_id = os.path.splitext(os.path.basename(path))[0]
     url = f"s3://eopf-data/cpm-{cpm}/{eopf_id}.zarr"
@@ -82,10 +83,7 @@ def create_stac_item_s2(test_product: dict):
     product_type = get_product_type(metadata)
 
     return create_item_s2(
-        metadata=metadata,
-        product_type=product_type,
-        asset_href_prefix=url,
-        cpm_version=cpm,
+        metadata=metadata, product_type=product_type, asset_href_prefix=url, cpm_version=cpm, source_href=source_uri
     )
 
 
