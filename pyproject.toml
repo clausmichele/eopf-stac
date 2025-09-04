@@ -25,7 +25,8 @@ dependencies = [
     "stactools-sentinel2 >= 0.6.5",
     "geojson",
     "xarray",
-    "netCDF4 == 1.7.2"
+    "netCDF4 == 1.7.2",
+    "footprint-facility"
 ]
 [project.optional-dependencies]
 dev = [

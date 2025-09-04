@@ -1,7 +1,6 @@
 import logging
 import os
 
-import geojson
 import pystac
 from pystac.extensions.sar import FrequencyBand, Polarization
 from pystac.extensions.view import ViewExtension
@@ -19,6 +18,7 @@ from eopf_stac.common.stac import (
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fix_geometry,
     get_datetimes,
     get_identifier,
     get_source_identifier,
@@ -61,6 +61,9 @@ def create_item(
         start_datetime=start_datetime,
         end_datetime=end_datetime,
     )
+
+    # -- Geometry (fix antimeridian, unclosed ring, etc)
+    fix_geometry(item)
 
     # -- Common metadata
 
@@ -216,27 +219,9 @@ def create_item(
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
 
-    # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/708
-    fix_geometry(item=item)
-
     return item
-
-
-def fix_geometry(item: pystac.Item):
-    coordinates = geojson.Polygon.clean_coordinates(coords=item.geometry["coordinates"], precision=15)
-    first_coord = coordinates[0][0]
-
-    # Append first coordinate to polygon
-    coordinates[0].append(first_coord)
-
-    # Validate new coordinates
-    polygon = geojson.Polygon(coordinates=coordinates, validate=True)
-
-    # Upate item geomatry
-    item.geometry = polygon
 
 
 def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:

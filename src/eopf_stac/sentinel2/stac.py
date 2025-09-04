@@ -28,6 +28,7 @@ from eopf_stac.common.stac import (
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fix_geometry,
     get_datetimes,
     get_identifier,
     get_source_identifier,
@@ -82,6 +83,9 @@ def create_item(
         start_datetime=start_datetime,
         end_datetime=end_datetime,
     )
+
+    # -- Geometry (fix antimeridian, unclosed ring, etc)
+    fix_geometry(item)
 
     # -- Common metadata
 

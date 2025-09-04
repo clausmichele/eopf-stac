@@ -1,7 +1,12 @@
+import json
+import logging
 import os
 import re
 
+import geojson
 import pystac
+import shapely
+from footprint_facility import rework_to_polygon_geometry
 from pystac.extensions.eo import EOExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
@@ -12,6 +17,8 @@ from eopf_stac.common.constants import (
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def validate_metadata(metadata: dict) -> dict:
@@ -86,6 +93,21 @@ def get_cpm_version(path: str) -> str | None:
         return cpm_version
 
     return None
+
+
+def fix_geometry(item: pystac.Item) -> None:
+    coordinates = geojson.Polygon.clean_coordinates(coords=item.geometry["coordinates"], precision=15)
+    first_coord = coordinates[0][0]
+    last_coord = coordinates[0][-1]
+    if first_coord != last_coord:
+        # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/708
+        logger.info("Fixing coordinates to end linear ring where it started")
+        coordinates[0].append(first_coord)
+        item.geometry["coordinates"] = coordinates
+
+    geometry = shapely.from_geojson(json.dumps(item.geometry))
+    reworked = rework_to_polygon_geometry(geometry)
+    item.geometry = json.loads(shapely.to_geojson(reworked))
 
 
 def fill_timestamp_properties(item: pystac.Item, properties: dict) -> None:
