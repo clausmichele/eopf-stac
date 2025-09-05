@@ -13,6 +13,7 @@ from eopf_stac.common.constants import (
     SENTINEL_PROVIDER,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eopf_properties,
     fill_processing_properties,
     fill_product_properties,
@@ -21,7 +22,6 @@ from eopf_stac.common.stac import (
     fix_geometry,
     get_datetimes,
     get_identifier,
-    get_source_identifier,
     rearrange_bbox,
 )
 from eopf_stac.sentinel1.assets import create_grd_assets, create_ocn_assets, create_slc_assets
@@ -36,15 +36,16 @@ logger = logging.getLogger(__name__)
 
 
 def create_item(
-    metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None, source_href: str | None = None
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
-
-    # -- source identifier
-    source_identifier = get_source_identifier(source_href)
-    logger.debug(source_identifier)
 
     # -- datetimes
     datetimes = get_datetimes(properties)
@@ -220,6 +221,8 @@ def create_item(
 
     # -- Links
     item.links.append(SENTINEL_LICENSE)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
 

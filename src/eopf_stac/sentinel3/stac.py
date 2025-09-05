@@ -17,6 +17,7 @@ from eopf_stac.common.constants import (
     THUMBNAIL_ASSET,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eo_properties,
     fill_eopf_properties,
     fill_processing_properties,
@@ -26,7 +27,6 @@ from eopf_stac.common.stac import (
     fix_geometry,
     get_datetimes,
     get_identifier,
-    get_source_identifier,
     is_valid_string,
     rearrange_bbox,
 )
@@ -92,15 +92,16 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
 
 
 def create_item(
-    metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None, source_href: str | None = None
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     # other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
-
-    # -- source identifier
-    source_identifier = get_source_identifier(source_href)
-    logger.debug(source_identifier)
 
     # -- datetimes
     datetimes = get_datetimes(properties)
@@ -202,5 +203,7 @@ def create_item(
     # -- Links
 
     item.links.append(SENTINEL_LICENSE)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item

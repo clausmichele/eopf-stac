@@ -8,6 +8,8 @@ from pystac.provider import ProviderRole
 
 from eopf_stac.common.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
+CDSE_STAC_API_URL = "https://stac.dataspace.copernicus.eu/v1"
+
 SUPPORTED_PRODUCT_TYPES_S1 = [
     "S01SIWGRH",
     "S01SSMGRH",

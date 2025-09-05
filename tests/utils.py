@@ -83,7 +83,7 @@ def create_stac_item_s2(test_product: dict):
     product_type = get_product_type(metadata)
 
     return create_item_s2(
-        metadata=metadata, product_type=product_type, asset_href_prefix=url, cpm_version=cpm, source_href=source_uri
+        metadata=metadata, product_type=product_type, asset_href_prefix=url, cpm_version=cpm, cdse_scene_id=source_uri
     )
 
 

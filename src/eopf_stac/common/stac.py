@@ -7,6 +7,7 @@ import geojson
 import pystac
 import shapely
 from footprint_facility import rework_to_polygon_geometry
+from pystac import Link
 from pystac.extensions.eo import EOExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
@@ -111,11 +112,12 @@ def fix_geometry(item: pystac.Item) -> None:
 
 
 def fill_timestamp_properties(item: pystac.Item, properties: dict) -> None:
-    created_datetime = properties.get("created")
-    if created_datetime is None:
-        created_datetime = now_in_utc()
-    else:
-        created_datetime = str_to_datetime(created_datetime)
+    # created_datetime_str = properties.get("created")
+    # created_datetime = None
+    # if created_datetime_str is None:
+    created_datetime = now_in_utc()
+    # else:
+    #    created_datetime = str_to_datetime(created_datetime_str)
     item.common_metadata.created = created_datetime
     item.common_metadata.updated = created_datetime
 
@@ -162,7 +164,7 @@ def fill_processing_properties(
     # CPM workarounds:
     # Some invalid values are ignored:
     # - "processing:expression": "systematic",
-    # - "processing:facility": "OPE,OPE,OPE",
+    # - "processing:facility": "OPE,OPE,OPE" or ["OPE","OPE","OPE"]
     # Baseline processing version is added
     # CPM version is added
 
@@ -170,6 +172,8 @@ def fill_processing_properties(
     proc_lineage = properties.get("processing:lineage")
     proc_level = properties.get("processing:level")
     proc_facility = properties.get("processing:facility")
+    if type(proc_facility) is list and len(proc_facility) > 0:
+        proc_facility = proc_facility[0]
     proc_datetime = properties.get("processing:datetime")
     proc_software = properties.get("processing:software")
     if any_not_none([proc_expression, proc_facility, proc_level, proc_lineage, proc_software, proc_datetime]):
@@ -184,7 +188,7 @@ def fill_processing_properties(
                 item.properties["processing:software"] = {}
         if proc_datetime is not None:
             item.properties["processing:datetime"] = proc_datetime
-        if is_valid_string(proc_facility) and proc_facility != "OPE,OPE,OPE":
+        if is_valid_string(proc_facility):
             item.properties["processing:facility"] = proc_facility
         if is_valid_string(proc_level):
             item.properties["processing:level"] = proc_level
@@ -266,10 +270,10 @@ def any_not_none(values: list) -> bool:
             return True
 
 
-def get_source_identifier(source_href: str | None) -> str:
-    source_identifier = None
-    if source_href is not None:
-        if source_href.endswith("/"):
-            source_href = source_href[:-1]
-        source_identifier = source_href.split("/")[-1]
-    return source_identifier
+def create_cdse_link(cdse_scene_href: str) -> Link:
+    return Link(
+        rel="alternate",
+        title="CDSE STAC item",
+        target=cdse_scene_href,
+        media_type="application/geo+json",
+    )

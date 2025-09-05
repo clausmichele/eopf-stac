@@ -77,9 +77,7 @@ def main():
         metadata = read_metadata(args.URL)
 
         logger.info(f"Creating STAC item for {args.URL} ...")
-        if args.source_uri is None or len(args.source_uri) == 0:
-            logger.warning("No reference to source product provided. Some STAC properties might not be available!")
-        item = create_item(metadata=metadata, eopf_href=args.URL, source_href=args.source_uri)
+        item = create_item(metadata=metadata, eopf_href=args.URL, source_uri=args.source_uri)
         logger.debug(json.dumps(item.to_dict(), indent=4))
 
         if not args.dry_run:

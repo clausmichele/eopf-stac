@@ -22,6 +22,7 @@ from eopf_stac.common.constants import (
     SENTINEL_PROVIDER,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eo_properties,
     fill_eopf_properties,
     fill_processing_properties,
@@ -31,7 +32,6 @@ from eopf_stac.common.stac import (
     fix_geometry,
     get_datetimes,
     get_identifier,
-    get_source_identifier,
     rearrange_bbox,
 )
 from eopf_stac.sentinel2.assets import (
@@ -57,14 +57,16 @@ logger = logging.getLogger(__name__)
 
 
 def create_item(
-    metadata: dict, product_type: str, asset_href_prefix: str, cpm_version: str = None, source_href: str | None = None
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
-
-    # -- source identifier
-    source_identifier = get_source_identifier(source_href)
 
     # -- datetimes
     datetimes = get_datetimes(properties)
@@ -137,8 +139,8 @@ def create_item(
             projection.centroid = {"lat": round(centroid.y, 5), "lon": round(centroid.x, 5)}
 
     # MGRS and Grid Extension
-    if source_identifier is not None:
-        mgrs_match = MGRS_PATTERN.search(source_identifier)
+    if cdse_scene_id is not None:
+        mgrs_match = MGRS_PATTERN.search(cdse_scene_id)
         if mgrs_match and len(mgrs_groups := mgrs_match.groups()) == 3:
             mgrs = MgrsExtension.ext(item, add_if_missing=True)
             mgrs.utm_zone = int(mgrs_groups[0])
@@ -147,7 +149,7 @@ def create_item(
             grid = GridExtension.ext(item, add_if_missing=True)
             grid.code = f"MGRS-{mgrs.utm_zone}{mgrs.latitude_band}{mgrs.grid_square}"
         else:
-            logger.warning(f"Error populating MGRS and Grid Extensions fields from identifier: {source_identifier}")
+            logger.warning(f"Error populating MGRS and Grid Extensions fields from identifier: {cdse_scene_id}")
     else:
         logger.warning(
             "MGRS and Grid Extensions fields will not be available due to missing identifier of source product"
@@ -165,10 +167,10 @@ def create_item(
         # TODO view.azimuth view.incidence_angle
 
     # Processing Extension
-    if source_identifier is not None:
-        baseline_version = get_baseline_processing_version(source_identifier)
+    if cdse_scene_id is not None:
+        baseline_version = get_baseline_processing_version(cdse_scene_id)
         if baseline_version is None:
-            logger.warning(f"Error populating processing:version field from identifier: {source_identifier}")
+            logger.warning(f"Error populating processing:version field from identifier: {cdse_scene_id}")
     else:
         baseline_version = None
         logger.warning("Property processing:version will not be available due to missing identifier of source product")
@@ -217,8 +219,9 @@ def create_item(
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
 
