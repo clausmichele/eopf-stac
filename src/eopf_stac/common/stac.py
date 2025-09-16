@@ -17,6 +17,7 @@ from eopf_stac.common.constants import (
     EOPF_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
+    VERSION_EXTENSION_SCHEMA_URI,
 )
 
 logger = logging.getLogger(__name__)
@@ -258,6 +259,12 @@ def fill_eopf_properties(item: pystac.Item, properties: dict) -> None:
             item.properties["eopf:datastrip_id"] = datastrip_id
         if instrument_configuration_id is not None:
             item.properties["eopf:instrument_configuration_id"] = instrument_configuration_id
+
+
+def fill_version_properties(item: pystac.Item) -> None:
+    if item is not None:
+        item.properties["deprecated"] = False
+        item.stac_extensions.append(VERSION_EXTENSION_SCHEMA_URI)
 
 
 def is_valid_string(value: str) -> bool:

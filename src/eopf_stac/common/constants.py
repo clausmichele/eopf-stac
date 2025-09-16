@@ -155,3 +155,5 @@ def get_item_asset_product():
 PRODUCT_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/product/v0.1.0/schema.json"
 PROCESSING_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
 EOPF_EXTENSION_SCHEMA_URI = "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json"
+VERSION_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/version/v1.2.0/schema.json"
+RASTER_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/raster/v2.0.0/schema.json"

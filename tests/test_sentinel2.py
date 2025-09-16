@@ -44,7 +44,9 @@ def stac_item(product_spec):
 
 
 def test_stac_item(stac_item, product_spec):
+    # import json
     # print(json.dumps(stac_item.to_dict(), indent=2))
+    # pytest.fail()
 
     # -- Check common metadata
     check_common_metadata(stac_item)
@@ -52,7 +54,7 @@ def test_stac_item(stac_item, product_spec):
     assert len(stac_item.common_metadata.providers) == 3
     assert stac_item.common_metadata.instruments == ["msi"]
     assert stac_item.common_metadata.gsd == 10
-    assert len(stac_item.stac_extensions) == 12
+    assert len(stac_item.stac_extensions) == 13
 
     # -- Check processing extension
     assert stac_item.properties.get("processing:version") == product_spec.get("baseline_version")

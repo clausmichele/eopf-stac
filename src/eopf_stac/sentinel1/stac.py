@@ -19,6 +19,7 @@ from eopf_stac.common.stac import (
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fill_version_properties,
     fix_geometry,
     get_datetimes,
     get_identifier,
@@ -179,6 +180,9 @@ def create_item(
 
     # EOPF Extension
     fill_eopf_properties(item, properties)
+
+    # Version Extension
+    fill_version_properties(item)
 
     logger.debug("Getting product components...")
     product_components = get_product_components(metadata=metadata, product_type=product_type)

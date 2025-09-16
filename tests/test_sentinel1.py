@@ -110,7 +110,7 @@ def test_stac_item(stac_item, product_spec):
     assert stac_item.common_metadata.mission == "Sentinel-1"
     assert len(stac_item.common_metadata.providers) == 3
     assert stac_item.common_metadata.instruments == ["sar"]
-    assert len(stac_item.stac_extensions) == 6
+    assert len(stac_item.stac_extensions) == 7
 
     # -- Check processing extension
     # assert stac_item.properties.get("processing:version") == product_spec.get("baseline_version")
