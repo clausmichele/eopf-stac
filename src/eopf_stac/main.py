@@ -53,7 +53,12 @@ def exit_on_error(exit_code: int = 1):
 
 def main():
     parser = argparse.ArgumentParser("eopf-stac.py")
-    parser.add_argument("URL", help="Local file path or S3 URL to the EOPF product.", type=str)
+    parser.add_argument("URL", help="Local file path or URL to the EOPF product", type=str)
+    parser.add_argument(
+        "--source-uri",
+        help="Reference to the original product which was input for the EOPF conversion",
+        action="store",
+    )
     parser.add_argument(
         "--dry-run", help="Create STAC item without trying to insert it into the catalog", action="store_true"
     )
@@ -72,7 +77,7 @@ def main():
         metadata = read_metadata(args.URL)
 
         logger.info(f"Creating STAC item for {args.URL} ...")
-        item = create_item(metadata=metadata, eopf_href=args.URL)
+        item = create_item(metadata=metadata, eopf_href=args.URL, source_uri=args.source_uri)
         logger.debug(json.dumps(item.to_dict(), indent=4))
 
         if not args.dry_run:

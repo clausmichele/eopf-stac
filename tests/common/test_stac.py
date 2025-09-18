@@ -3,20 +3,33 @@ import datetime
 import pytest
 from dateutil.tz import tzutc
 
-from eopf_stac.common.stac import get_datetimes, get_identifier, rearrange_bbox, validate_metadata
+from eopf_stac.common.stac import (
+    get_datetimes,
+    get_identifier_from_href,
+    rearrange_bbox,
+    validate_metadata,
+)
 
 
 class TestSTAC:
-    def test_get_identifier(self):
-        tests = {
-            "S1A_S2_GRDH_1SDH_20250408T213530_20250408T213554_058671_0743C6_742E.SAFE": "S1A_S2_GRDH_1SDH_20250408T213530_20250408T213554_058671_0743C6_742E",
-            "S3A_OL_2_WFR____20250416T102344_20250416T102644_20250416T121904_0179_125_008_2340_MAR_O_NR_003.SEN3": "S3A_OL_2_WFR____20250416T102344_20250416T102644_20250416T121904_0179_125_008_2340_MAR_O_NR_003",
-            "S1A_IW_GRDH_1SDV_20250319T002519_20250319T002544_058366_07377B_ABA5.SAFE": "S1A_IW_GRDH_1SDV_20250319T002519_20250319T002544_058366_07377B_ABA5",
-        }
+    def test_get_identifier_from_href(self):
+        tests = [
+            "S1A_S2_GRDH_1SDH_20250408T213530_20250408T213554_058671_0743C6_742E.SAFE",
+            "S3A_OL_2_WFR____20250416T102344_20250416T102644_20250416T121904_0179_125_008_2340_MAR_O_NR_003.SEN3/",
+            "S02MSIL2A_20250109T100401_0000_A122_T323.zarr",
+            "s3://eopf-data/cpm_v261/S01SSMGRD_20250408T213530_0024_A149__8D6.zarr",
+            "/path/to/data/converted/cpm-2.6.1/S03SLSFRP_20250512T184151_0180_A384_SBFC.zarr",
+            "https://objects.eodc.eu/e05ab01a9d56408d82ac32d69a5aae2a:202507-s02msil2a/23/products/cpm_v256/S2A_MSIL2A_20250723T033201_N0511_R018_T48QUF_20250723T082115.zarr",
+        ]
 
-        for actual, expected in tests.items():
-            metadata = {"id": actual}
-            assert expected == get_identifier(metadata)
+        for href in tests:
+            identifier = get_identifier_from_href(href)
+            assert identifier is not None
+            assert len(identifier) > 0
+            assert not identifier.endswith("/")
+            assert not identifier.endswith(".zarr")
+            assert not identifier.endswith(".SAFE")
+            assert not identifier.endswith(".SEN3")
 
     def test_validate_metadata(self):
         zattrs = {".zattrs": {"stac_discovery": {}, "other_metadata": {}}}

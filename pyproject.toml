@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "eopf-stac"
-version = "0.9.1"
+version = "0.10.0"
 authors = [
     { name="Mario Winkler", email="mario.winkler@dlr.de" }
 ]
@@ -24,7 +24,9 @@ dependencies = [
     "stactools-sentinel3 >= 0.4.0",
     "stactools-sentinel2 >= 0.6.5",
     "geojson",
-    "xarray"
+    "xarray",
+    "netCDF4 == 1.7.2",
+    "footprint-facility"
 ]
 [project.optional-dependencies]
 dev = [

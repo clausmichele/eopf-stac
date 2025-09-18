@@ -1,18 +1,25 @@
+import re
 from copy import deepcopy
 from typing import Final
 
 import pystac
-from pystac.collection import ItemAssetDefinition
+from pystac.item_assets import ItemAssetDefinition
 from pystac.link import Link
 from pystac.provider import ProviderRole
 
 from eopf_stac.common.eopf_xarray import EopfXarrayBackendConfig, OpMode
 
+CDSE_STAC_API_URL = "https://stac.dataspace.copernicus.eu/v1"
+
 SUPPORTED_PRODUCT_TYPES_S1 = [
     "S01SIWGRH",
     "S01SSMGRH",
     "S01SEWGRH",
+    "S01SIWGRD",
+    "S01SSMGRD",
+    "S01SEWGRD",
     "S01SIWSLC",
+    "S01SIVSLC",  # CPM workaround
     "S01SWVSLC",
     "S01SSMSLC",
     "S01SEWSLC",
@@ -27,38 +34,38 @@ SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES = ["S03OLCEFR", "S03OLCERR"]
 SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES = ["S03OLCLFR", "S03OLCLRR"]
 SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES = ["S03SLSRBT"]
 SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE = ["S03SLSLST"]
-# SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE = ["S03SLSFRP"]  # conversion error
+SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE = ["S03SLSFRP"]
+SUPPORTED_S3_SYN_L2_PRODUCT_TYPES = [
+    "S03SYNSDR",
+    "S03SYNVGP",
+    "S03SYNVG1",
+    "S03SYNV10",
+    "S03SYNAOD",
+]
 SUPPORTED_PRODUCT_TYPES_S3 = (
     SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES
     + SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES
     + SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES
     + SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE
+    + SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE
+    + SUPPORTED_S3_SYN_L2_PRODUCT_TYPES
 )
 
-# Other Sentinen-3 product types to support
-SUPPORTED_S3_SRAL_L1_PRODUCT_TYPES = ["S03AHRL1B"]  # sentinel-3-sra-l1b
-SUPPORTED_S3_SRAL_L2_PRODUCT_TYPES = ["S03AHRL2H"]  # sentinel-3-sra-l2-lan-hy
-SUPPORTED_S3_SYN_L2_PRODUCT_TYPES = [
-    "S03SYNAOD",
-    "S03SYNSDR",
-    "S03SYNV10",
-    "S03SYNVG1",
-    "S03SYNVGK",
-    "S03SYNVGP",
-]  # sentinel-3-syn-l2-aod, sentinel-3-syn-l2, sentinel-3-syn-l2-v10, sentinel-3-syn-l2-vg1, ?, sentinel-3-syn-l2-vgp
 
-
-# other SRAL listed in [1]
-#   - S03AHRL1A (SR_1_SRA_A_), S03ALRL1A (SR_1_SRA_A_), S03ALRL1B (SR_1_SRA_BS), S03ALRL2H (SR_2_LAN_HY)
-# other SYN listed in [1]: S03SYNMIS
-
+# SUPPORTED_S3_SRAL_L1_PRODUCT_TYPES = ["S03AHRL1B"]  # sentinel-3-sra-l1b
+# SUPPORTED_S3_SRAL_L2_PRODUCT_TYPES = ["S03AHRL2H"]  # sentinel-3-sra-l2-lan-hy
+# other SRAL listed: S03AHRL1A (SR_1_SRA_A_), S03ALRL1A (SR_1_SRA_A_), S03ALRL1B (SR_1_SRA_BS), S03ALRL2H (SR_2_LAN_HY)
 # [1] https://cpm.pages.eopf.copernicus.eu/eopf-cpm/main/PSFD/3-product-types-naming-rules.html
 
 PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SIWGRH": "sentinel-1-l1-grd",
     "S01SSMGRH": "sentinel-1-l1-grd",
     "S01SEWGRH": "sentinel-1-l1-grd",
+    "S01SEWGRD": "sentinel-1-l1-grd",
+    "S01SIWGRD": "sentinel-1-l1-grd",
+    "S01SSMGRD": "sentinel-1-l1-grd",
     "S01SIWSLC": "sentinel-1-l1-slc",
+    "S01SIVSLC": "sentinel-1-l1-slc",  # CPM workaround
     "S01SWVSLC": "sentinel-1-l1-slc",
     "S01SSMSLC": "sentinel-1-l1-slc",
     "S01SEWSLC": "sentinel-1-l1-slc",
@@ -75,6 +82,11 @@ PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S03SLSRBT": "sentinel-3-slstr-l1-rbt",
     "S03SLSFRP": "sentinel-3-slstr-l2-frp",
     "S03SLSLST": "sentinel-3-slstr-l2-lst",
+    "S03SYNSDR": "sentinel-3-syn-l2",
+    "S03SYNVGP": "sentinel-3-syn-l2-vgp",
+    "S03SYNVG1": "sentinel-3-syn-l2-vg1",
+    "S03SYNV10": "sentinel-3-syn-l2-v10",
+    "S03SYNAOD": "sentinel-3-syn-l2-aod",
 }
 
 MEDIA_TYPE_ZARR = "application/vnd+zarr"
@@ -152,3 +164,9 @@ def get_item_asset_product():
 PRODUCT_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/product/v0.1.0/schema.json"
 PROCESSING_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
 EOPF_EXTENSION_SCHEMA_URI = "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json"
+VERSION_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/version/v1.2.0/schema.json"
+RASTER_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/raster/v2.0.0/schema.json"
+
+S2_MGRS_PATTERN: Final[re.Pattern[str]] = re.compile(
+    r"_T(\d{1,2})([CDEFGHJKLMNPQRSTUVWX])([ABCDEFGHJKLMNPQRSTUVWXYZ][ABCDEFGHJKLMNPQRSTUV])"
+)

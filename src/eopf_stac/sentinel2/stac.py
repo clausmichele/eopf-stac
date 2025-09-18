@@ -1,10 +1,10 @@
 import logging
 import os
+import re
 from itertools import chain
 
 import antimeridian
 import pystac
-from pystac.extensions.grid import GridExtension
 from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.scientific import ItemScientificExtension
 from pystac.extensions.view import ViewExtension
@@ -12,7 +12,6 @@ from stactools.sentinel2.constants import (
     SENTINEL_CONSTELLATION,
     SENTINEL_INSTRUMENTS,
 )
-from stactools.sentinel2.mgrs import MgrsExtension
 
 from eopf_stac.common.constants import (
     EOPF_PROVIDER,
@@ -21,14 +20,18 @@ from eopf_stac.common.constants import (
     SENTINEL_PROVIDER,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eo_properties,
     fill_eopf_properties,
+    fill_mgrs_grid_properties,
     fill_processing_properties,
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fill_version_properties,
+    fix_geometry,
     get_datetimes,
-    get_identifier,
+    get_identifier_from_href,
     rearrange_bbox,
 )
 from eopf_stac.sentinel2.assets import (
@@ -47,13 +50,19 @@ from eopf_stac.sentinel2.constants import (
     L2A_BAND_ASSETS_TO_PATH,
     L2A_SCL_ASSETS_TO_PATH,
     L2A_TCI_ASSETS_TO_PATH,
-    MGRS_PATTERN,
 )
 
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> pystac.Item:
+def create_item(
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
+) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
@@ -66,8 +75,10 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
 
     bbox = rearrange_bbox(stac_discovery.get("bbox"))
 
+    identifier = get_identifier_from_href(asset_href_prefix)
+
     item = pystac.Item(
-        id=get_identifier(stac_discovery),
+        id=identifier,
         bbox=bbox,
         geometry=stac_discovery.get("geometry"),
         properties={},
@@ -75,6 +86,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         start_datetime=start_datetime,
         end_datetime=end_datetime,
     )
+
+    # -- Geometry (fix antimeridian, unclosed ring, etc)
+    fix_geometry(item)
 
     # -- Common metadata
 
@@ -126,16 +140,15 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
             projection.centroid = {"lat": round(centroid.y, 5), "lon": round(centroid.x, 5)}
 
     # MGRS and Grid Extension
-    mgrs_match = MGRS_PATTERN.search(stac_discovery.get("id"))
-    if mgrs_match and len(mgrs_groups := mgrs_match.groups()) == 3:
-        mgrs = MgrsExtension.ext(item, add_if_missing=True)
-        mgrs.utm_zone = int(mgrs_groups[0])
-        mgrs.latitude_band = mgrs_groups[1]
-        mgrs.grid_square = mgrs_groups[2]
-        grid = GridExtension.ext(item, add_if_missing=True)
-        grid.code = f"MGRS-{mgrs.utm_zone}{mgrs.latitude_band}{mgrs.grid_square}"
-    else:
-        logger.warning(f"Error populating MGRS and Grid Extensions fields from ID: {stac_discovery.get('id')}")
+    # First try to extract mgrs fields from identifier
+    mgrs_grid = fill_mgrs_grid_properties(item=item, identifier=identifier)
+    if not mgrs_grid:
+        logger.warning(f"Unable to populate MGRS and Grid Extensions fields from: {identifier}")
+        if cdse_scene_id is not None:
+            # Retry with csde scene id
+            mgrs_grid = fill_mgrs_grid_properties(item=item, identifier=cdse_scene_id)
+            if not mgrs_grid:
+                logger.warning(f"Unable to populate MGRS and Grid Extensions fields from: {cdse_scene_id}")
 
     # View Extension
     sun_azimuth = other_metadata.get("mean_sun_azimuth_angle_in_deg_for_all_bands_all_detectors")
@@ -149,7 +162,15 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         # TODO view.azimuth view.incidence_angle
 
     # Processing Extension
-    fill_processing_properties(item, properties)
+    baseline_version = get_baseline_processing_version(identifier)
+    if baseline_version is None:
+        logger.warning(f"Unable to populate processing:version field from: {identifier}")
+        if cdse_scene_id is not None:
+            baseline_version = get_baseline_processing_version(cdse_scene_id)
+            if baseline_version is None:
+                logger.warning(f"Unable to populate processing:version field from: {cdse_scene_id}")
+
+    fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
     fill_product_properties(item, product_type, properties)
@@ -161,6 +182,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
 
     # EOPF Extension
     fill_eopf_properties(item, properties)
+
+    # Version Extension
+    fill_version_properties(item)
 
     # -- Assets
 
@@ -194,7 +218,21 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
+
+
+def get_baseline_processing_version(identifier: str) -> str | None:
+    # S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125
+    # S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750
+    proc_version = None
+    if identifier is not None:
+        proc_version_pattern = re.compile(r"_N(\d{2})(\d{2})")
+        proc_version_match = proc_version_pattern.search(identifier)
+        if proc_version_match and len(proc_version_groups := proc_version_match.groups()) == 2:
+            proc_version = f"{proc_version_groups[0]}.{proc_version_groups[1]}"
+
+    return proc_version

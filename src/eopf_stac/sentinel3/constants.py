@@ -314,13 +314,62 @@ SLSTR_L2_LST_ASSETS_KEY_TO_PATH: dict[str:str] = {
 }
 
 SLSTR_L2_FRP_ASSETS: dict[str, ItemAssetDefinition] = {
+    "FRP_an": ItemAssetDefinition.create(
+        title="FRP_an measurements",
+        media_type=pystac.MediaType.ZARR,
+        description=None,
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S05", "S06", "S07", "S10"])},
+    ),
+    "FRP_bn": ItemAssetDefinition.create(
+        title="FRP_bn measurements",
+        media_type=pystac.MediaType.ZARR,
+        description=None,
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S05", "S06", "S07", "S10"])},
+    ),
+    "FRP_in": ItemAssetDefinition.create(
+        title="FRP_in measurements",
+        media_type=pystac.MediaType.ZARR,
+        description=None,
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={"bands": get_slstr_bands(["S05", "S06", "S07", "S10"])},
+    ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
 }
 
 SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
+    "FRP_an": "measurements/anadir",
+    "FRP_bn": "measurements/bnadir",
+    "FRP_in": "measurements/inadir",
     PRODUCT_ASSET_KEY: "",
     PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
+}
+
+SYN_L2_AOD_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SYN_L2_VGP_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SYN_L2_VG1_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SYN_L2_V10_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+}
+
+SYN_L2_SYN_ASSETS: dict[str, ItemAssetDefinition] = {
+    PRODUCT_ASSET_KEY: get_item_asset_product(),
+    PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
 }
 
 # -- Collection metadata
@@ -335,7 +384,7 @@ S3_OLCI_L1_EFR = {
     ),
     "product_type": "S03OLCEFR",
     "processing_level": "L1",
-    "instrument": "olci",
+    "instruments": ["olci"],
     "gsd": [300],
     "item_assets": {**OLCI_L1_ASSETS},
 }
@@ -350,7 +399,7 @@ S3_OLCI_L1_ERR = {
     ),
     "product_type": "S03OLCERR",
     "processing_level": "L1",
-    "instrument": "olci",
+    "instruments": ["olci"],
     "gsd": [1200],
     "item_assets": {**OLCI_L1_ASSETS},
 }
@@ -363,7 +412,7 @@ S3_OLCI_L2_LFR = {
     ),
     "product_type": "S03OLCLFR",
     "processing_level": "L2",
-    "instrument": "olci",
+    "instruments": ["olci"],
     "gsd": [300],
     "item_assets": {**OLCI_L2_ASSETS},
 }
@@ -376,7 +425,7 @@ S3_OLCI_L2_LRR = {
     ),
     "product_type": "S03OLCLRR",
     "processing_level": "L2",
-    "instrument": "olci",
+    "instruments": ["olci"],
     "gsd": [1200],
     "item_assets": {**OLCI_L2_ASSETS},
 }
@@ -391,7 +440,7 @@ S3_SLSTR_L1_RBT = {
     ),
     "product_type": "S03SLSRBT",
     "processing_level": "L1",
-    "instrument": "slstr",
+    "instruments": ["slstr"],
     "gsd": [500, 1000],
     "item_assets": {**SLSTR_L1_ASSETS},
 }
@@ -402,7 +451,7 @@ S3_SLSTR_L2_LST = {
     "description": "The Sentinel-3 SLSTR Level-2 LST product provides land surface temperature.",
     "product_type": "S03SLSLST",
     "processing_level": "L2",
-    "instrument": "slstr",
+    "instruments": ["slstr"],
     "gsd": [500, 1000],
     "item_assets": {**SLSTR_L2_LST_ASSETS},
 }
@@ -415,12 +464,80 @@ S3_SLSTR_L2_FRP = {
     ),
     "product_type": "S03SLSFRP",
     "processing_level": "L2",
-    "instrument": "slstr",
+    "instruments": ["slstr"],
     "gsd": [500, 1000],
     "item_assets": {**SLSTR_L2_FRP_ASSETS},
 }
 
-# TBD: SRAL, SYN
+S3_SYN_L2_AOD = {
+    "id": "sentinel-3-syn-l2-aod",
+    "title": "Sentinel-3 SYN Level-2 AOD",
+    "description": (
+        "The Sentinel-3 Level-2 AOD product is a global product over land and sea providing aerosol "
+        "optical thickness, surface reflectance and several aerosol characteristics on a wider resolution (4.5 km)."
+    ),
+    "product_type": "S03SYNAOD",
+    "processing_level": "L2",
+    "instruments": ["olci", "slstr"],
+    "gsd": [4500],
+    "item_assets": {**SYN_L2_AOD_ASSETS},
+}
+
+S3_SYN_L2_VGP = {
+    "id": "sentinel-3-syn-l2-vgp",
+    "title": "Sentinel-3 SYN Level-2 VGP",
+    "description": (
+        "The Sentinel-3 Level-2 SYN VGP is a 1 km VEGETATION-Like product (~VGT-P) providing TOA reflectance."
+    ),
+    "product_type": "S03SYNAOD",
+    "processing_level": "L2",
+    "instruments": ["olci", "slstr"],
+    "gsd": [1000],
+    "item_assets": {**SYN_L2_VGP_ASSETS},
+}
+
+S3_SYN_L2_VG1 = {
+    "id": "sentinel-3-syn-l2-vg1",
+    "title": "Sentinel-3 SYN Level-2 VG1",
+    "description": (
+        "The Sentinel-3 Level-2 SYN VG1 is a 1 km VEGETATION-Like product (~VGT-S1) "
+        "providing maximum NDVI value composite received during 1 day."
+    ),
+    "product_type": "S03SYNVG1",
+    "processing_level": "L2",
+    "instruments": ["olci", "slstr"],
+    "gsd": [1000],
+    "item_assets": {**SYN_L2_VG1_ASSETS},
+}
+
+S3_SYN_L2_V10 = {
+    "id": "sentinel-3-syn-l2-v10",
+    "title": "Sentinel-3 SYN Level-2 V10",
+    "description": (
+        "The Sentinel-3 Level-2 SYN V10 is a 1 km VEGETATION-Like product (~VGT-S1) "
+        "providing maximum NDVI value composite received during 10 days."
+    ),
+    "product_type": "S03SYNV10",
+    "processing_level": "L2",
+    "instruments": ["olci", "slstr"],
+    "gsd": [1000],
+    "item_assets": {**SYN_L2_V10_ASSETS},
+}
+
+S3_SYN_L2_SYN = {
+    "id": "sentinel-3-syn-l2",
+    "title": "Sentinel-3 SYN Level-2",
+    "description": (
+        "The Sentinel-3 Level-2 SYN products provide the surface reflectance and aerosol parameters over Land."
+    ),
+    "product_type": "S03SYNSDR",
+    "processing_level": "L2",
+    "instruments": ["olci", "slstr"],
+    "gsd": [300],
+    "item_assets": {**SYN_L2_SYN_ASSETS},
+}
+
+# TBD: SRAL
 
 # Conversion not supported by CPM; no mapping
 
@@ -432,7 +549,7 @@ S3_OLCI_L2_WFR = {
     ),
     "product_type": "S03OLCWFR",
     "processing_level": "L2",
-    "instrument": "olci",
+    "instruments": ["olci"],
     "gsd": 300,
     "item_assets": {
         PRODUCT_ASSET_KEY: get_item_asset_product(),

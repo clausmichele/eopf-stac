@@ -1,11 +1,9 @@
 import logging
 import os
 
-import geojson
 import pystac
-from pystac.extensions.sar import FrequencyBand, Polarization, SarExtension
+from pystac.extensions.sar import FrequencyBand, Polarization
 from pystac.extensions.view import ViewExtension
-from pystac.utils import datetime_to_str
 
 from eopf_stac.common.constants import (
     EOPF_PROVIDER,
@@ -14,13 +12,16 @@ from eopf_stac.common.constants import (
     SENTINEL_PROVIDER,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eopf_properties,
     fill_processing_properties,
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fill_version_properties,
+    fix_geometry,
     get_datetimes,
-    get_identifier,
+    get_identifier_from_href,
     rearrange_bbox,
 )
 from eopf_stac.sentinel1.assets import create_grd_assets, create_ocn_assets, create_slc_assets
@@ -34,7 +35,14 @@ from eopf_stac.sentinel1.constants import (
 logger = logging.getLogger(__name__)
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> pystac.Item:
+def create_item(
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
+) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
@@ -46,7 +54,7 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     end_datetime = datetimes[2]
 
     item = pystac.Item(
-        id=get_identifier(stac_discovery),
+        id=get_identifier_from_href(asset_href_prefix),
         bbox=rearrange_bbox(stac_discovery.get("bbox")),
         geometry=stac_discovery.get("geometry"),
         properties={},
@@ -54,6 +62,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         start_datetime=start_datetime,
         end_datetime=end_datetime,
     )
+
+    # -- Geometry (fix antimeridian, unclosed ring, etc)
+    fix_geometry(item)
 
     # -- Common metadata
 
@@ -99,7 +110,10 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
             view.off_nadir = off_nadir
 
     # Processing Extension
-    fill_processing_properties(item, properties)
+    baseline_version = None
+    if properties.get("processing:software") is not None:
+        baseline_version = properties.get("processing:software").get("Sentinel-1 IPF")
+    fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
     fill_product_properties(item, product_type, properties)
@@ -138,53 +152,55 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
             sar_instrument_mode,
         ]
     ):
-        sar = SarExtension.ext(item, add_if_missing=True)
+        item.stac_extensions.append("https://stac-extensions.github.io/sar/v1.3.0/schema.json")
+        # sar = SarExtension.ext(item, add_if_missing=True)
         if polarizations:
-            sar.polarizations = polarizations
+            item.properties["sar:polarizations"] = polarizations
         if frequency_band:
-            sar.frequency_band = frequency_band
-        if instrument_mode:
-            sar.instrument_mode = instrument_mode
+            item.properties["sar:frequency_band"] = frequency_band
         if center_frequency:
-            sar.center_frequency = center_frequency
+            item.properties["sar:center_frequency"] = center_frequency
         else:
-            sar.center_frequency = 5.405
+            item.properties["sar:center_frequency"] = 5.405
         if resolution_range:
-            sar.resolution_range = resolution_range
+            item.properties["sar:resolution_range"] = resolution_range
         if resolution_azimuth:
-            sar.resolution_azimuth = resolution_azimuth
+            item.properties["sar:resolution_azimuth"] = resolution_azimuth
         if pixel_spacing_range:
-            sar.pixel_spacing_range = pixel_spacing_range
+            item.properties["sar:pixel_spacing_range"] = pixel_spacing_range
         if observation_direction:
-            sar.observation_direction = observation_direction
+            item.properties["sar:observation_direction"] = observation_direction
         if pixel_spacing_azimuth:
-            sar.pixel_spacing_azimuth = pixel_spacing_azimuth
+            item.properties["sar:pixel_spacing_azimuth"] = pixel_spacing_azimuth
         if sar_product_type:
-            sar.product_type = sar_product_type
+            item.properties["sar:product_type"] = sar_product_type
         if sar_instrument_mode:
-            sar.instrument_mode = sar_instrument_mode
+            item.properties["sar:instrument_mode"] = sar_instrument_mode
 
     # EOPF Extension
     fill_eopf_properties(item, properties)
+
+    # Version Extension
+    fill_version_properties(item)
 
     logger.debug("Getting product components...")
     product_components = get_product_components(metadata=metadata, product_type=product_type)
 
     # Reconstruct original identifier of SAFE product
     # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/70
-    component_name = None
-    for _, name in product_components.items():
-        component_name = name
-        break  # we need only one component_name
-    item.id = construct_identifier_s1(
-        product_type=product_type,
-        polarization=polarizations_value,
-        startTime=datetime_to_str(start_datetime),
-        endTime=datetime_to_str(end_datetime),
-        platform=platform,
-        orbit=properties.get("sat:absolute_orbit"),
-        component=component_name,
-    )
+    # component_name = None
+    # for _, name in product_components.items():
+    #    component_name = name
+    #    break  # we need only one component_name
+    # item.id = construct_identifier_s1(
+    #    product_type=product_type,
+    #    polarization=polarizations_value,
+    #    startTime=datetime_to_str(start_datetime),
+    #    endTime=datetime_to_str(end_datetime),
+    #    platform=platform,
+    #    orbit=properties.get("sat:absolute_orbit"),
+    #    component=component_name,
+    # )
 
     # -- Assets
     assets = {}
@@ -207,34 +223,18 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
-
-    # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/708
-    fix_geometry(item=item)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
 
 
-def fix_geometry(item: pystac.Item):
-    coordinates = geojson.Polygon.clean_coordinates(coords=item.geometry["coordinates"], precision=15)
-    first_coord = coordinates[0][0]
-
-    # Append first coordinate to polygon
-    coordinates[0].append(first_coord)
-
-    # Validate new coordinates
-    polygon = geojson.Polygon(coordinates=coordinates, validate=True)
-
-    # Upate item geomatry
-    item.geometry = polygon
-
-
 def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
     components = {}
-    stac_discovery_links = metadata[".zattrs"]["stac_discovery"]["links"]
-    if stac_discovery_links:
-        for component_name in stac_discovery_links:
+    component_refs = metadata[".zattrs"]["stac_discovery"].get("assets")
+    if component_refs:
+        for component_name, _ in component_refs.items():
             if isinstance(component_name, str):
                 if product_type in S1_GRD_PRODUCT_TYPES:
                     key = component_name.split("_")[6]
@@ -249,12 +249,15 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
                 elif product_type in S1_OCN_PRODUCT_TYPES:
                     key = component_name
                     for sub_component in (
-                        metadata.get(f"{component_name.lower()}/.zattrs", {}).get("stac_discovery", {}).get("links", {})
+                        metadata.get(f"{component_name.lower()}/.zattrs", {})
+                        .get("stac_discovery", {})
+                        .get("assets", {})
                     ):
                         if isinstance(sub_component, str):
                             components[component_name] = sub_component
     else:
-        raise ValueError("Links section in metadata is missing")
+        # raise ValueError("No references to product components found")
+        logger.warning("Cannot detect all product parts. Some assets might not be available!")
 
     return components
 

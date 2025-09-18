@@ -12,18 +12,22 @@ from eopf_stac.common.constants import (
     SUPPORTED_S3_OLCI_L1_PRODUCT_TYPES,
     SUPPORTED_S3_OLCI_L2_PRODUCT_TYPES,
     SUPPORTED_S3_SLSTR_L1_PRODUCT_TYPES,
+    SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE,
     SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE,
     THUMBNAIL_ASSET,
 )
 from eopf_stac.common.stac import (
+    create_cdse_link,
     fill_eo_properties,
     fill_eopf_properties,
     fill_processing_properties,
     fill_product_properties,
     fill_sat_properties,
     fill_timestamp_properties,
+    fill_version_properties,
+    fix_geometry,
     get_datetimes,
-    get_identifier,
+    get_identifier_from_href,
     is_valid_string,
     rearrange_bbox,
 )
@@ -35,6 +39,8 @@ from eopf_stac.sentinel3.constants import (
     SENTINEL3_METADATA,
     SLSTR_L1_ASSETS,
     SLSTR_L1_ASSETS_KEY_TO_PATH,
+    SLSTR_L2_FRP_ASSETS,
+    SLSTR_L2_FRP_ASSETS_KEY_TO_PATH,
     SLSTR_L2_LST_ASSETS,
     SLSTR_L2_LST_ASSETS_KEY_TO_PATH,
 )
@@ -47,7 +53,7 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
     summary_dict = {
         "constellation": [mission_metadata.get("constellation")],
         "platform": mission_metadata.get("platforms"),
-        "instruments": [collection_metadata.get("instrument")],
+        "instruments": collection_metadata.get("instruments"),
         "gsd": collection_metadata.get("gsd"),
         "processing:level": [collection_metadata.get("processing_level")],
         "product:type": [collection_metadata.get("product_type")],
@@ -86,7 +92,14 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
     return collection
 
 
-def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> pystac.Item:
+def create_item(
+    metadata: dict,
+    product_type: str,
+    asset_href_prefix: str,
+    cpm_version: str = None,
+    cdse_scene_id: str | None = None,
+    cdse_scene_href: str | None = None,
+) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     # other_metadata = metadata[".zattrs"]["other_metadata"]
     properties = stac_discovery["properties"]
@@ -98,7 +111,7 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     end_datetime = datetimes[2]
 
     item = pystac.Item(
-        id=get_identifier(stac_discovery),
+        id=get_identifier_from_href(asset_href_prefix),
         bbox=rearrange_bbox(stac_discovery.get("bbox")),
         geometry=stac_discovery.get("geometry"),
         properties={},
@@ -107,15 +120,18 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         end_datetime=end_datetime,
     )
 
+    # -- Geometry (fix antimeridian, unclosed ring, etc)
+    fix_geometry(item)
+
     # -- Common metadata
 
     item.common_metadata.mission = SENTINEL3_METADATA["constellation"].capitalize()
     item.common_metadata.providers = SENTINEL3_METADATA["providers"]
     item.common_metadata.constellation = SENTINEL3_METADATA["constellation"]
 
-    # CPM workaround: instrument property which is not an array
-    if properties.get("instrument"):
-        item.common_metadata.instruments = [properties.get("instrument")]
+    # CPM workaround: instruments property which is not an array
+    if properties.get("instruments"):
+        item.common_metadata.instruments = [properties.get("instruments")]
 
     if properties.get("platform"):
         item.common_metadata.platform = properties.get("platform")
@@ -139,13 +155,19 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     fill_eo_properties(item, properties)
 
     # Processing Extension
-    fill_processing_properties(item, properties)
+    baseline_version = None
+    if properties.get("processing:software") is not None:
+        baseline_version = properties.get("processing:software").get("PUG")
+    fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
     fill_product_properties(item, product_type, properties)
 
     # EOPF Extension
     fill_eopf_properties(item, properties)
+
+    # Version Extension
+    fill_version_properties(item)
 
     # -- Assets
 
@@ -164,6 +186,9 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
     elif product_type in SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE:
         asset_defintions = SLSTR_L2_LST_ASSETS
         asset_path_lookups = SLSTR_L2_LST_ASSETS_KEY_TO_PATH
+    elif product_type in SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE:
+        asset_defintions = SLSTR_L2_FRP_ASSETS
+        asset_path_lookups = SLSTR_L2_FRP_ASSETS_KEY_TO_PATH
     else:
         raise ValueError(f"Unsupported Sentinel-3 product type '{product_type}'")
 
@@ -180,7 +205,8 @@ def create_item(metadata: dict, product_type: str, asset_href_prefix: str) -> py
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
+    if cdse_scene_href is not None:
+        item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
