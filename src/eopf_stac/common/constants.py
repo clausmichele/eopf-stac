@@ -1,3 +1,4 @@
+import re
 from copy import deepcopy
 from typing import Final
 
@@ -14,7 +15,11 @@ SUPPORTED_PRODUCT_TYPES_S1 = [
     "S01SIWGRH",
     "S01SSMGRH",
     "S01SEWGRH",
+    "S01SIWGRD",
+    "S01SSMGRD",
+    "S01SEWGRD",
     "S01SIWSLC",
+    "S01SIVSLC",  # CPM workaround
     "S01SWVSLC",
     "S01SSMSLC",
     "S01SEWSLC",
@@ -56,7 +61,11 @@ PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
     "S01SIWGRH": "sentinel-1-l1-grd",
     "S01SSMGRH": "sentinel-1-l1-grd",
     "S01SEWGRH": "sentinel-1-l1-grd",
+    "S01SEWGRD": "sentinel-1-l1-grd",
+    "S01SIWGRD": "sentinel-1-l1-grd",
+    "S01SSMGRD": "sentinel-1-l1-grd",
     "S01SIWSLC": "sentinel-1-l1-slc",
+    "S01SIVSLC": "sentinel-1-l1-slc",  # CPM workaround
     "S01SWVSLC": "sentinel-1-l1-slc",
     "S01SSMSLC": "sentinel-1-l1-slc",
     "S01SEWSLC": "sentinel-1-l1-slc",
@@ -157,3 +166,7 @@ PROCESSING_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/processing/
 EOPF_EXTENSION_SCHEMA_URI = "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json"
 VERSION_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/version/v1.2.0/schema.json"
 RASTER_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/raster/v2.0.0/schema.json"
+
+S2_MGRS_PATTERN: Final[re.Pattern[str]] = re.compile(
+    r"_T(\d{1,2})([CDEFGHJKLMNPQRSTUVWX])([ABCDEFGHJKLMNPQRSTUVWXYZ][ABCDEFGHJKLMNPQRSTUV])"
+)

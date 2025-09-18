@@ -4,7 +4,6 @@ from copy import deepcopy
 import numpy as np
 import pystac
 from pystac.extensions.eo import Band
-from pystac.extensions.raster import RasterExtension
 from stactools.sentinel2.constants import (
     BANDS_TO_ASSET_NAME,
     SENTINEL_BANDS,
@@ -16,6 +15,7 @@ from eopf_stac.common.constants import (
     PRODUCT_ASSET_KEY,
     PRODUCT_METADATA_ASSET_KEY,
     PRODUCT_METADATA_PATH,
+    RASTER_EXTENSION_SCHEMA_URI,
     ROLE_DATA,
     ROLE_DATASET,
     get_item_asset_metadata,
@@ -293,7 +293,8 @@ def update_extra_fields_from_metadata(asset: pystac.Asset, attrs: dict, item: py
     scale = attrs.get("scale_factor")
     offset = attrs.get("add_offset")
     if any([scale, offset]):
-        RasterExtension.add_to(item)
+        if RASTER_EXTENSION_SCHEMA_URI not in item.stac_extensions:
+            item.stac_extensions.append(RASTER_EXTENSION_SCHEMA_URI)
         if scale is not None:
             asset.extra_fields["raster:scale"] = scale
         if offset is not None:

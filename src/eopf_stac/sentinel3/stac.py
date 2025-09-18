@@ -27,7 +27,7 @@ from eopf_stac.common.stac import (
     fill_version_properties,
     fix_geometry,
     get_datetimes,
-    get_identifier,
+    get_identifier_from_href,
     is_valid_string,
     rearrange_bbox,
 )
@@ -111,7 +111,7 @@ def create_item(
     end_datetime = datetimes[2]
 
     item = pystac.Item(
-        id=get_identifier(stac_discovery),
+        id=get_identifier_from_href(asset_href_prefix),
         bbox=rearrange_bbox(stac_discovery.get("bbox")),
         geometry=stac_discovery.get("geometry"),
         properties={},
@@ -205,7 +205,6 @@ def create_item(
         item.add_asset(key, asset)
 
     # -- Links
-
     item.links.append(SENTINEL_LICENSE)
     if cdse_scene_href is not None:
         item.links.append(create_cdse_link(cdse_scene_href))

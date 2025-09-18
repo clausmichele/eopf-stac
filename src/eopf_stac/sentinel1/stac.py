@@ -4,7 +4,6 @@ import os
 import pystac
 from pystac.extensions.sar import FrequencyBand, Polarization
 from pystac.extensions.view import ViewExtension
-from pystac.utils import datetime_to_str
 
 from eopf_stac.common.constants import (
     EOPF_PROVIDER,
@@ -22,7 +21,7 @@ from eopf_stac.common.stac import (
     fill_version_properties,
     fix_geometry,
     get_datetimes,
-    get_identifier,
+    get_identifier_from_href,
     rearrange_bbox,
 )
 from eopf_stac.sentinel1.assets import create_grd_assets, create_ocn_assets, create_slc_assets
@@ -55,7 +54,7 @@ def create_item(
     end_datetime = datetimes[2]
 
     item = pystac.Item(
-        id=get_identifier(stac_discovery),
+        id=get_identifier_from_href(asset_href_prefix),
         bbox=rearrange_bbox(stac_discovery.get("bbox")),
         geometry=stac_discovery.get("geometry"),
         properties={},
@@ -189,19 +188,19 @@ def create_item(
 
     # Reconstruct original identifier of SAFE product
     # CPM workaround for https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/70
-    component_name = None
-    for _, name in product_components.items():
-        component_name = name
-        break  # we need only one component_name
-    item.id = construct_identifier_s1(
-        product_type=product_type,
-        polarization=polarizations_value,
-        startTime=datetime_to_str(start_datetime),
-        endTime=datetime_to_str(end_datetime),
-        platform=platform,
-        orbit=properties.get("sat:absolute_orbit"),
-        component=component_name,
-    )
+    # component_name = None
+    # for _, name in product_components.items():
+    #    component_name = name
+    #    break  # we need only one component_name
+    # item.id = construct_identifier_s1(
+    #    product_type=product_type,
+    #    polarization=polarizations_value,
+    #    startTime=datetime_to_str(start_datetime),
+    #    endTime=datetime_to_str(end_datetime),
+    #    platform=platform,
+    #    orbit=properties.get("sat:absolute_orbit"),
+    #    component=component_name,
+    # )
 
     # -- Assets
     assets = {}
@@ -233,7 +232,7 @@ def create_item(
 
 def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
     components = {}
-    component_refs = metadata[".zattrs"]["stac_discovery"]["assets"]
+    component_refs = metadata[".zattrs"]["stac_discovery"].get("assets")
     if component_refs:
         for component_name, _ in component_refs.items():
             if isinstance(component_name, str):
@@ -257,7 +256,8 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
                         if isinstance(sub_component, str):
                             components[component_name] = sub_component
     else:
-        raise ValueError("No references to product components found")
+        # raise ValueError("No references to product components found")
+        logger.warning("Cannot detect all product parts. Some assets might not be available!")
 
     return components
 

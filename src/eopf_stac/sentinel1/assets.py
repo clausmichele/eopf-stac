@@ -17,7 +17,7 @@ from eopf_stac.sentinel1.constants import (
 )
 
 
-def create_grd_assets(asset_href_prefix: str, components: list[str]) -> dict[str, pystac.Asset]:
+def create_grd_assets(asset_href_prefix: str, components: dict[str:str]) -> dict[str, pystac.Asset]:
     assets = {}
 
     # Create assets for current polarisation
@@ -37,10 +37,10 @@ def create_grd_assets(asset_href_prefix: str, components: list[str]) -> dict[str
     return assets
 
 
-def create_slc_assets(asset_href_prefix: str, components: list[str]) -> dict[str, pystac.Asset]:
+def create_slc_assets(asset_href_prefix: str, components: dict[str:str]) -> dict[str, pystac.Asset]:
     assets = {}
 
-    # Create assets for current swath and polarisation
+    # TBD: Create assets for current swath and polarisation
 
     # Create product and metadata assets
     assets[PRODUCT_ASSET_KEY] = get_item_asset_product().create_asset(asset_href_prefix)
@@ -50,7 +50,9 @@ def create_slc_assets(asset_href_prefix: str, components: list[str]) -> dict[str
     return assets
 
 
-def create_ocn_assets(asset_href_prefix: str, components: list[str], instrument_mode: str) -> dict[str, pystac.Asset]:
+def create_ocn_assets(
+    asset_href_prefix: str, components: dict[str:str], instrument_mode: str
+) -> dict[str, pystac.Asset]:
     assets = {}
 
     # For WV mode the measurements data set are one per vignette. Not creating assets for each burst at the moment.

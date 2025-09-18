@@ -71,7 +71,7 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
         cdse_scene_id = get_source_identifier(source_uri)
         logger.info(f"CDSE scene ID is {cdse_scene_id}")
     else:
-        logger.warning("No reference to source product provided. Some STAC properties might not be available!")
+        logger.warning("No value for --source-uri provided. Some STAC properties might not be available!")
 
     cdse_scene_href = None
     if cdse_scene_id is not None:
@@ -79,7 +79,7 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
         logger.info(f"CDSE STAC item URL of source scene is {cdse_scene_href}")
 
     if cdse_scene_href is None:
-        logger.warning("No link to the original scene at CSDE will be added to the STAC item!")
+        logger.warning("Unable to determine link to the original scene at CSDE STAC API!")
 
     item = None
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:

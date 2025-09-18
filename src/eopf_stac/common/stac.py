@@ -9,14 +9,17 @@ import shapely
 from footprint_facility import rework_to_polygon_geometry
 from pystac import Link
 from pystac.extensions.eo import EOExtension
+from pystac.extensions.grid import GridExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
 from pystac.utils import now_in_utc, str_to_datetime
+from stactools.sentinel2.mgrs import MgrsExtension
 
 from eopf_stac.common.constants import (
     EOPF_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
+    S2_MGRS_PATTERN,
     VERSION_EXTENSION_SCHEMA_URI,
 )
 
@@ -41,6 +44,18 @@ def rearrange_bbox(bbox):
 
     corrected_bbox = [min(longitudes), min(latitudes), max(longitudes), max(latitudes)]
     return corrected_bbox
+
+
+def get_identifier_from_href(product_href: str):
+    if product_href.endswith("/"):
+        item_id = os.path.basename(product_href[:-1])
+    else:
+        item_id = os.path.basename(product_href)
+
+    if item_id.lower().endswith(".safe") or item_id.lower().endswith(".sen3") or item_id.lower().endswith(".zarr"):
+        item_id = os.path.splitext(item_id)[0]
+
+    return item_id
 
 
 def get_identifier(stac_discovery: dict):
@@ -259,6 +274,21 @@ def fill_eopf_properties(item: pystac.Item, properties: dict) -> None:
             item.properties["eopf:datastrip_id"] = datastrip_id
         if instrument_configuration_id is not None:
             item.properties["eopf:instrument_configuration_id"] = instrument_configuration_id
+
+
+def fill_mgrs_grid_properties(item: pystac.Item, identifier: str) -> bool:
+    success = False
+    if identifier is not None:
+        mgrs_match = S2_MGRS_PATTERN.search(identifier)
+        success = mgrs_match and len(mgrs_groups := mgrs_match.groups())
+        if success:
+            mgrs = MgrsExtension.ext(item, add_if_missing=True)
+            mgrs.utm_zone = int(mgrs_groups[0])
+            mgrs.latitude_band = mgrs_groups[1]
+            mgrs.grid_square = mgrs_groups[2]
+            grid = GridExtension.ext(item, add_if_missing=True)
+            grid.code = f"MGRS-{mgrs.utm_zone}{mgrs.latitude_band}{mgrs.grid_square}"
+    return success
 
 
 def fill_version_properties(item: pystac.Item) -> None:
