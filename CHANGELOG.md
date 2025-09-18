@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.10.0] - 2025-09-??
+
+### Added
+
+- Add support for products converted with CPM 2.5.9, 2.6.0 and 2.6.1
+- Add alternate link to each item pointing the corresponding product in CDSE [#37](https://github.com/EOPF-Sample-Service/eopf-stac/issues/37)
+- Add support of Sentinel-3 SLSTR L2 FRP product [#12](https://github.com/EOPF-Sample-Service/eopf-stac/issues/12)
+- Add field `processing:version` to STAC item [#28](https://github.com/EOPF-Sample-Service/eopf-stac/issues/28)
+- Add CPM version to `processing:software` field in STAC item [#31](https://github.com/EOPF-Sample-Service/eopf-stac/issues/31)
+- Add `deprecated` field from [version extension](https://github.com/stac-extensions/version) to STAC item [#43](https://github.com/EOPF-Sample-Service/eopf-stac/issues/43)
+- Add CLI option to provide source URI of converted product [#41](https://github.com/EOPF-Sample-Service/eopf-stac/issues/41)
+
+### Changed
+
+- The STAC item id will be identical to the name of the Zarr store, except the `.zarr` extension [#42](https://github.com/EOPF-Sample-Service/eopf-stac/issues/42)
+
+### Fixed
+
+- Add support for Sentinel-1 GRD and SLC products converted with CPM 2.6.0 [#33](https://github.com/EOPF-Sample-Service/eopf-stac/issues/33)
+- Correct antimeridian and polar crossing geometries [#39](https://github.com/EOPF-Sample-Service/eopf-stac/issues/39)
+
 ## [0.9.1] - 2025-05-20
 
 ### Fixed
