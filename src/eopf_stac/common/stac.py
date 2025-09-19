@@ -177,13 +177,6 @@ def fill_eo_properties(item: pystac.Item, properties: dict) -> None:
 def fill_processing_properties(
     item: pystac.Item, properties: dict, cpm_version: str = None, baseline_processing_version: str = None
 ) -> None:
-    # CPM workarounds:
-    # Some invalid values are ignored:
-    # - "processing:expression": "systematic",
-    # - "processing:facility": "OPE,OPE,OPE" or ["OPE","OPE","OPE"]
-    # Baseline processing version is added
-    # CPM version is added
-
     proc_expression = properties.get("processing:expression")
     proc_lineage = properties.get("processing:lineage")
     proc_level = properties.get("processing:level")
@@ -192,6 +185,7 @@ def fill_processing_properties(
         proc_facility = proc_facility[0]
     proc_datetime = properties.get("processing:datetime")
     proc_software = properties.get("processing:software")
+    proc_version = properties.get("processing:version")
     if any_not_none([proc_expression, proc_facility, proc_level, proc_lineage, proc_software, proc_datetime]):
         item.stac_extensions.append(PROCESSING_EXTENSION_SCHEMA_URI)
         if proc_expression is not None and proc_expression != "systematic":
@@ -217,9 +211,14 @@ def fill_processing_properties(
             item.properties["processing:software"] = {}
         item.properties["processing:software"]["EOPF-CPM"] = cpm_version
 
-    # Add baseline processing version
-    if baseline_processing_version is not None:
-        item.properties["processing:version"] = baseline_processing_version
+    if is_valid_string(proc_version) and proc_version != "TODO":
+        item.properties["processing:version"] = proc_version
+    else:
+        # Add baseline version extracted from identifier
+        if is_valid_string(baseline_processing_version):
+            item.properties["processing:version"] = baseline_processing_version
+        else:
+            logger.warning("Unable to populate processing:version field")
 
 
 def fill_product_properties(item: pystac.Item, product_type: str, properties: dict) -> None:

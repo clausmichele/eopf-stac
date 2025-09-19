@@ -9,8 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Added
 
 - Add support for products converted with CPM 2.5.9, 2.6.0 and 2.6.1
-- Add alternate link to each item pointing the corresponding product in CDSE [#37](https://github.com/EOPF-Sample-Service/eopf-stac/issues/37)
-- Add support of Sentinel-3 SLSTR L2 FRP product [#12](https://github.com/EOPF-Sample-Service/eopf-stac/issues/12)
+- Add alternate link to corresponding STAC item at CDSE [#37](https://github.com/EOPF-Sample-Service/eopf-stac/issues/37)
+- Add support for Sentinel-3 SLSTR L2 FRP product [#12](https://github.com/EOPF-Sample-Service/eopf-stac/issues/12)
 - Add field `processing:version` to STAC item [#28](https://github.com/EOPF-Sample-Service/eopf-stac/issues/28)
 - Add CPM version to `processing:software` field in STAC item [#31](https://github.com/EOPF-Sample-Service/eopf-stac/issues/31)
 - Add `deprecated` field from [version extension](https://github.com/stac-extensions/version) to STAC item [#43](https://github.com/EOPF-Sample-Service/eopf-stac/issues/43)

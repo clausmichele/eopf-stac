@@ -143,12 +143,11 @@ def create_item(
     # First try to extract mgrs fields from identifier
     mgrs_grid = fill_mgrs_grid_properties(item=item, identifier=identifier)
     if not mgrs_grid:
-        logger.warning(f"Unable to populate MGRS and Grid Extensions fields from: {identifier}")
         if cdse_scene_id is not None:
             # Retry with csde scene id
             mgrs_grid = fill_mgrs_grid_properties(item=item, identifier=cdse_scene_id)
-            if not mgrs_grid:
-                logger.warning(f"Unable to populate MGRS and Grid Extensions fields from: {cdse_scene_id}")
+    if not mgrs_grid:
+        logger.warning("Unable to populate MGRS and Grid Extensions fields from product identifier")
 
     # View Extension
     sun_azimuth = other_metadata.get("mean_sun_azimuth_angle_in_deg_for_all_bands_all_detectors")
@@ -164,12 +163,9 @@ def create_item(
     # Processing Extension
     baseline_version = get_baseline_processing_version(identifier)
     if baseline_version is None:
-        logger.warning(f"Unable to populate processing:version field from: {identifier}")
         if cdse_scene_id is not None:
+            # Retry with csde scene id
             baseline_version = get_baseline_processing_version(cdse_scene_id)
-            if baseline_version is None:
-                logger.warning(f"Unable to populate processing:version field from: {cdse_scene_id}")
-
     fill_processing_properties(item, properties, cpm_version, baseline_version)
 
     # Product Extension
