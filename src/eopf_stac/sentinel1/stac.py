@@ -232,9 +232,22 @@ def create_item(
 
 def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
     components = {}
+    component_names: list[str] = None
     component_refs = metadata[".zattrs"]["stac_discovery"].get("assets")
-    if component_refs:
-        for component_name, _ in component_refs.items():
+    if component_refs is not None and len(component_refs) > 0:
+        # New versions of CPM put this information into assets (as map)
+        component_names = component_refs.keys()
+    else:
+        # Older versions of CPM had put this informations into links section (as list)
+        component_refs = metadata[".zattrs"]["stac_discovery"].get("links")
+        for ref in component_refs:
+            if isinstance(ref, str):
+                if component_names is None:
+                    component_names = []
+                component_names.append(ref)
+
+    if component_names is not None:
+        for component_name in component_names:
             if isinstance(component_name, str):
                 if product_type in S1_GRD_PRODUCT_TYPES:
                     key = component_name.split("_")[6]
@@ -247,14 +260,20 @@ def get_product_components(metadata: dict, product_type: str) -> dict[str:str]:
                         key = parts[6]
                     components[key] = component_name
                 elif product_type in S1_OCN_PRODUCT_TYPES:
-                    key = component_name
-                    for sub_component in (
-                        metadata.get(f"{component_name.lower()}/.zattrs", {})
-                        .get("stac_discovery", {})
-                        .get("assets", {})
-                    ):
-                        if isinstance(sub_component, str):
-                            components[component_name] = sub_component
+                    sub_component_names: list[str] = None
+                    sub_component_refs = (
+                        metadata.get(f"{component_name.lower()}/.zattrs", {}).get("stac_discovery", {}).get("assets")
+                    )
+                    if sub_component_refs is not None:
+                        sub_component_names = sub_component_refs.keys()
+                    else:
+                        sub_component_names = (
+                            metadata.get(f"{component_name.lower()}/.zattrs", {}).get("stac_discovery", {}).get("links")
+                        )
+                    if sub_component_names is not None:
+                        for sub_component in sub_component_names:
+                            if isinstance(sub_component, str):
+                                components[component_name] = sub_component
     else:
         # raise ValueError("No references to product components found")
         logger.warning("Cannot detect all product parts. Some assets might not be available!")
