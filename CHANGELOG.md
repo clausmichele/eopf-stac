@@ -4,12 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.10.0] - 2025-09-??
+## [0.10.0] - 2025-09-23
 
 ### Added
 
 - Add support for products converted with CPM 2.5.9, 2.6.0 and 2.6.1
-- Add alternate link to corresponding STAC item at CDSE [#37](https://github.com/EOPF-Sample-Service/eopf-stac/issues/37)
+- Add alternate link pointing to corresponding STAC item at CDSE [#37](https://github.com/EOPF-Sample-Service/eopf-stac/issues/37)
 - Add support for Sentinel-3 SLSTR L2 FRP product [#12](https://github.com/EOPF-Sample-Service/eopf-stac/issues/12)
 - Add field `processing:version` to STAC item [#28](https://github.com/EOPF-Sample-Service/eopf-stac/issues/28)
 - Add CPM version to `processing:software` field in STAC item [#31](https://github.com/EOPF-Sample-Service/eopf-stac/issues/31)
@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ### Changed
 
-- The STAC item id will be identical to the name of the Zarr store, except the `.zarr` extension [#42](https://github.com/EOPF-Sample-Service/eopf-stac/issues/42)
+- The STAC item id will be identical to the name of the Zarr store, without the `.zarr` extension [#42](https://github.com/EOPF-Sample-Service/eopf-stac/issues/42)
 
 ### Fixed
 
