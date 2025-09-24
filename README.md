@@ -19,9 +19,10 @@ positional arguments:
   URL         Local file path or HTTP/S3 URL to the EOPF product.
 
 options:
-  -h, --help  show this help message and exit
-  --dry-run   Create STAC item only. Do not insert it into the catalog
-  --debug     Enable verbose output
+  -h, --help   show this help message and exit  
+  --source-uri SOURCE_URI Reference to the original product which was input for the EOPF conversion
+  --dry-run    Create STAC item only. Do not insert it into the catalog
+  --debug      Enable verbose output
 ```
 
 ## Settings 
