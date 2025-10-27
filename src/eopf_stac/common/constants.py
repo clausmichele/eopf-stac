@@ -166,6 +166,7 @@ PROCESSING_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/processing/
 EOPF_EXTENSION_SCHEMA_URI = "https://cs-si.github.io/eopf-stac-extension/v1.2.0/schema.json"
 VERSION_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/version/v1.2.0/schema.json"
 RASTER_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/raster/v2.0.0/schema.json"
+EO_EXTENSION_SCHEMA_URI = "https://stac-extensions.github.io/eo/v2.0.0/schema.json"
 
 S2_MGRS_PATTERN: Final[re.Pattern[str]] = re.compile(
     r"_T(\d{1,2})([CDEFGHJKLMNPQRSTUVWX])([ABCDEFGHJKLMNPQRSTUVWXYZ][ABCDEFGHJKLMNPQRSTUV])"

@@ -6,6 +6,7 @@ import pystac
 from pystac.extensions.sat import SatExtension
 
 from eopf_stac.common.constants import (
+    EO_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
     SENTINEL_LICENSE,
@@ -70,6 +71,7 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
             SatExtension.get_schema_uri(),
             PRODUCT_EXTENSION_SCHEMA_URI,
             PROCESSING_EXTENSION_SCHEMA_URI,
+            EO_EXTENSION_SCHEMA_URI,
         ],
         summaries=pystac.Summaries(summary_dict),
     )

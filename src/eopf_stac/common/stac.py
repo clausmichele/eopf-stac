@@ -8,7 +8,6 @@ import pystac
 import shapely
 from footprint_facility import rework_to_polygon_geometry
 from pystac import Link
-from pystac.extensions.eo import EOExtension
 from pystac.extensions.grid import GridExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
@@ -16,6 +15,7 @@ from pystac.utils import now_in_utc, str_to_datetime
 from stactools.sentinel2.mgrs import MgrsExtension
 
 from eopf_stac.common.constants import (
+    EO_EXTENSION_SCHEMA_URI,
     EOPF_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
@@ -166,12 +166,12 @@ def fill_eo_properties(item: pystac.Item, properties: dict) -> None:
     cloud_cover = properties.get("eo:cloud_cover")
     snow_cover = properties.get("eo:snow_cover")
 
-    if any_not_none([cloud_cover, snow_cover]):
-        eo = EOExtension.ext(item, add_if_missing=True)
-        if cloud_cover is not None:
-            eo.cloud_cover = cloud_cover
-        if snow_cover is not None:
-            eo.snow_cover = snow_cover
+    if cloud_cover is not None:
+        item.properties["eo:cloud_cover"] = cloud_cover
+    if snow_cover is not None:
+        item.properties["eo:snow_cover"] = snow_cover
+
+    item.stac_extensions.append(EO_EXTENSION_SCHEMA_URI)
 
 
 def fill_processing_properties(

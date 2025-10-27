@@ -12,9 +12,6 @@ from pystac.collection import (
     TemporalExtent,
 )
 from pystac.extensions.sat import OrbitState
-from stactools.sentinel2.constants import (
-    SENTINEL_BANDS,
-)
 
 from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
@@ -31,6 +28,56 @@ from eopf_stac.common.constants import (
 
 ROLE_REFLECTANCE = "reflectance"
 
+SENTINEL2_BANDS_DICT: Final[dict[str, dict]] = {
+    "coastal": {
+        "name": "B01",
+        "eo:common_name": "coastal",
+        "eo:center_wavelength": 0.443,
+        "eo:full_width_half_max": 0.027,
+    },
+    "blue": {"name": "B02", "eo:common_name": "blue", "eo:center_wavelength": 0.49, "eo:full_width_half_max": 0.098},
+    "green": {"name": "B03", "eo:common_name": "green", "eo:center_wavelength": 0.56, "eo:full_width_half_max": 0.045},
+    "red": {"name": "B04", "eo:common_name": "red", "eo:center_wavelength": 0.665, "eo:full_width_half_max": 0.038},
+    "rededge1": {
+        "name": "B05",
+        "eo:common_name": "rededge071",
+        "eo:center_wavelength": 0.704,
+        "eo:full_width_half_max": 0.019,
+    },
+    "rededge2": {
+        "name": "B06",
+        "eo:common_name": "rededge075",
+        "eo:center_wavelength": 0.74,
+        "eo:full_width_half_max": 0.018,
+    },
+    "rededge3": {
+        "name": "B07",
+        "eo:common_name": "rededge078",
+        "eo:center_wavelength": 0.783,
+        "eo:full_width_half_max": 0.028,
+    },
+    "nir": {"name": "B08", "eo:common_name": "nir", "eo:center_wavelength": 0.842, "eo:full_width_half_max": 0.145},
+    "nir08": {"name": "B8A", "eo:common_name": "nir08", "eo:center_wavelength": 0.865, "eo:full_width_half_max": 0.033},
+    "nir09": {"name": "B09", "eo:common_name": "nir09", "eo:center_wavelength": 0.945, "eo:full_width_half_max": 0.026},
+    "cirrus": {
+        "name": "B10",
+        "eo:common_name": "cirrus",
+        "eo:center_wavelength": 1.3735,
+        "eo:full_width_half_max": 0.075,
+    },
+    "swir16": {
+        "name": "B11",
+        "eo:common_name": "swir16",
+        "eo:center_wavelength": 1.61,
+        "eo:full_width_half_max": 0.143,
+    },
+    "swir22": {
+        "name": "B12",
+        "eo:common_name": "swir22",
+        "eo:center_wavelength": 2.19,
+        "eo:full_width_half_max": 0.242,
+    },
+}
 
 MGRS_PATTERN: Final[Pattern[str]] = re.compile(
     r"_T(\d{1,2})([CDEFGHJKLMNPQRSTUVWX])([ABCDEFGHJKLMNPQRSTUVWXYZ][ABCDEFGHJKLMNPQRSTUV])"
@@ -132,13 +179,13 @@ L1C_TCI_ASSETS_TO_PATH: Final[dict[str, str]] = {"TCI_10m": "quality/l1c_quicklo
 
 def get_msi_band_item_assets() -> dict[str:ItemAssetDefinition]:
     item_assets = {}
-    for band_key, band in SENTINEL_BANDS.items():
+    for band_key, band in SENTINEL2_BANDS_DICT.items():
         item_asset = ItemAssetDefinition.create(
             title=f"TOA radiance for OLCI acquisition band {band_key}",
             media_type=MediaType.ZARR,
             description=None,
             roles=[ROLE_DATA],
-            extra_fields={"bands": [band.to_dict()]},
+            extra_fields={"bands": [band]},
         )
         item_assets[f"{band_key}_radianceData"] = item_asset
 
@@ -154,12 +201,57 @@ S2_MSI_L1C_ASSETS: dict[str, ItemAssetDefinition] = {
         extra_fields={
             **deepcopy(DATASET_ASSET_EXTRA_FIELDS),
             "gsd": 10,
-            "bands": list(
-                map(
-                    lambda b: b.to_dict(),
-                    [SENTINEL_BANDS["blue"], SENTINEL_BANDS["green"], SENTINEL_BANDS["red"], SENTINEL_BANDS["nir"]],
-                )
-            ),
+            "bands": [
+                SENTINEL2_BANDS_DICT["blue"],
+                SENTINEL2_BANDS_DICT["green"],
+                SENTINEL2_BANDS_DICT["red"],
+                SENTINEL2_BANDS_DICT["nir"],
+            ],
+        },
+    ),
+    "SR_20m": ItemAssetDefinition.create(
+        title="Surface Reflectance - 20m",
+        media_type=MediaType.ZARR,
+        description=None,
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={
+            **deepcopy(DATASET_ASSET_EXTRA_FIELDS),
+            "gsd": 20,
+            "bands": [
+                SENTINEL2_BANDS_DICT["coastal"],
+                SENTINEL2_BANDS_DICT["blue"],
+                SENTINEL2_BANDS_DICT["green"],
+                SENTINEL2_BANDS_DICT["red"],
+                SENTINEL2_BANDS_DICT["rededge1"],
+                SENTINEL2_BANDS_DICT["rededge2"],
+                SENTINEL2_BANDS_DICT["rededge3"],
+                SENTINEL2_BANDS_DICT["nir08"],
+                SENTINEL2_BANDS_DICT["swir16"],
+                SENTINEL2_BANDS_DICT["swir22"],
+            ],
+        },
+    ),
+    "SR_60m": ItemAssetDefinition.create(
+        title="Surface Reflectance - 60m",
+        media_type=MediaType.ZARR,
+        description=None,
+        roles=[ROLE_DATA, ROLE_DATASET],
+        extra_fields={
+            **deepcopy(DATASET_ASSET_EXTRA_FIELDS),
+            "gsd": 60,
+            "bands": [
+                SENTINEL2_BANDS_DICT["coastal"],
+                SENTINEL2_BANDS_DICT["blue"],
+                SENTINEL2_BANDS_DICT["green"],
+                SENTINEL2_BANDS_DICT["red"],
+                SENTINEL2_BANDS_DICT["rededge1"],
+                SENTINEL2_BANDS_DICT["rededge2"],
+                SENTINEL2_BANDS_DICT["rededge3"],
+                SENTINEL2_BANDS_DICT["nir08"],
+                SENTINEL2_BANDS_DICT["nir09"],
+                SENTINEL2_BANDS_DICT["swir16"],
+                SENTINEL2_BANDS_DICT["swir22"],
+            ],
         },
     ),
     **get_msi_band_item_assets(),
