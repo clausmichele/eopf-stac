@@ -17,8 +17,10 @@ from eopf_stac.common.constants import (
     ROLE_DATA,
     ROLE_DATASET,
     SENTINEL_PROVIDER,
+    ZIPPED_PRODUCT_ASSET_KEY,
     get_item_asset_metadata,
     get_item_asset_product,
+    get_item_asset_zipped_product,
 )
 
 SENTINEL3_OLCI_BANDS_DICT = {
@@ -127,6 +129,7 @@ OLCI_L1_ASSETS: dict[str, ItemAssetDefinition] = {
     **get_olci_band_item_assets(),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 OLCI_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -243,6 +246,7 @@ OLCI_L2_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 OLCI_L2_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -329,6 +333,7 @@ SLSTR_L1_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -354,6 +359,7 @@ SLSTR_L2_LST_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L2_LST_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -386,6 +392,7 @@ SLSTR_L2_FRP_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -399,26 +406,31 @@ SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
 SYN_L2_AOD_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_VGP_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_VG1_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_V10_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_SYN_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 # -- Collection metadata
@@ -603,5 +615,6 @@ S3_OLCI_L2_WFR = {
     "item_assets": {
         PRODUCT_ASSET_KEY: get_item_asset_product(),
         PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+        ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
     },
 }

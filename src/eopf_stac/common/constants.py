@@ -91,11 +91,13 @@ PRODUCT_TYPE_TO_COLLECTION: Final[dict] = {
 
 MEDIA_TYPE_ZARR = "application/vnd+zarr"
 MEDIA_TYPE_JSON = "application/json"
+MEDIA_TYPE_ZIP = "application/zip"
 
 ROLE_DATA = "data"
 ROLE_METADATA = "metadata"
 ROLE_VISUAL = "visual"
 ROLE_DATASET = "dataset"
+ROLE_ARCHIVE = "archive"
 
 SENTINEL_LICENSE: Final[Link] = Link(
     rel="license",
@@ -141,6 +143,9 @@ DATASET_ASSET_EXTRA_FIELDS: Final[dict] = {
     "xarray:open_dataset_kwargs": EopfXarrayBackendConfig(mode=OpMode.NATIVE).to_dict()
 }
 
+ZIPPED_PRODUCT_ASSET_KEY: Final[str] = "zipped_product"
+ZIPPED_PRODUCT_HREF_BASE = "https://download.user.eopf.eodc.eu/zip"
+
 
 def get_item_asset_metadata() -> ItemAssetDefinition:
     return ItemAssetDefinition.create(
@@ -154,10 +159,19 @@ def get_item_asset_metadata() -> ItemAssetDefinition:
 def get_item_asset_product():
     return ItemAssetDefinition.create(
         title="EOPF Product",
-        description="The full Zarr hierarchy of the EOPF product",
+        description="The full Zarr store of the EOPF product",
         media_type=MEDIA_TYPE_ZARR,
         roles=[ROLE_DATA, ROLE_METADATA],
         extra_fields=deepcopy(PRODUCT_ASSET_EXTRA_FIELDS),
+    )
+
+
+def get_item_asset_zipped_product() -> ItemAssetDefinition:
+    return ItemAssetDefinition.create(
+        title="Zipped EOPF Product",
+        description="The full EOPF Zarr store as zip archive",
+        media_type=MEDIA_TYPE_ZIP,
+        roles=[ROLE_DATA, ROLE_METADATA, ROLE_ARCHIVE],
     )
 
 

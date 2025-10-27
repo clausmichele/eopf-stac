@@ -28,6 +28,21 @@ from eopf_stac.common.constants import (
 
 ROLE_REFLECTANCE = "reflectance"
 
+SENTINEL2_BANDS_TO_ASSET_NAME: Final[dict[str, str]] = {
+    "B01": "coastal",
+    "B02": "blue",
+    "B03": "green",
+    "B04": "red",
+    "B05": "rededge1",
+    "B06": "rededge2",
+    "B07": "rededge3",
+    "B08": "nir",
+    "B8A": "nir08",
+    "B09": "nir09",
+    "B11": "swir16",
+    "B12": "swir22",
+}
+
 SENTINEL2_BANDS_DICT: Final[dict[str, dict]] = {
     "coastal": {
         "name": "B01",
@@ -59,12 +74,6 @@ SENTINEL2_BANDS_DICT: Final[dict[str, dict]] = {
     "nir": {"name": "B08", "eo:common_name": "nir", "eo:center_wavelength": 0.842, "eo:full_width_half_max": 0.145},
     "nir08": {"name": "B8A", "eo:common_name": "nir08", "eo:center_wavelength": 0.865, "eo:full_width_half_max": 0.033},
     "nir09": {"name": "B09", "eo:common_name": "nir09", "eo:center_wavelength": 0.945, "eo:full_width_half_max": 0.026},
-    "cirrus": {
-        "name": "B10",
-        "eo:common_name": "cirrus",
-        "eo:center_wavelength": 1.3735,
-        "eo:full_width_half_max": 0.075,
-    },
     "swir16": {
         "name": "B11",
         "eo:common_name": "swir16",
@@ -95,7 +104,6 @@ ASSET_TO_DESCRIPTION: Final[dict[str, str]] = {
     "B05": "Red edge 1 (band 5)",
     "B06": "Red edge 2 (band 6)",
     "B07": "Red edge 3 (band 7)",
-    "B10": "Cirrus (band 10)",
     "B11": "SWIR 1 (band 11)",
     "B12": "SWIR 2 (band 12)",
     "B8A": "NIR 2 (band 8A)",
@@ -168,7 +176,6 @@ L1C_BAND_ASSETS_TO_PATH: Final[dict[str, str]] = {
     "B07_20m": "measurements/reflectance/r20m/b07",
     "B08_10m": "measurements/reflectance/r10m/b08",
     "B09_60m": "measurements/reflectance/r60m/b09",
-    "B10_60m": "measurements/reflectance/r60m/b10",
     "B11_20m": "measurements/reflectance/r20m/b11",
     "B12_20m": "measurements/reflectance/r20m/b12",
     "B8A_20m": "measurements/reflectance/r20m/b8a",

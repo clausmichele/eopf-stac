@@ -4,9 +4,6 @@ from copy import deepcopy
 import numpy as np
 import pystac
 from pystac.extensions.eo import Band
-from stactools.sentinel2.constants import (
-    BANDS_TO_ASSET_NAME,
-)
 
 from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
@@ -17,9 +14,11 @@ from eopf_stac.common.constants import (
     RASTER_EXTENSION_SCHEMA_URI,
     ROLE_DATA,
     ROLE_DATASET,
+    ZIPPED_PRODUCT_ASSET_KEY,
     get_item_asset_metadata,
     get_item_asset_product,
 )
+from eopf_stac.common.stac import create_zipped_product_asset
 from eopf_stac.sentinel2.constants import (
     ASSET_TO_DESCRIPTION,
     DATASET_PATHS_TO_ASSET,
@@ -27,6 +26,7 @@ from eopf_stac.sentinel2.constants import (
     L2A_SCL_ASSETS_TO_PATH,
     ROLE_REFLECTANCE,
     SENTINEL2_BANDS_DICT,
+    SENTINEL2_BANDS_TO_ASSET_NAME,
 )
 
 
@@ -205,14 +205,14 @@ def get_dataset_assets(
     return assets
 
 
-def get_extra_assets(asset_href: str, item: pystac.Item) -> dict[str, pystac.Asset]:
+def get_extra_assets(asset_href: str, item: pystac.Item, collection_id: str) -> dict[str, pystac.Asset]:
     metadata = get_item_asset_metadata().create_asset(os.path.join(asset_href, PRODUCT_METADATA_PATH))
     product = get_item_asset_product().create_asset(asset_href)
+    zip_product = create_zipped_product_asset(collection_id=collection_id, item_id=item.id)
+    metadata.set_owner(item)
     product.set_owner(item)
-    return {
-        PRODUCT_METADATA_ASSET_KEY: metadata,
-        PRODUCT_ASSET_KEY: product,
-    }
+    zip_product.set_owner(item)
+    return {PRODUCT_METADATA_ASSET_KEY: metadata, PRODUCT_ASSET_KEY: product, ZIPPED_PRODUCT_ASSET_KEY: zip_product}
 
 
 def create_item_asset(
@@ -246,7 +246,7 @@ def create_item_asset(
 def get_bands_for_band_keys(keys: list[str]) -> list[Band]:
     bands = []
     for band_key in keys:
-        band = SENTINEL2_BANDS_DICT[BANDS_TO_ASSET_NAME[band_key]]
+        band = SENTINEL2_BANDS_DICT[SENTINEL2_BANDS_TO_ASSET_NAME[band_key]]
         band["description"] = f"{ASSET_TO_DESCRIPTION[band_key]}"
         bands.append(band)
     return bands

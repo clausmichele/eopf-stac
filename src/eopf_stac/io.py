@@ -81,6 +81,10 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
     if cdse_scene_href is None:
         logger.warning("Unable to determine link to the original scene at CSDE STAC API!")
 
+    collection = PRODUCT_TYPE_TO_COLLECTION.get(product_type)
+    if collection is None:
+        raise ValueError(f"No collection defined for product type '{product_type}'")
+
     item = None
     if product_type in SUPPORTED_PRODUCT_TYPES_S1:
         item = create_item_s1(
@@ -90,6 +94,7 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
             cpm_version=cpm_version,
             cdse_scene_id=cdse_scene_id,
             cdse_scene_href=cdse_scene_href,
+            collection_id=collection,
         )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S2:
         item = create_item_s2(
@@ -99,6 +104,7 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
             cpm_version=cpm_version,
             cdse_scene_id=cdse_scene_id,
             cdse_scene_href=cdse_scene_href,
+            collection_id=collection,
         )
     elif product_type in SUPPORTED_PRODUCT_TYPES_S3:
         item = create_item_s3(
@@ -108,9 +114,12 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
             cpm_version=cpm_version,
             cdse_scene_id=cdse_scene_id,
             cdse_scene_href=cdse_scene_href,
+            collection_id=collection,
         )
     else:
         raise ValueError(f"The product type '{product_type}' is not supported")
+
+    item.collection_id = collection
 
     logger.info("Sucessfully created STAC item")
     return item
@@ -118,13 +127,6 @@ def create_item(metadata: dict, eopf_href: str, source_uri: str | None) -> pysta
 
 def register_item(item: pystac.Item, stac_api_url: str) -> pystac.Item:
     logger.info(f"Inserting STAC item into catalog {stac_api_url} ...")
-
-    product_type = item.properties["product:type"]
-    collection = PRODUCT_TYPE_TO_COLLECTION.get(product_type)
-    if collection is None:
-        raise ValueError(f"No collection defined for product type '{product_type}'")
-    else:
-        item.collection_id = collection
 
     item.remove_links("self")
     session = requests.Session()

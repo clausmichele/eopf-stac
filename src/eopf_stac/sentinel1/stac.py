@@ -10,9 +10,11 @@ from eopf_stac.common.constants import (
     LICENSE_PROVIDER,
     SENTINEL_LICENSE,
     SENTINEL_PROVIDER,
+    ZIPPED_PRODUCT_ASSET_KEY,
 )
 from eopf_stac.common.stac import (
     create_cdse_link,
+    create_zipped_product_asset,
     fill_eopf_properties,
     fill_processing_properties,
     fill_product_properties,
@@ -42,6 +44,7 @@ def create_item(
     cpm_version: str = None,
     cdse_scene_id: str | None = None,
     cdse_scene_href: str | None = None,
+    collection_id: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
@@ -217,6 +220,8 @@ def create_item(
         )
     else:
         raise ValueError(f"Unsupported Sentinel-1 product type '{product_type}'")
+
+    assets[ZIPPED_PRODUCT_ASSET_KEY] = create_zipped_product_asset(collection_id=collection_id, item_id=item.id)
 
     for key, asset in assets.items():
         assert key not in item.assets

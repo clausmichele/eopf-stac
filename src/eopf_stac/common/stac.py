@@ -7,7 +7,7 @@ import geojson
 import pystac
 import shapely
 from footprint_facility import rework_to_polygon_geometry
-from pystac import Link
+from pystac import Asset, Link
 from pystac.extensions.grid import GridExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
@@ -21,6 +21,8 @@ from eopf_stac.common.constants import (
     PRODUCT_EXTENSION_SCHEMA_URI,
     S2_MGRS_PATTERN,
     VERSION_EXTENSION_SCHEMA_URI,
+    ZIPPED_PRODUCT_HREF_BASE,
+    get_item_asset_zipped_product,
 )
 
 logger = logging.getLogger(__name__)
@@ -313,3 +315,11 @@ def create_cdse_link(cdse_scene_href: str) -> Link:
         target=cdse_scene_href,
         media_type="application/geo+json",
     )
+
+
+def create_zipped_product_asset(collection_id: str, item_id: str) -> Asset:
+    if is_valid_string(collection_id) and is_valid_string(item_id):
+        href = os.path.join(ZIPPED_PRODUCT_HREF_BASE, "collections", collection_id, "items", item_id + ".zip")
+        return get_item_asset_zipped_product().create_asset(href=href)
+    else:
+        raise ValueError(f"Unable to create zip product asset for collection={collection_id} and item={item_id}")
