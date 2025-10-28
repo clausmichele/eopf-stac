@@ -7,8 +7,7 @@ import geojson
 import pystac
 import shapely
 from footprint_facility import rework_to_polygon_geometry
-from pystac import Link
-from pystac.extensions.eo import EOExtension
+from pystac import Asset, Link
 from pystac.extensions.grid import GridExtension
 from pystac.extensions.sat import OrbitState, SatExtension
 from pystac.extensions.timestamps import TimestampsExtension
@@ -16,11 +15,14 @@ from pystac.utils import now_in_utc, str_to_datetime
 from stactools.sentinel2.mgrs import MgrsExtension
 
 from eopf_stac.common.constants import (
+    EO_EXTENSION_SCHEMA_URI,
     EOPF_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
     S2_MGRS_PATTERN,
     VERSION_EXTENSION_SCHEMA_URI,
+    ZIPPED_PRODUCT_HREF_BASE,
+    get_item_asset_zipped_product,
 )
 
 logger = logging.getLogger(__name__)
@@ -166,12 +168,12 @@ def fill_eo_properties(item: pystac.Item, properties: dict) -> None:
     cloud_cover = properties.get("eo:cloud_cover")
     snow_cover = properties.get("eo:snow_cover")
 
-    if any_not_none([cloud_cover, snow_cover]):
-        eo = EOExtension.ext(item, add_if_missing=True)
-        if cloud_cover is not None:
-            eo.cloud_cover = cloud_cover
-        if snow_cover is not None:
-            eo.snow_cover = snow_cover
+    if cloud_cover is not None:
+        item.properties["eo:cloud_cover"] = cloud_cover
+    if snow_cover is not None:
+        item.properties["eo:snow_cover"] = snow_cover
+
+    item.stac_extensions.append(EO_EXTENSION_SCHEMA_URI)
 
 
 def fill_processing_properties(
@@ -313,3 +315,11 @@ def create_cdse_link(cdse_scene_href: str) -> Link:
         target=cdse_scene_href,
         media_type="application/geo+json",
     )
+
+
+def create_zipped_product_asset(collection_id: str, item_id: str) -> Asset:
+    if is_valid_string(collection_id) and is_valid_string(item_id):
+        href = os.path.join(ZIPPED_PRODUCT_HREF_BASE, "collections", collection_id, "items", item_id + ".zip")
+        return get_item_asset_zipped_product().create_asset(href=href)
+    else:
+        raise ValueError(f"Unable to create zip product asset for collection={collection_id} and item={item_id}")

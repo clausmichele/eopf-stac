@@ -6,6 +6,7 @@ import pystac
 from pystac.extensions.sat import SatExtension
 
 from eopf_stac.common.constants import (
+    EO_EXTENSION_SCHEMA_URI,
     PROCESSING_EXTENSION_SCHEMA_URI,
     PRODUCT_EXTENSION_SCHEMA_URI,
     SENTINEL_LICENSE,
@@ -15,9 +16,11 @@ from eopf_stac.common.constants import (
     SUPPORTED_S3_SLSTR_L2_FRP_PRODUCT_TYPE,
     SUPPORTED_S3_SLSTR_L2_LST_PRODUCT_TYPE,
     THUMBNAIL_ASSET,
+    ZIPPED_PRODUCT_ASSET_KEY,
 )
 from eopf_stac.common.stac import (
     create_cdse_link,
+    create_zipped_product_asset,
     fill_eo_properties,
     fill_eopf_properties,
     fill_processing_properties,
@@ -70,6 +73,7 @@ def create_collection(collection_metadata: dict, thumbnail_href: str) -> pystac.
             SatExtension.get_schema_uri(),
             PRODUCT_EXTENSION_SCHEMA_URI,
             PROCESSING_EXTENSION_SCHEMA_URI,
+            EO_EXTENSION_SCHEMA_URI,
         ],
         summaries=pystac.Summaries(summary_dict),
     )
@@ -99,6 +103,7 @@ def create_item(
     cpm_version: str = None,
     cdse_scene_id: str | None = None,
     cdse_scene_href: str | None = None,
+    collection_id: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     # other_metadata = metadata[".zattrs"]["other_metadata"]
@@ -192,11 +197,14 @@ def create_item(
         raise ValueError(f"Unsupported Sentinel-3 product type '{product_type}'")
 
     for asset_key, item_asset in asset_defintions.items():
-        path = asset_path_lookups[asset_key]
-        if is_valid_string(path):
-            asset = item_asset.create_asset(os.path.join(asset_href_prefix, path))
+        if asset_key == ZIPPED_PRODUCT_ASSET_KEY:
+            asset = create_zipped_product_asset(collection_id=collection_id, item_id=item.id)
         else:
-            asset = item_asset.create_asset(asset_href_prefix)
+            path = asset_path_lookups[asset_key]
+            if is_valid_string(path):
+                asset = item_asset.create_asset(os.path.join(asset_href_prefix, path))
+            else:
+                asset = item_asset.create_asset(asset_href_prefix)
         assets[asset_key] = asset
 
     for key, asset in assets.items():

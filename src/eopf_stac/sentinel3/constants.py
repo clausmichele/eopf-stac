@@ -6,7 +6,6 @@ from pystac import Extent, Provider, SpatialExtent, TemporalExtent
 from pystac.extensions.sat import OrbitState
 from pystac.item_assets import ItemAssetDefinition
 from pystac.utils import str_to_datetime
-from stactools.sentinel3.constants import SENTINEL_OLCI_BANDS, SENTINEL_SLSTR_BANDS
 
 from eopf_stac.common.constants import (
     DATASET_ASSET_EXTRA_FIELDS,
@@ -18,9 +17,64 @@ from eopf_stac.common.constants import (
     ROLE_DATA,
     ROLE_DATASET,
     SENTINEL_PROVIDER,
+    ZIPPED_PRODUCT_ASSET_KEY,
     get_item_asset_metadata,
     get_item_asset_product,
+    get_item_asset_zipped_product,
 )
+
+SENTINEL3_OLCI_BANDS_DICT = {
+    "Oa01": {"name": "Oa01", "eo:center_wavelength": 400, "eo:full_width_half_max": 15},
+    "Oa02": {"name": "Oa02", "eo:center_wavelength": 412.5, "eo:full_width_half_max": 10},
+    "Oa03": {"name": "Oa03", "eo:common_name": "coastal", "eo:center_wavelength": 442.5, "eo:full_width_half_max": 10},
+    "Oa04": {"name": "Oa04", "eo:common_name": "blue", "eo:center_wavelength": 490, "eo:full_width_half_max": 10},
+    "Oa05": {"name": "Oa05", "eo:common_name": "green05", "eo:center_wavelength": 510, "eo:full_width_half_max": 10},
+    "Oa06": {"name": "Oa06", "eo:common_name": "green", "eo:center_wavelength": 560, "eo:full_width_half_max": 10},
+    "Oa07": {"name": "Oa07", "eo:common_name": "yellow", "eo:center_wavelength": 620, "eo:full_width_half_max": 10},
+    "Oa08": {"name": "Oa08", "eo:center_wavelength": 665, "eo:full_width_half_max": 10},
+    "Oa09": {"name": "Oa09", "eo:common_name": "red", "eo:center_wavelength": 673.75, "eo:full_width_half_max": 7.5},
+    "Oa10": {"name": "Oa10", "eo:center_wavelength": 681.25, "eo:full_width_half_max": 7.5},
+    "Oa11": {
+        "name": "Oa11",
+        "eo:common_name": "rededge071",
+        "eo:center_wavelength": 708.75,
+        "eo:full_width_half_max": 10,
+    },
+    "Oa12": {
+        "name": "Oa12",
+        "eo:common_name": "rededge075",
+        "eo:center_wavelength": 753.75,
+        "eo:full_width_half_max": 7.5,
+    },
+    "Oa13": {"name": "Oa13", "eo:center_wavelength": 761.25, "eo:full_width_half_max": 2.5},
+    "Oa14": {"name": "Oa14", "eo:center_wavelength": 764.375, "eo:full_width_half_max": 3.75},
+    "Oa15": {"name": "Oa15", "eo:center_wavelength": 767.5, "eo:full_width_half_max": 2.5},
+    "Oa16": {
+        "name": "Oa16",
+        "eo:common_name": "rededge078",
+        "eo:center_wavelength": 778.75,
+        "eo:full_width_half_max": 15,
+    },
+    "Oa17": {"name": "Oa17", "eo:common_name": "nir08", "eo:center_wavelength": 865, "eo:full_width_half_max": 20},
+    "Oa18": {"name": "Oa18", "eo:center_wavelength": 885, "eo:full_width_half_max": 10},
+    "Oa19": {"name": "Oa19", "eo:center_wavelength": 900, "eo:full_width_half_max": 10},
+    "Oa20": {"name": "Oa20", "eo:common_name": "nir09", "eo:center_wavelength": 940, "eo:full_width_half_max": 20},
+    "Oa21": {"name": "Oa21", "eo:center_wavelength": 1020, "eo:full_width_half_max": 40},
+}
+
+SENTINEL3_SLSTR_BANDS_DICT = {
+    "S01": {"name": "S1", "eo:common_name": "green", "eo:center_wavelength": 554.27, "eo:full_width_half_max": 19.26},
+    "S02": {"name": "S2", "eo:common_name": "red", "eo:center_wavelength": 659.47, "eo:full_width_half_max": 19.25},
+    "S03": {"name": "S3", "eo:common_name": "nir08", "eo:center_wavelength": 868, "eo:full_width_half_max": 20.6},
+    "S04": {"name": "S4", "eo:common_name": "cirrus", "eo:center_wavelength": 1374.8, "eo:full_width_half_max": 20.8},
+    "S05": {"name": "S5", "eo:common_name": "swir16", "eo:center_wavelength": 1613.4, "eo:full_width_half_max": 60.68},
+    "S06": {"name": "S6", "eo:common_name": "swir22", "eo:center_wavelength": 2255.7, "eo:full_width_half_max": 50.15},
+    "S07": {"name": "S7", "eo:center_wavelength": 3742, "eo:full_width_half_max": 398},
+    "S08": {"name": "S8", "eo:center_wavelength": 10854, "eo:full_width_half_max": 776},
+    "S09": {"name": "S9", "eo:center_wavelength": 12022.5, "eo:full_width_half_max": 905},
+    "S10": {"name": "F1", "eo:center_wavelength": 3742, "eo:full_width_half_max": 398},
+    "S11": {"name": "F2", "eo:center_wavelength": 10854, "eo:full_width_half_max": 776},
+}
 
 SENTINEL3_METADATA = {
     "extent": Extent(
@@ -48,13 +102,13 @@ SENTINEL3_METADATA = {
 
 def get_olci_band_item_assets() -> dict[str:ItemAssetDefinition]:
     item_assets = {}
-    for band_key, band in SENTINEL_OLCI_BANDS.items():
+    for band_key, band in SENTINEL3_OLCI_BANDS_DICT.items():
         item_asset = ItemAssetDefinition.create(
             title=f"TOA radiance for OLCI acquisition band {band_key}",
             media_type=pystac.MediaType.ZARR,
             description=None,
             roles=[ROLE_DATA],
-            extra_fields={"bands": [band.to_dict()]},
+            extra_fields={"bands": [band]},
         )
         item_assets[f"{band_key}_radianceData"] = item_asset
 
@@ -69,12 +123,13 @@ OLCI_L1_ASSETS: dict[str, ItemAssetDefinition] = {
         roles=[ROLE_DATA, ROLE_DATASET],
         extra_fields={
             **deepcopy(DATASET_ASSET_EXTRA_FIELDS),
-            "bands": list(map(lambda b: b.to_dict(), SENTINEL_OLCI_BANDS.values())),
+            "bands": list(SENTINEL3_OLCI_BANDS_DICT.values()),
         },
     ),
     **get_olci_band_item_assets(),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 OLCI_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -108,11 +163,11 @@ OLCI_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
 def get_olci_bands(band_keys: list[str] | None = None) -> list[dict]:
     bands = []
     if band_keys is None:
-        for _, band in SENTINEL_OLCI_BANDS.items():
-            bands.append(band.to_dict())
+        for _, band in SENTINEL3_OLCI_BANDS_DICT.items():
+            bands.append(band)
     else:
         for key in band_keys:
-            bands.append(SENTINEL_OLCI_BANDS[key].to_dict())
+            bands.append(SENTINEL3_OLCI_BANDS_DICT[key])
     return bands
 
 
@@ -191,6 +246,7 @@ OLCI_L2_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 OLCI_L2_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -205,18 +261,15 @@ OLCI_L2_ASSETS_KEY_TO_PATH: dict[str:str] = {
     PRODUCT_METADATA_ASSET_KEY: PRODUCT_METADATA_PATH,
 }
 
-# SENTINEL_SLSTR_BANDS
-# SLSTR_BANDS_TO_RESOLUTIONS
-
 
 def get_slstr_bands(band_keys: list[str] | None = None) -> list[dict]:
     bands = []
     if band_keys is None:
-        for _, band in SENTINEL_SLSTR_BANDS.items():
-            bands.append(band.to_dict())
+        for _, band in SENTINEL3_SLSTR_BANDS_DICT.items():
+            bands.append(band)
     else:
         for key in band_keys:
-            bands.append(SENTINEL_SLSTR_BANDS[key].to_dict())
+            bands.append(SENTINEL3_SLSTR_BANDS_DICT[key])
 
     return bands
 
@@ -280,6 +333,7 @@ SLSTR_L1_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L1_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -305,6 +359,7 @@ SLSTR_L2_LST_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L2_LST_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -337,6 +392,7 @@ SLSTR_L2_FRP_ASSETS: dict[str, ItemAssetDefinition] = {
     ),
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
@@ -350,26 +406,31 @@ SLSTR_L2_FRP_ASSETS_KEY_TO_PATH: dict[str:str] = {
 SYN_L2_AOD_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_VGP_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_VG1_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_V10_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 SYN_L2_SYN_ASSETS: dict[str, ItemAssetDefinition] = {
     PRODUCT_ASSET_KEY: get_item_asset_product(),
     PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+    ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
 }
 
 # -- Collection metadata
@@ -554,5 +615,6 @@ S3_OLCI_L2_WFR = {
     "item_assets": {
         PRODUCT_ASSET_KEY: get_item_asset_product(),
         PRODUCT_METADATA_ASSET_KEY: get_item_asset_metadata(),
+        ZIPPED_PRODUCT_ASSET_KEY: get_item_asset_zipped_product(),
     },
 }

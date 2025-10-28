@@ -62,6 +62,7 @@ def create_item(
     cpm_version: str = None,
     cdse_scene_id: str | None = None,
     cdse_scene_href: str | None = None,
+    collection_id: str | None = None,
 ) -> pystac.Item:
     stac_discovery = metadata[".zattrs"]["stac_discovery"]
     other_metadata = metadata[".zattrs"]["other_metadata"]
@@ -200,7 +201,7 @@ def create_item(
         raise ValueError(f"Invalid Sentinel-2 product type '{product_type}'")
 
     dataset_assets = get_dataset_assets(DATASET_PATHS_TO_ASSET, asset_href_prefix, metadata, item)
-    extra_assets = get_extra_assets(asset_href_prefix, item)
+    extra_assets = get_extra_assets(asset_href=asset_href_prefix, item=item, collection_id=collection_id)
 
     for key, asset in chain(
         band_assets.items(),
