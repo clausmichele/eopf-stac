@@ -14,22 +14,25 @@ from tests.utils import (
     check_license_link,
     check_metadata_asset,
     check_product_asset,
+    check_zipped_product_asset,
     create_stac_item_s2,
     create_test_product_spec,
 )
 
 # Specify the test products
 S02MSIL1C = {
-    "path": "data/converted/cpm-2.6.0/S02MSIL1C_20240428T102559_0000_B108_T781.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S02MSIL1C_20240428T102559_0000_B108_T452.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125",
     "baseline_version": "05.10",
+    "collection": "sentinel-2-l1c",
 }
 S02MSIL2A = {
-    "path": "data/converted/cpm-2.6.0/S02MSIL2A_20250109T100401_0000_A122_T323.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S02MSIL2A_20250109T100401_0000_A122_TC06.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750",
     "baseline_version": "05.11",
+    "collection": "sentinel-2-l2a",
 }
 
 
@@ -67,6 +70,7 @@ def test_stac_item(stac_item, product_spec):
     # -- Check assets
     check_product_asset(stac_item, product_spec.get("url"))
     check_metadata_asset(stac_item, product_spec.get("url"))
+    check_zipped_product_asset(stac_item)
     for key, asset in stac_item.assets.items():
         if key.startswith("B"):
             assert asset.extra_fields.get("raster:scale") is not None
@@ -96,9 +100,8 @@ def test_stac_item(stac_item, product_spec):
 
 def check_l1c(item, expected):
     # -- Check eo extension
-    # TODO https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/785
     assert item.properties.get("eo:cloud_cover") is not None
-    assert item.properties.get("eo:snow_cover") is None
+    assert item.properties.get("eo:snow_cover") is not None
 
     # -- Check product extension
     assert item.properties.get("product:type") == "S02MSIL1C"
@@ -118,15 +121,14 @@ def check_l1c(item, expected):
 
 def check_l2a(item, expected):
     # -- Check eo extension
-    # TODO https://gitlab.eopf.copernicus.eu/cpm/eopf-cpm/-/issues/785
-    assert item.properties.get("eo:cloud_cover") is None
+    assert item.properties.get("eo:cloud_cover") is not None
     assert item.properties.get("eo:snow_cover") is not None
 
     # -- Check product extension
     assert item.properties.get("product:type") == "S02MSIL2A"
 
     # -- Assets
-    assert len(item.assets) == 21
+    assert len(item.assets) == 22
     asset_defs = [
         L2A_BAND_ASSETS_TO_PATH,
         L2A_AOT_WVP_ASSETS_TO_PATH,

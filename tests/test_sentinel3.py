@@ -13,81 +13,94 @@ from tests.utils import (
     check_license_link,
     check_metadata_asset,
     check_product_asset,
+    check_zipped_product_asset,
     create_stac_item_s3,
     create_test_product_spec,
 )
 
 S03OLCEFR = {
-    "path": "data/converted/cpm-2.6.0/S03OLCEFR_20250416T063751_0180_B248_T273.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03OLCEFR_20250817T222452_0180_A229_SE10.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S3B_OL_1_EFR____20250416T063752_20250416T064052_20250416T083131_0179_105_248_3240_ESA_O_NR_004",
     "baseline_version": "03.50",
-}
-S03OLCERR = {
-    "path": "data/converted/cpm-2.6.0/S03OLCERR_20250424T055918_2658_B362_S520.zarr",
-    "cpm": "2.6.0",
-    "source_uri": "S3B_OL_1_ERR____20250424T055919_20250424T064337_20250425T063838_2658_105_362______ESA_O_NT_004",
-    "baseline_version": "03.50",
+    "collection": "sentinel-3-olci-l1-efr",
 }
 S03OLCLFR = {
-    "path": "data/converted/cpm-2.6.0/S03OLCLFR_20250416T063751_0180_B248_T704.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03OLCLFR_20250416T063751_0180_B248_T160.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S3B_OL_2_LFR____20250416T063752_20250416T064052_20250416T083835_0179_105_248_3240_ESA_O_NR_003",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-olci-l2-lfr",
+}
+S03OLCERR = {
+    "path": "data/converted/cpm-2.6.2/S03OLCERR_20250424T055918_2658_B362_SA2E.zarr",
+    "cpm": "2.6.2",
+    "source_uri": "S3B_OL_1_ERR____20250424T055919_20250424T064337_20250425T063838_2658_105_362______ESA_O_NT_004",
+    "baseline_version": "03.50",
+    "collection": "sentinel-3-olci-l1-err",
 }
 S03OLCLRR = {
-    "path": "data/converted/cpm-2.6.0/S03OLCLRR_20250424T023721_2657_B360_T513.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03OLCLRR_20250424T023721_2657_B360_T1E6.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S3B_OL_2_LRR____20250424T023722_20250424T032139_20250424T052327_2657_105_360______ESA_O_NR_003",
     "baseline_version": "03.50",
-}
-S03SLSFRP = {
-    "path": "data/converted/cpm-2.6.0/S03SLSFRP_20250512T184151_0180_A384_S114.zarr",
-    "cpm": "2.6.0",
-    "source_uri": "S3A_SL_2_FRP____20250512T184152_20250512T184452_20250514T064410_0180_125_384_0360_PS1_O_NT_004",
-    "baseline_version": "03.50",
-}
-S03SLSLST = {
-    "path": "data/converted/cpm-2.6.0/S03SLSLST_20250428T075538_0180_B035_T292.zarr",
-    "cpm": "2.6.0",
-    "source_uri": "S3B_SL_2_LST____20250428T075539_20250428T075839_20250428T123039_0179_106_035_2520_ESA_O_NR_004",
-    "baseline_version": "03.50",
+    "collection": "sentinel-3-olci-l2-lrr",
 }
 S03SLSRBT = {
-    "path": "data/converted/cpm-2.6.0/S03SLSRBT_20250428T081931_0180_A178_T439.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03SLSRBT_20250428T081931_0180_A178_T610.zarr",
+    "cpm": "2.6.2",
     "source_uri": "S3A_SL_1_RBT____20250428T081931_20250428T082231_20250428T104108_0179_125_178_1620_PS1_O_NR_004",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-slstr-l1-rbt",
+}
+S03SLSFRP = {
+    "path": "data/converted/cpm-2.6.2/S03SLSFRP_20250512T184151_0180_A384_S3D6.zarr",
+    "cpm": "2.6.2",
+    "source_uri": "S3A_SL_2_FRP____20250512T184152_20250512T184452_20250514T064410_0180_125_384_0360_PS1_O_NT_004",
+    "baseline_version": "001",
+    "collection": "sentinel-3-slstr-l2-frp",
+}
+S03SLSLST = {
+    "path": "data/converted/cpm-2.6.2/S03SLSLST_20250428T075538_0180_B035_TCE4.zarr",
+    "cpm": "2.6.2",
+    "source_uri": "S3B_SL_2_LST____20250428T075539_20250428T075839_20250428T123039_0179_106_035_2520_ESA_O_NR_004",
+    "baseline_version": "004",
+    "collection": "sentinel-3-slstr-l2-lst",
 }
 S03SYNAOD = {
-    "path": "data/converted/cpm-2.6.0/S03SYNAOD_20250428T095601_2659_A179_S845.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03SYNAOD_20250428T095601_2659_A179_S6F5.zarr",
+    "cpm": "2.6.2",
     "source_uri": "",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-syn-l2-aod",
 }
 S03SYNSDR = {
-    "path": "data/converted/cpm-2.6.0/S03SYNSDR_20250427T103841_0180_A165__415.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03SYNSDR_20250427T103841_0180_A165__0AB.zarr",
+    "cpm": "2.6.2",
     "source_uri": "",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-syn-l2",
 }
 S03SYNV10 = {
-    "path": "data/converted/cpm-2.6.0/S03SYNV10_20250411T000000_9999_A000__855.zarr",
-    "cpm": "2.6.0",
+    "path": "data/converted/cpm-2.6.2/S03SYNV10_20250411T000000_9999_A000__86C.zarr",
+    "cpm": "2.6.2",
     "source_uri": "",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-syn-l2-v10",
 }
-S03SYNVG1 = {
-    "path": "data/converted/cpm-2.6.0/S03SYNVG1_20250427T000000_9999_A000_S847.zarr",
-    "cpm": "2.6.0",
+S03SYNV01 = {
+    "path": "data/converted/cpm-2.6.2/S03SYNV01_20250427T000000_9999_A000_S34A.zarr",
+    "cpm": "2.6.2",
     "source_uri": "",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-syn-l2-v01",
 }
-S03SYNVGP = {
-    "path": "data/converted/cpm-2.6.0/S03SYNVGP_20250428T081502_2659_A178_S225.zarr",
-    "cpm": "2.6.0",
+S03SYNVGT = {
+    "path": "data/converted/cpm-2.6.2/S03SYNVGT_20250428T081502_2659_A178_S924.zarr",
+    "cpm": "2.6.2",
     "source_uri": "",
     "baseline_version": "03.50",
+    "collection": "sentinel-3-syn-l2-vgt",
 }
 
 
@@ -125,7 +138,7 @@ def test_stac_item(stac_item, product_spec):
     check_common_metadata(stac_item)
     assert stac_item.common_metadata.mission == "Sentinel-3"
     assert len(stac_item.common_metadata.providers) == 3
-    assert len(stac_item.stac_extensions) == 6
+    assert len(stac_item.stac_extensions) == 7
 
     # -- Check processing extension
     assert stac_item.properties.get("processing:version") == product_spec.get("baseline_version")
@@ -138,6 +151,7 @@ def test_stac_item(stac_item, product_spec):
     # -- Check assets
     check_product_asset(stac_item, product_spec.get("url"))
     check_metadata_asset(stac_item, product_spec.get("url"))
+    check_zipped_product_asset(stac_item)
 
     # -- Check links
     check_license_link(stac_item)
@@ -161,7 +175,7 @@ def check_olci_l2(item):
     assert item.common_metadata.instruments == ["olci"]
 
     # -- Assets
-    assert len(item.assets) == 9
+    assert len(item.assets) == 10
 
     for key, path in OLCI_L2_ASSETS_KEY_TO_PATH.items():
         asset = item.assets[key]
@@ -183,7 +197,7 @@ def check_olci_l1(item):
     assert item.common_metadata.instruments == ["olci"]
 
     # -- Assets
-    assert len(item.assets) == 24
+    assert len(item.assets) == 25
 
     radiance = item.assets["radianceData"]
     assert "dataset" in radiance.roles
@@ -201,7 +215,7 @@ def check_slstr_l1(item):
     assert item.common_metadata.instruments == ["slstr"]
 
     # -- Assets
-    assert len(item.assets) == 10
+    assert len(item.assets) == 11
 
     for key, path in SLSTR_L1_ASSETS_KEY_TO_PATH.items():
         asset = item.assets[key]

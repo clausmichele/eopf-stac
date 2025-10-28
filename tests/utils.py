@@ -5,7 +5,12 @@ import fsspec
 import pystac
 from pystac.utils import datetime_to_str
 
-from eopf_stac.common.constants import PRODUCT_ASSET_KEY, PRODUCT_METADATA_ASSET_KEY, PRODUCT_METADATA_PATH
+from eopf_stac.common.constants import (
+    PRODUCT_ASSET_KEY,
+    PRODUCT_METADATA_ASSET_KEY,
+    PRODUCT_METADATA_PATH,
+    ZIPPED_PRODUCT_ASSET_KEY,
+)
 from eopf_stac.common.stac import get_cpm_version, get_identifier, validate_metadata
 from eopf_stac.sentinel1.stac import create_item as create_item_s1
 from eopf_stac.sentinel2.stac import create_item as create_item_s2
@@ -54,6 +59,8 @@ def get_eopf_product_info(path: str):
 def create_stac_item_s1(test_product: dict):
     path = test_product.get("path")
     cpm = test_product.get("cpm")
+    source_uri = test_product.get("source_uri")
+    collection = test_product.get("collection")
 
     eopf_id = os.path.splitext(os.path.basename(path))[0]
     url = f"s3://eopf-data/cpm-{cpm}/{eopf_id}.zarr"
@@ -67,6 +74,8 @@ def create_stac_item_s1(test_product: dict):
         product_type=product_type,
         asset_href_prefix=url,
         cpm_version=cpm,
+        cdse_scene_id=source_uri,
+        collection_id=collection,
     )
 
 
@@ -74,6 +83,7 @@ def create_stac_item_s2(test_product: dict):
     path = test_product.get("path")
     cpm = test_product.get("cpm")
     source_uri = test_product.get("source_uri")
+    collection = test_product.get("collection")
 
     eopf_id = os.path.splitext(os.path.basename(path))[0]
     url = f"s3://eopf-data/cpm-{cpm}/{eopf_id}.zarr"
@@ -83,13 +93,20 @@ def create_stac_item_s2(test_product: dict):
     product_type = get_product_type(metadata)
 
     return create_item_s2(
-        metadata=metadata, product_type=product_type, asset_href_prefix=url, cpm_version=cpm, cdse_scene_id=source_uri
+        metadata=metadata,
+        product_type=product_type,
+        asset_href_prefix=url,
+        cpm_version=cpm,
+        cdse_scene_id=source_uri,
+        collection_id=collection,
     )
 
 
 def create_stac_item_s3(test_product: dict):
     path = test_product.get("path")
     cpm = test_product.get("cpm")
+    source_uri = test_product.get("source_uri")
+    collection = test_product.get("collection")
 
     eopf_id = os.path.splitext(os.path.basename(path))[0]
     url = f"s3://eopf-data/cpm-{cpm}/{eopf_id}.zarr"
@@ -103,6 +120,8 @@ def create_stac_item_s3(test_product: dict):
         product_type=product_type,
         asset_href_prefix=url,
         cpm_version=cpm,
+        cdse_scene_id=source_uri,
+        collection_id=collection,
     )
 
 
@@ -150,3 +169,8 @@ def check_product_asset(item: pystac.Item, url: str):
 def check_metadata_asset(item: pystac.Item, url: str):
     product_metadata = item.assets[PRODUCT_METADATA_ASSET_KEY]
     assert product_metadata.href == f"{url}/{PRODUCT_METADATA_PATH}"
+
+
+def check_zipped_product_asset(item: pystac.Item):
+    zipped_product = item.assets[ZIPPED_PRODUCT_ASSET_KEY]
+    assert zipped_product.href.endswith(".zip")
