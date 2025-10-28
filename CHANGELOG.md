@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.11.0] - 2025-10-28
+
+### Added
+
+- Add support for products converted with CPM 2.6.2 [#49](https://github.com/EOPF-Sample-Service/eopf-stac/issues/49)
+- Add additional asset to enable download of individual Zarr stores as zip file [#56](https://github.com/EOPF-Sample-Service/eopf-stac/issues/56)
+
+### Changed
+
+- Use the [common band names](https://github.com/stac-extensions/eo/tree/main?tab=readme-ov-file#common-band-names) in Sentinel-2 and Sentinel-3 assets [#47](https://github.com/EOPF-Sample-Service/eopf-stac/issues/47)
+- Use version 2.0.0 of [eo extension](https://github.com/stac-extensions/eo) in items and assets [#36](https://github.com/EOPF-Sample-Service/eopf-stac/issues/36)
+
 ## [0.10.0] - 2025-09-23
 
 ### Added
