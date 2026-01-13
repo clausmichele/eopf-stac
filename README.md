@@ -27,26 +27,31 @@ The EOPF product must be referenced by an URL which must be provided as a comman
 
 ```bash
 $ eopf-stac --help
-usage: eopf-stac.py [-h] [--source-uri SOURCE_URI] [--dry-run] [--debug] URL
+usage: eopf-stac.py [-h] [--source-uri SOURCE_URI] [--dry-run] [--output-file OUTPUT_FILE] [--debug] URL
 
 positional arguments:
   URL         Local file path or URL to the EOPF product
 
 options:
-  -h, --help   show this help message and exit
+  -h, --help            show this help message and exit
   --source-uri SOURCE_URI
-               Reference to the original product which was input for the EOPF conversion
-  --dry-run    Create STAC item without trying to insert it into the catalog
-  --debug      Enable verbose output
+                        Reference to the original product which was input for the EOPF conversion
+  --dry-run             Create STAC item without trying to insert it into the catalog
+  --output-file OUTPUT_FILE
+                        Save the STAC item as JSON to the specified file path
+  --debug               Enable verbose output
 ```
 
 Example usage:
 
 ```bash
-# Process an EOPF product from S3
+# Register STAC item to catalog
 eopf-stac s3://path/to/eopf.zarr
 
-# Dry run with debug output
+# Save STAC item to local file instead of registering
+eopf-stac --output-file item.json s3://path/to/eopf.zarr
+
+# Dry run with debug output (only logs, doesn't save or register)
 eopf-stac --dry-run --debug s3://path/to/eopf.zarr
 
 # With source URI
@@ -62,7 +67,7 @@ Additional settings need to be provided through the following environment variab
 | AWS_ACCESS_KEY_ID | If an s3 URL is provided, the access key for the object storage where the EOPF product is stored. | None |
 | AWS_SECRET_ACCESS_KEY | If an s3 URL is provided, the secret for the access key. | None |
 | S3_ENDPOINT_URL | If an s3 URL is provided, the endpoint URL of the object storage  | None |
-| STAC_API_URL | The URL of the STAC catalog to register the created STAC item  | None |
+| STAC_API_URL | The URL of the STAC catalog to register the created STAC item. Not required if `--output-file` is used. | None |
 | STAC_INGEST_USER | The username to access the transaction endpoints of the STAC API with HTTP Basic Auth | None |
 | STAC_INGEST_PASS | The password to access the transaction endpoints of the STAC API with HTTP Basic Auth | None |
 
