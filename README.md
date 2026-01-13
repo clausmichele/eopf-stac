@@ -7,22 +7,50 @@ When started, it does the following:
 - Creates a STAC item with assets. The assets `href` is based on the given URL.
 - Adds the STAC item to a STAC catalog. If an item with the same id already exists, it will be updated.
 
+## Installation
+
+Install the package using pip:
+
+```bash
+# Install from source
+pip install .
+
+# Or install in editable mode for development
+pip install -e .
+```
+
+After installation, the `eopf-stac` command will be available in your environment.
+
 ## Usage
 
 The EOPF product must be referenced by an URL which must be provided as a command-line argument. Only `http(s)://`, `s3://` and `file://` URLs are supported. For debugging, a combination of the `--dry-run` and `--debug` option can be used to see the created STAC item in the logs without inserting it into a catalog.
 
 ```bash
-$ python src/eopf_stac/main.py --help
-usage: eopf-stac.py [-h] [--dry-run] [--debug] URL
+$ eopf-stac --help
+usage: eopf-stac.py [-h] [--source-uri SOURCE_URI] [--dry-run] [--debug] URL
 
 positional arguments:
-  URL         Local file path or HTTP/S3 URL to the EOPF product.
+  URL         Local file path or URL to the EOPF product
 
 options:
-  -h, --help   show this help message and exit  
-  --source-uri SOURCE_URI Reference to the original product which was input for the EOPF conversion
-  --dry-run    Create STAC item only. Do not insert it into the catalog
+  -h, --help   show this help message and exit
+  --source-uri SOURCE_URI
+               Reference to the original product which was input for the EOPF conversion
+  --dry-run    Create STAC item without trying to insert it into the catalog
   --debug      Enable verbose output
+```
+
+Example usage:
+
+```bash
+# Process an EOPF product from S3
+eopf-stac s3://path/to/eopf.zarr
+
+# Dry run with debug output
+eopf-stac --dry-run --debug s3://path/to/eopf.zarr
+
+# With source URI
+eopf-stac --source-uri s3://original/product.nc s3://path/to/eopf.zarr
 ```
 
 ## Settings 
