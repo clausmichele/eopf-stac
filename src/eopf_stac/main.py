@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from sys import exit
+from typing import Optional
 
 from eopf_stac.io import create_item, read_metadata, register_item
 
@@ -25,7 +26,7 @@ def configure_logging(level: int):
     )
 
 
-def validate_env(url: str, dry_run: bool, env: dict):
+def validate_env(url: str, dry_run: bool, output_file: Optional[str], env):
     if url.startswith("s3://"):
         # if s3 url is provided, the credentials are required?
         missing_vars = []
@@ -41,7 +42,7 @@ def validate_env(url: str, dry_run: bool, env: dict):
         if len(missing_vars) > 0:
             raise ValueError(f"The following enviroment variables are missing: {missing_vars}")
 
-    if not dry_run:
+    if not dry_run and not output_file:
         if ENV_STAC_API_URL not in env:
             raise ValueError(f"The enviroment variable {ENV_STAC_API_URL} is missing")
 
@@ -62,6 +63,7 @@ def main():
     parser.add_argument(
         "--dry-run", help="Create STAC item without trying to insert it into the catalog", action="store_true"
     )
+    parser.add_argument("--output-file", help="Save the STAC item as JSON to the specified file path", type=str)
     parser.add_argument("--debug", help="Enable verbose output", action="store_true")
     args = parser.parse_args()
 
@@ -71,7 +73,7 @@ def main():
         configure_logging(logging.INFO)
 
     try:
-        validate_env(args.URL, args.dry_run, env=os.environ)
+        validate_env(args.URL, args.dry_run, args.output_file, os.environ)
 
         logger.debug("Opening metadata file ...")
         metadata = read_metadata(args.URL)
@@ -81,7 +83,13 @@ def main():
         logger.debug(json.dumps(item.to_dict(), indent=4))
 
         if not args.dry_run:
-            item = register_item(item=item, stac_api_url=os.environ[ENV_STAC_API_URL])
+            if args.output_file:
+                logger.info(f"Writing STAC item to {args.output_file}")
+                with open(args.output_file, "w") as f:
+                    json.dump(item.to_dict(), f, indent=4)
+            else:
+                logger.info(f"Registering STAC item to {os.environ[ENV_STAC_API_URL]}")
+                item = register_item(item=item, stac_api_url=os.environ[ENV_STAC_API_URL])
 
     except Exception as e:
         logger.error(str(e))

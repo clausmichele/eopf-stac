@@ -28,6 +28,9 @@ dependencies = [
     "netCDF4 == 1.7.2",
     "footprint-facility"
 ]
+[project.scripts]
+eopf-stac = "eopf_stac.main:main"
+
 [project.optional-dependencies]
 dev = [
     "ruff"
