@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.12.0] - Unreleased
+
+### Fixed
+
+- Inconsistent `proj:bbox` with `proj:code` [#60](https://github.com/EOPF-Sample-Service/eopf-stac/issues/60)
+- Missing `proj:bbox` in STAC asset metadata for older Sentinel-2 data [#61](https://github.com/EOPF-Sample-Service/eopf-stac/issues/61)
+
+
 ## [0.11.0] - 2025-10-28
 
 ### Added

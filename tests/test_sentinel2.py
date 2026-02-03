@@ -26,6 +26,8 @@ S02MSIL1C = {
     "source_uri": "S2B_MSIL1C_20240428T102559_N0510_R108_T32UPC_20240428T123125",
     "baseline_version": "05.10",
     "collection": "sentinel-2-l1c",
+    "proj:code": "EPSG:32632",
+    "proj:bbox": None,
 }
 S02MSIL2A = {
     "path": "data/converted/cpm-2.6.2/S02MSIL2A_20250109T100401_0000_A122_TC06.zarr",
@@ -33,10 +35,21 @@ S02MSIL2A = {
     "source_uri": "S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750",
     "baseline_version": "05.11",
     "collection": "sentinel-2-l2a",
+    "proj:code": "EPSG:32634",
+    "proj:bbox": None,
+}
+S02MSIL2A_CPM_264 = {
+    "path": "data/converted/cpm-2.6.4/S02MSIL2A_20250109T100401_0000_A122_TB26.zarr",
+    "cpm": "2.6.4",
+    "source_uri": "S2A_MSIL2A_20250109T100401_N0511_R122_T34UCE_20250109T122750",
+    "baseline_version": "05.11",
+    "collection": "sentinel-2-l2a",
+    "proj:code": "EPSG:32634",
+    "proj:bbox": [300000.0, 5890200.0, 409800.0, 6000000.0],
 }
 
 
-@pytest.fixture(scope="module", params=[S02MSIL1C, S02MSIL2A])
+@pytest.fixture(scope="module", params=[S02MSIL1C, S02MSIL2A, S02MSIL2A_CPM_264])
 def product_spec(request):
     return create_test_product_spec(request.param)
 
@@ -58,6 +71,10 @@ def test_stac_item(stac_item, product_spec):
     assert stac_item.common_metadata.instruments == ["msi"]
     assert stac_item.common_metadata.gsd == 10
     assert len(stac_item.stac_extensions) == 13
+
+    # -- Check projection extension
+    assert stac_item.properties.get("proj:code") == product_spec.get("proj:code")
+    assert stac_item.properties.get("proj:bbox") == product_spec.get("proj:bbox")
 
     # -- Check processing extension
     assert stac_item.properties.get("processing:version") == product_spec.get("baseline_version")

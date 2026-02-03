@@ -3,8 +3,8 @@ import os
 import re
 from itertools import chain
 
-import antimeridian
 import pystac
+import zarr
 from pystac.extensions.projection import ProjectionExtension
 from pystac.extensions.scientific import ItemScientificExtension
 from pystac.extensions.view import ViewExtension
@@ -130,15 +130,24 @@ def create_item(
     fill_sat_properties(item, properties)
 
     # Projection Extension
-    code = other_metadata.get("horizontal_CRS_code")
-    centroid = antimeridian.centroid(item.geometry)
-    if any([code, centroid]):
+    proj_code = properties.get("proj:code")  # Since CPM 2.6.4 this field is available
+    if proj_code is None:
+        proj_code = properties.get("proj:epsg")  # CPM version 2.5.6
+        if proj_code is not None:
+            proj_code = f"EPSG:{proj_code}"
+        if proj_code is None:
+            proj_code = other_metadata.get("horizontal_CRS_code")  # 2.5.6 < CPM version < 2.6.4
+
+    proj_bbox = properties.get("proj:bbox")  # in CPM 2.5.6 and 2.6.4 this field is available
+    if proj_bbox is None:
+        proj_bbox = calculate_proj_bbox(url=asset_href_prefix)  # 2.5.6 < CPM version < 2.6.4
+
+    if any([proj_code, proj_bbox]):
         projection = ProjectionExtension.ext(item, add_if_missing=True)
-        projection.bbox = bbox
-        if code:
-            projection.code = code
-        if centroid:
-            projection.centroid = {"lat": round(centroid.y, 5), "lon": round(centroid.x, 5)}
+        if proj_bbox is not None:
+            projection.bbox = proj_bbox
+        if proj_code is not None:
+            projection.code = proj_code
 
     # MGRS and Grid Extension
     # First try to extract mgrs fields from identifier
@@ -220,6 +229,39 @@ def create_item(
         item.links.append(create_cdse_link(cdse_scene_href))
 
     return item
+
+
+def calculate_proj_bbox(url: str, res: int = 10) -> list | None:
+    logger.info(f"Calculating bounding box in data crs coordinates for resolution {res} ...")
+    try:
+        path_geom_x_coords = "conditions/geometry/x"
+        path_geom_y_coords = "conditions/geometry/y"
+        geom_x_coords = zarr.open_array(os.path.join(url, path_geom_x_coords))
+        geom_y_coords = zarr.open_array(os.path.join(url, path_geom_y_coords))
+        ulx = float(geom_x_coords[0])
+        uly = float(geom_y_coords[0])
+
+        if res == 10:
+            ncols = 10980
+            nrows = 10980
+        elif res == 20:
+            ncols = 5490
+            nrows = 5490
+        else:
+            ncols = 1830
+            nrows = 1830
+
+        #  [xmin, ymin, xmax, ymax]
+        proj_bbox = [
+            ulx,
+            uly - res * ncols,
+            ulx + res * nrows,
+            uly,
+        ]
+        return proj_bbox
+    except Exception as e:
+        logger.error(f"Unable to read coordinates from Zarr data: {str(e)}")
+        return None
 
 
 def get_baseline_processing_version(identifier: str) -> str | None:
