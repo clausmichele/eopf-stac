@@ -82,6 +82,6 @@ $ docker run \
     --env STAC_API_URL=value \
     --env STAC_INGEST_USER=value \
     --env STAC_INGEST_PASS=value \
-    ghcr.io/eopf-sample-service/eopf-stac:0.10.0 s3://path/to/eopf.zarr
+    ghcr.io/eopf-sample-service/eopf-stac:0.12.0 s3://path/to/eopf.zarr
 ```
 
